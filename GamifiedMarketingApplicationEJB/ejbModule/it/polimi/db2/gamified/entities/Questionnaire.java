@@ -12,7 +12,12 @@ import java.util.List;
  */
 @Entity
 @Table(name="questionnaire")
-@NamedQuery(name="Questionnaire.findAll", query="SELECT q FROM Questionnaire q")
+
+
+@NamedQueries({ @NamedQuery(name="Questionnaire.findAll", query="SELECT q FROM Questionnaire q"),
+	            @NamedQuery(name = "Questionnaire.findByDate", query = "SELECT q FROM Questionnaire q WHERE q.date = :date")})
+ 
+
 public class Questionnaire implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -30,7 +35,7 @@ public class Questionnaire implements Serializable {
 	private int maxscore;
 
 	//bi-directional many-to-one association to Question
-	@OneToMany(mappedBy="questionnaire",cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy="questionnaire",cascade = CascadeType.ALL)
 	private List<Question> questions;
 
 	//bi-directional many-to-one association to Product

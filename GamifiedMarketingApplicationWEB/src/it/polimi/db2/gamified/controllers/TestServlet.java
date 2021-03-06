@@ -22,8 +22,8 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 public class TestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
-	//@EJB(name = "it.polimi.db2.gamified.services/TestService")
-	//private TestService ts;
+	@EJB(name = "it.polimi.db2.gamified.services/TestService")
+	private TestService ts;
 	
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
@@ -36,11 +36,7 @@ public class TestServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//		List<Product> allprods = ts.testMethod();
-		ServletContext servletContext = getServletContext();
-		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		// ctx.setVariable("allproducts", allprods);
-		templateEngine.process("WEB-INF/home.html", ctx, response.getWriter());
+
 	}
 	
 	
