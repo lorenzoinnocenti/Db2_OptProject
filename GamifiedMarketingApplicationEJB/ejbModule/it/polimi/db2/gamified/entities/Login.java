@@ -11,7 +11,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="login")
-@NamedQuery(name="Login.findAll", query="SELECT l FROM Login l")
+@NamedQuery(name = "Login.findByUserId", query = "SELECT l FROM Login l WHERE l.account = :usrId")
 public class Login implements Serializable {
 	private static final long serialVersionUID = 1L;
 
