@@ -19,12 +19,13 @@ public class QuestionnaireService {
 	}
 	
 	public List<Questionnaire> findByDate(Date date) { 
+		// maybe it needs hint refresh
 		return em.createNamedQuery("Questionnaire.findByDate", Questionnaire.class).setParameter("date", date).getResultList();
 	}
 	
 	public void addQuestionnaire(Date date, int productId) throws ProductNotFoundException{ 
 		Product p = em.find(Product.class, productId);
-		if (p == null) throw new ProductNotFoundException("product not found");
+		if (p == null) throw new ProductNotFoundException("Product not found");
 		Questionnaire q = new Questionnaire();
 		q.setDate(date);
 		q.setProduct(p);
@@ -33,7 +34,7 @@ public class QuestionnaireService {
 	
 	public void addQuestion(int questionnaireId, String text) throws QuestionnaireNotFoundException{
 		Questionnaire q = em.find(Questionnaire.class, questionnaireId);
-		if (q == null) throw new QuestionnaireNotFoundException("questionnaire not found");
+		if (q == null) throw new QuestionnaireNotFoundException("Questionnaire not found");
 		Question question = new Question();
 		question.setQuestionText(text);
 		q.addQuestion(question);
@@ -42,7 +43,7 @@ public class QuestionnaireService {
 	
 	public void removeQuestionnaire(int questionnaireId) throws QuestionnaireNotFoundException{
 		Questionnaire q = em.find(Questionnaire.class, questionnaireId);
-		if (q == null) throw new QuestionnaireNotFoundException("questionnaire not found");
+		if (q == null) throw new QuestionnaireNotFoundException("Questionnaire not found");
 		Product p = q.getProduct();
 		p.getQuestionnaires().remove(q);
 		em.remove(q);
