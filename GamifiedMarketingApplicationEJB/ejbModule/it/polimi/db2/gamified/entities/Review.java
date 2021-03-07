@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name="review")
-@NamedQuery(name="Review.findAll", query="SELECT r FROM Review r")
+@NamedQuery(name="Review.findByProductId", query="SELECT r FROM Review r where r.product = :prdId")
 public class Review implements Serializable {
 	private static final long serialVersionUID = 1L;
 
