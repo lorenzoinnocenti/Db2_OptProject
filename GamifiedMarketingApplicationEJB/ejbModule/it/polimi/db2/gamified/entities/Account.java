@@ -13,7 +13,7 @@ import java.util.List;
 @DiscriminatorColumn(name="status", 
 discriminatorType = DiscriminatorType.CHAR)
 @Table(name="account")
-@NamedQuery(name="Account.findAll", query="SELECT a FROM Account a")
+@NamedQuery(name = "User.checkCredentials", query = "SELECT r FROM User r  WHERE r.username = ?1 and r.password = ?2")
 public class Account implements Serializable {
 	private static final long serialVersionUID = 1L;
 
