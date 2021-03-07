@@ -13,7 +13,12 @@ import java.util.List;
 @DiscriminatorColumn(name="status", 
 discriminatorType = DiscriminatorType.CHAR)
 @Table(name="account")
-@NamedQuery(name = "User.checkCredentials", query = "SELECT r FROM User r  WHERE r.username = ?1 and r.password = ?2")
+
+
+@NamedQueries({ @NamedQuery(name = "Account.checkCredentials", query = "SELECT r FROM Account r  WHERE r.username = ?1 and r.password = ?2"),
+	            @NamedQuery(name = "Account.computeLeaderboard", query = "SELECT r FROM Account r ORDER BY r.totalpoints DESC")})
+
+
 public class Account implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -28,8 +33,8 @@ public class Account implements Serializable {
 	@Column(nullable=false, length=20)
 	private String password;
 
-	@Column(nullable=false, length=1)
-	private String status;
+	@Column(nullable=false)
+	private AccountStatus status;
 
 	private int totalpoints;
 
@@ -75,11 +80,11 @@ public class Account implements Serializable {
 		this.password = password;
 	}
 
-	public String getStatus() {
+	public AccountStatus getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(AccountStatus status) {
 		this.status = status;
 	}
 

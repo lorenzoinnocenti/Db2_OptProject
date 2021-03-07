@@ -12,11 +12,11 @@ import it.polimi.db2.gamified.entities.*;
 import it.polimi.db2.gamified.exceptions.*;
 
 @Stateless
-public class UserService {
+public class AccountService {
 	@PersistenceContext(unitName = "GamifiedMarketingApplicationEJB")
 	private EntityManager em;
 	
-	public UserService() {
+	public AccountService() {
 	}
 
 	public User checkCredentials(String usrn, String pwd) throws CredentialsException, NonUniqueResultException, BannedUserException {
@@ -30,8 +30,8 @@ public class UserService {
 		if (uList.isEmpty())
 			return null;
 		else if (uList.size() == 1) {
-			//Se l'account è bannato
-			if (uList.get(0).getStatus().equals("B")) {
+			//Se l'account ï¿½ bannato
+			if (uList.get(0).getStatus()==AccountStatus.BANNED) {
 				throw new BannedUserException("This account has been terminated.");
 			}
 			//Altrimenti, ritorna user
@@ -39,5 +39,33 @@ public class UserService {
 			}
 		throw new NonUniqueResultException("More than one user registered with same credentials");
 	}
-	 
+	
+	public AccountStatus checkStatus(int accountId) throws AccountNotFoundException {
+		Account account = em.find(Account.class, accountId);
+		if (account == null) throw new AccountNotFoundException("account not found");
+		return account.getStatus();
+	}
+	
+	public void banUser(int accountId) throws AccountNotFoundException, AlreadyBannedException, BanAdminException {
+		Account account = em.find(Account.class, accountId);
+		if (account == null) throw new AccountNotFoundException("account not found");
+		if (account.getStatus()==AccountStatus.BANNED) throw new AlreadyBannedException("this user is already banned");
+		if (account.getStatus()==AccountStatus.ADMIN) throw new BanAdminException("can't ban an admin");
+		account.setStatus(AccountStatus.BANNED); 
+	}
+	
+	public List<Account> computeLeaderboard(){
+		return em.createNamedQuery("Account.computeLeaderboard", Account.class)
+				.setMaxResults(10)
+				.setHint("javax.persistence.cache.storeMode", "REFRESH") // not sure about that
+				.getResultList();
+	}
 }
+
+
+
+
+
+
+
+
