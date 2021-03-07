@@ -38,9 +38,8 @@ public class Question implements Serializable {
 	public Question() {
 	}
 
-	public Question(String text, Questionnaire questionnaire) {
+	public Question(String text) {
 		this.questionText = text;
-		this.questionnaire = questionnaire;
 	}
 	
 	public int getId() {

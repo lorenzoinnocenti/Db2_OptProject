@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import it.polimi.db2.gamified.entities.*;
+import it.polimi.db2.gamified.exceptions.*;
 
 @Stateless
 public class QuestionService {
@@ -16,9 +17,10 @@ public class QuestionService {
 	public QuestionService() {
 	}
 	
-	public void createQuestion(String questionText, int questionnaireId) {
+	public void createQuestion(String questionText, int questionnaireId) throws QuestionnaireNotFoundException {
 		Questionnaire questionnaire = em.find(Questionnaire.class, questionnaireId);
-		Question question = new Question(questionText, questionnaire);
+		if (questionnaire == null) throw new QuestionnaireNotFoundException("Questionnaire not found.");
+		Question question = new Question(questionText);
 		
 		// Update both sides of the relationships
 		questionnaire.addQuestion(question);
@@ -35,6 +37,7 @@ public class QuestionService {
 	
 	public List<Question> findQuestionsByQuestionnaireRefresh (int questionnaireId) {
 		Questionnaire questionnaire = em.find(Questionnaire.class, questionnaireId);
+		em.refresh(questionnaire);
 		List<Question> questions = questionnaire.getQuestions();
 		return questions;
 	}
@@ -53,10 +56,10 @@ public class QuestionService {
 		return questions;
 	}
 	
-	public void removeQuestion (int questionId) {
+	public void removeQuestion (int questionId) throws QuestionNotFoundException {
 		Question question = em.find(Question.class, questionId);
+		if (question == null) throw new QuestionNotFoundException("Question not found.");
 		Questionnaire questionnaire = question.getQuestionnaire();
-		
 		questionnaire.removeQuestion(question);
 		em.remove(question);
 	}
