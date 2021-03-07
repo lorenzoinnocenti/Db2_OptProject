@@ -13,6 +13,8 @@ public class LoginService {
 	@PersistenceContext(unitName = "GamifiedMarketingApplicationEJB")
 	private EntityManager em;
 	
+	public LoginService() {
+	}
 	public List<Login> findTSByUser (int userId) {
 		return em.createNamedQuery("Login.findByUserId", Login.class).setParameter("usrId", userId).getResultList();	
 	}
