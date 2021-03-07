@@ -18,11 +18,11 @@ public class QuestionnaireService {
 	public QuestionnaireService() {
 	}
 	
-	public List<Questionnaire> findByDate(Date date) { // come parametro ho messo il tipo Date ma in realtà non so cos'è
+	public List<Questionnaire> findByDate(Date date) { 
 		return em.createNamedQuery("Questionnaire.findByDate", Questionnaire.class).setParameter("date", date).getResultList();
 	}
 	
-	public void addQuestionnaire(Date date, int productId) throws ProductNotFoundException{ // forse dovrebbe restituire q
+	public void addQuestionnaire(Date date, int productId) throws ProductNotFoundException{ 
 		Product p = em.find(Product.class, productId);
 		if (p == null) throw new ProductNotFoundException("product not found");
 		Questionnaire q = new Questionnaire();
@@ -37,12 +37,14 @@ public class QuestionnaireService {
 		Question question = new Question();
 		question.setQuestionText(text);
 		q.addQuestion(question);
-		em.persist(q); // dovrebbe persistere anche question tramite cascade
+		em.persist(q); 
 	}
 	
 	public void removeQuestionnaire(int questionnaireId) throws QuestionnaireNotFoundException{
 		Questionnaire q = em.find(Questionnaire.class, questionnaireId);
 		if (q == null) throw new QuestionnaireNotFoundException("questionnaire not found");
+		Product p = q.getProduct();
+		p.getQuestionnaires().remove(q);
 		em.remove(q);
 	}
 	
