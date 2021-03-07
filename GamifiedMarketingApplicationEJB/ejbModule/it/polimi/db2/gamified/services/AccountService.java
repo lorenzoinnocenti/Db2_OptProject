@@ -19,38 +19,39 @@ public class AccountService {
 	public AccountService() {
 	}
 
-	public User checkCredentials(String usrn, String pwd) throws CredentialsException, NonUniqueResultException, BannedUserException {
-		List<User> uList = null;
+	public Account checkCredentials(String usrn, String pwd) throws CredentialsException, NonUniqueResultException, BannedUserException {
+		List<Account> aList = null;
 		try {
-			uList = em.createNamedQuery("User.checkCredentials", User.class).setParameter(1, usrn).setParameter(2, pwd)
+			aList = em.createNamedQuery("Account.checkCredentials", Account.class).setParameter(1, usrn).setParameter(2, pwd)
 					.getResultList();
 		} catch (PersistenceException e) {
 			throw new CredentialsException("Could not verify credentals");
 		}
-		if (uList.isEmpty())
+		if (aList.isEmpty())
 			return null;
-		else if (uList.size() == 1) {
+		else if (aList.size() == 1) {
 			//Se l'account � bannato
-			if (uList.get(0).getStatus()==AccountStatus.BANNED) {
+			if (aList.get(0).getStatus()==AccountStatus.BANNED) {
 				throw new BannedUserException("This account has been terminated.");
 			}
 			//Altrimenti, ritorna user
-			else return uList.get(0);
+			// chiamare qua il metodo di loginservice
+			else return aList.get(0);
 			}
 		throw new NonUniqueResultException("More than one user registered with same credentials");
 	}
 	
 	public AccountStatus checkStatus(int accountId) throws AccountNotFoundException {
 		Account account = em.find(Account.class, accountId);
-		if (account == null) throw new AccountNotFoundException("account not found");
+		if (account == null) throw new AccountNotFoundException("Account not found");
 		return account.getStatus();
 	}
 	
 	public void banUser(int accountId) throws AccountNotFoundException, AlreadyBannedException, BanAdminException {
 		Account account = em.find(Account.class, accountId);
-		if (account == null) throw new AccountNotFoundException("account not found");
-		if (account.getStatus()==AccountStatus.BANNED) throw new AlreadyBannedException("this user is already banned");
-		if (account.getStatus()==AccountStatus.ADMIN) throw new BanAdminException("can't ban an admin");
+		if (account == null) throw new AccountNotFoundException("Account not found");
+		if (account.getStatus()==AccountStatus.BANNED) throw new AlreadyBannedException("This user is already banned");
+		if (account.getStatus()==AccountStatus.ADMIN) throw new BanAdminException("Can't ban an admin");
 		account.setStatus(AccountStatus.BANNED); 
 	}
 	
