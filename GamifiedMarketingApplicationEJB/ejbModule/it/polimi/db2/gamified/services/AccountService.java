@@ -35,9 +35,13 @@ public class AccountService {
 				throw new BannedUserException("This account has been terminated.");
 			}
 			//Altrimenti, ritorna user
-			// chiamare qua il metodo di loginservice
-			else return aList.get(0);
+			else {
+				Account account = aList.get(0);
+				LoginService ls = new LoginService();
+				ls.addTS(account.getId());
+				return account;
 			}
+		}
 		throw new NonUniqueResultException("More than one user registered with same credentials");
 	}
 	
@@ -50,8 +54,8 @@ public class AccountService {
 	public void banUser(int accountId) throws AccountNotFoundException, AlreadyBannedException, BanAdminException {
 		Account account = em.find(Account.class, accountId);
 		if (account == null) throw new AccountNotFoundException("Account not found");
-		if (account.getStatus()==AccountStatus.BANNED) throw new AlreadyBannedException("This user is already banned");
-		if (account.getStatus()==AccountStatus.ADMIN) throw new BanAdminException("Can't ban an admin");
+		if (account.getStatus() == AccountStatus.BANNED) throw new AlreadyBannedException("This user is already banned");
+		if (account.getStatus() == AccountStatus.ADMIN) throw new BanAdminException("Can't ban an admin");
 		account.setStatus(AccountStatus.BANNED); 
 	}
 	
