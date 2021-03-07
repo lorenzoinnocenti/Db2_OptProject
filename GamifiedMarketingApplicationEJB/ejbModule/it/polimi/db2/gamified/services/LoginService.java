@@ -24,10 +24,8 @@ public class LoginService {
 		return account.getLogins();	
 	}
 	
-	public void addTS (int accountId) throws AccountNotFoundException {
-		Account account = em.find(Account.class, accountId);
-		if (account == null) throw new AccountNotFoundException("Account not found");
-		
+	public void addTS (int accountId) {
+		Account account = em.find(Account.class, accountId);		
 		Login login = new Login();
 		login.setTimestamp( new Timestamp(System.currentTimeMillis()));
 		login.setAccount(account);
