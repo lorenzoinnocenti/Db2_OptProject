@@ -4,8 +4,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import java.sql.Date;
+//import java.sql.Date;
 import java.util.List;
+import java.util.Date;
 
 import it.polimi.db2.gamified.entities.*;
 import it.polimi.db2.gamified.exceptions.*;
