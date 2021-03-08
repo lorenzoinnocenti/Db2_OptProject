@@ -23,8 +23,9 @@ public class AccountService {
 		List<Account> aList = null;
 		try {
 			aList = em.createNamedQuery("Account.checkCredentials", Account.class).setParameter(1, usrn).setParameter(2, pwd)
-					.getResultList();	
+					.getResultList();
 		} catch (PersistenceException e) {
+			e.printStackTrace();
 			throw new CredentialsException("Could not verify credentals");
 		}
 		if (aList.isEmpty())

@@ -22,12 +22,12 @@ public class Answer implements Serializable {
 
 	//bi-directional many-to-one association to Account
 	@ManyToOne
-	@JoinColumn(name="userid", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="userid", nullable=false)
 	private Account account;
 
 	//bi-directional many-to-one association to Question
 	@ManyToOne
-	@JoinColumn(name="questionid", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="questionid", nullable=false)
 	private Question question;
 
 	public Answer() {
