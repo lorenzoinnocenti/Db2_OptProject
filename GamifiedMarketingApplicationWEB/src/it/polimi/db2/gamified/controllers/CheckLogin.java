@@ -48,6 +48,7 @@ public class CheckLogin extends HttpServlet {
 		// obtain and escape params
 		String usrn = null;
 		String pwd = null;
+		String path;
 		try {
 			usrn = StringEscapeUtils.escapeJava(request.getParameter("username"));
 			pwd = StringEscapeUtils.escapeJava(request.getParameter("pwd"));
@@ -73,14 +74,18 @@ public class CheckLogin extends HttpServlet {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Credentials exception");
 			return;
 		} catch (BannedUserException e) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "You have been banned");
+			ServletContext servletContext = getServletContext();
+			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+			ctx.setVariable("errorMsg", "Your account has been terminated");
+			path = "/index.html";
+			templateEngine.process(path, ctx, response.getWriter());
 			return;
 		}
 
 		// If the user exists, add info to the session and go to home page, otherwise
 		// show login page with error message
 
-		String path;
+		
 		if (account == null) {
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());

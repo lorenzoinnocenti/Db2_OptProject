@@ -10,7 +10,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="userquestionnaire")
-@NamedQuery(name="Userquestionnaire.findAll", query="SELECT u FROM Userquestionnaire u")
+@NamedQueries({@NamedQuery(name="Userquestionnaire.findAll", query="SELECT u FROM Userquestionnaire u"),
+			  @NamedQuery(name="Userquestionnaire.findNonCancelled", query="SELECT u FROM Userquestionnaire u WHERE u.status = 1"),
+			  @NamedQuery(name="Userquestionnaire.findCancelled", query="SELECT u FROM Userquestionnaire u WHERE u.status = 0")})
 public class Userquestionnaire implements Serializable {
 	private static final long serialVersionUID = 1L;
 
