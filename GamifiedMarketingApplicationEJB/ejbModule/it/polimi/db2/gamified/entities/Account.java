@@ -10,12 +10,8 @@ import java.util.List;
  * 
  */
 @Entity
-@DiscriminatorColumn(name="status", 
-discriminatorType = DiscriminatorType.CHAR)
 @Table(name="account")
-
-
-@NamedQueries({ @NamedQuery(name = "Account.checkCredentials", query = "SELECT r FROM Account r  WHERE r.username = ?1 and r.password = ?2"),
+@NamedQueries({ @NamedQuery(name = "Account.checkCredentials", query = "SELECT r FROM Account r  WHERE r.username = :usrn and r.password = :pwd"),
 	            @NamedQuery(name = "Account.computeLeaderboard", query = "SELECT r FROM Account r ORDER BY r.totalpoints DESC")})
 
 
@@ -36,6 +32,7 @@ public class Account implements Serializable {
 	@Column(nullable=false)
 	private AccountStatus status;
 
+	@Column (nullable=true)
 	private int totalpoints;
 
 	@Column(nullable=false, length=20)
