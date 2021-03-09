@@ -20,31 +20,30 @@ public class UserQuestionnaireService {
 	
 	public UserQuestionnaireService(){		
 	}
+
 	
 	public List<Account> findUsersByQuestionnaireId(int questionnaireId) throws UserNotFoundException{
-		List<Userquestionnaire> UsersQuestionnairesMapping = em.find(Questionnaire.class, questionnaireId).getUserquestionnaires();		
-		List<Account> users = new ArrayList<Account>();
-		for (Userquestionnaire mapping : UsersQuestionnairesMapping) {
-			if(mapping.getStatus() != 0)
-				users.add(mapping.getAccount());
+		List<Userquestionnaire> questionnaires = em.createNamedQuery("Userquestionnaire.findNonCancelled", Userquestionnaire.class).getResultList();
+		if(questionnaires != null) {
+			List<Account> users_account = new ArrayList<Account>();
+			for (Userquestionnaire u: questionnaires)
+				users_account.add(u.getAccount());
+			return users_account;
 		}
-		if (! users.isEmpty())
-			return users;
 		else
-			throw new UserNotFoundException("no user has compiled and submitted that questionnaire");
+			throw new UserNotFoundException("There is no user which has compiled a such a questionnaire");
 	}
 	
 	public List<Account> FindUsersByQuestionnaireCancelled(int questionnaireId) throws UserNotFoundException{
-		List<Userquestionnaire> UsersQuestionnairesMapping = em.find(Questionnaire.class, questionnaireId).getUserquestionnaires();
-		List<Account> users = new ArrayList<Account>();
-		for (Userquestionnaire mapping : UsersQuestionnairesMapping) {
-			if(mapping.getStatus() == 0)
-				users.add(mapping.getAccount());
+		List<Userquestionnaire> questionnaires = em.createNamedQuery("Userquestionnaire.findCancelled", Userquestionnaire.class).getResultList();
+		if(questionnaires != null) {
+			List<Account> users_account = new ArrayList<Account>();
+			for (Userquestionnaire u: questionnaires)
+				users_account.add(u.getAccount());
+			return users_account;
 		}
-		if (! users.isEmpty())
-			return users;
 		else
-			throw new UserNotFoundException("there are no users which have cancelled their questionnaire");			
+			throw new UserNotFoundException("There is no user which has cancelled a such a questionnaire");	
 	}
 	
 }
