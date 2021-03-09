@@ -1,7 +1,6 @@
 package it.polimi.db2.gamified.controllers;
 
 import java.io.IOException;
-//import java.sql.Date;
 import java.util.Date;
 import java.util.List;
 
@@ -19,16 +18,17 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import it.polimi.db2.gamified.entities.Product;
-import it.polimi.db2.gamified.entities.Questionnaire;
-import it.polimi.db2.gamified.services.QuestionnaireService;
+import it.polimi.db2.gamified.entities.*;
+import it.polimi.db2.gamified.services.*;
 
 @WebServlet("/Home")
 public class GoToHomePage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
-	@EJB(name = "it.polimi.db2.gamifies.services")
+	@EJB(name = "it.polimi.db2.gamified.services/QuestionnaireService")
 	private QuestionnaireService qService;
+	@EJB(name = "it.polimi.db2.gamified.services/ReviewService")
+	private ReviewService rService;
 
 	public GoToHomePage() {
 		super();
@@ -55,13 +55,18 @@ public class GoToHomePage extends HttpServlet {
 		
 		List<Questionnaire> questionnaires = null;
 		Product product = null;
+		List<Review> reviews = null;
 
 		try {
-			Long ms =  java.lang.System.currentTimeMillis();
-			Date date = new java.sql.Date(ms);
-			questionnaires = qService.findByDate(date);
-			product = questionnaires.get(0).getProduct();
-			
+			questionnaires = qService.findByDate(new Date(java.lang.System.currentTimeMillis()));
+			if (questionnaires.size() != 0) {
+				product = questionnaires.get(0).getProduct();
+				reviews = rService.findReviewByProduct(product.getId());
+				
+				if (reviews.size() == 0) {
+					reviews = null;
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
@@ -73,7 +78,8 @@ public class GoToHomePage extends HttpServlet {
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("product", product);
-		System.out.println(product.getName());
+		ctx.setVariable("reviews", reviews);
+
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 
