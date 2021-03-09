@@ -2,10 +2,12 @@ package it.polimi.db2.gamified.services;
 
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import it.polimi.db2.gamified.entities.*;
 
+@Stateless
 public class ReviewService {
 	@PersistenceContext(unitName = "GamifiedMarketingApplicationEJB")
 	private EntityManager em;
