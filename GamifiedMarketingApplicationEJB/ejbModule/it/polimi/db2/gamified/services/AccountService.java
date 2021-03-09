@@ -2,6 +2,7 @@ package it.polimi.db2.gamified.services;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NonUniqueResultException;
@@ -15,6 +16,8 @@ import it.polimi.db2.gamified.exceptions.*;
 public class AccountService {
 	@PersistenceContext(unitName = "GamifiedMarketingApplicationEJB")
 	private EntityManager em;
+	@EJB(name = "it.polimi.db2.gamified.services/LoginService")
+	private LoginService ls;
 	
 	public AccountService() {
 	}
@@ -39,7 +42,6 @@ public class AccountService {
 			//Altrimenti, ritorna user
 			else {
 				Account account = aList.get(0);
-				LoginService ls = new LoginService();
 				ls.addTS(account.getId());
 				return account;
 			}

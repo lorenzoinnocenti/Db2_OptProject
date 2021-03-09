@@ -63,6 +63,7 @@ public class GoToHomePage extends HttpServlet {
 			product = questionnaires.get(0).getProduct();
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
 			return;
 		}
@@ -72,7 +73,7 @@ public class GoToHomePage extends HttpServlet {
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("product", product);
-
+		System.out.println(product.getName());
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 

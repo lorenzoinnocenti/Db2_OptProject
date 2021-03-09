@@ -37,5 +37,7 @@ public class LoginService {
 		
 		//Binding bi-directional 
 		account.addLogin(login);
+		em.persist(login);
+		System.out.println("BBBBBBBBBBBB " + login.getId());
 		}
 }

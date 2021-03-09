@@ -73,7 +73,6 @@ public class CheckLogin extends HttpServlet {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Credentials exception");
 			return;
 		} catch (BannedUserException e) {
-			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "You have been banned");
 			return;
 		}
