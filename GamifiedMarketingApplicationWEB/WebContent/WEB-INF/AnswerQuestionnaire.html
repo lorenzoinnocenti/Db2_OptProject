@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Answer Questionnaire</title>
+</head>
+<body>
+	<div align="right">
+		<a th:href="@{/Home}">Home</a>
+	</div>
+	<h2>In order to gain points, answer the following questions:</h2>
+	<div>
+		<form th:action="@{/SendAnswers}" method="POST">
+		<div th:each="a : ${questions}">
+			<div class="row">
+				<span th:text="${a.questionText}"></span>
+			</div>
+			<div class="row">
+				<input type="text" name="Answer" required="required">
+			</div>
+		</div>
+		<button type="submit" name="action" value="submit">Submit Answers</button>	
+		</form>
+	</div>
+</body>
+</html>
