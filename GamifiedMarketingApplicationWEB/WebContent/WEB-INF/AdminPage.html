@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Admin Page</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+</head>
+<body>
+	<div align="right">
+		<a th:href="@{/Leaderboard}">Leaderboard</a>
+	</div>
+	<div align="right">
+		<a th:href="@{/Logout}">Logout</a>
+	</div>
+	<h1 th:if="${product != null}">Product of the day</h1>
+	<table th:if="${product != null}">
+		<thead>
+			<tr>
+				<th>Product Name</th>
+				<th>Product Description</th>
+				<th>Product Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th th:text= "${product.name}"></th>
+				<th th:text= "${product.description}"></th>
+				<th th:text= "${product.price}"></th>
+			</tr>
+		</tbody>
+	</table>
+	<div th:if="${product == null}">
+		<p>There isn't any highlighted product today.</p>
+	</div>
+
+
+	<div>
+		<a th:href="@{/CreateQuestionnaire}">Create a new questionnaire.</a>
+	</div>	
+	<div>
+		<a th:href="@{/PastResults}">See the results of past questionnaires.</a>
+	</div>	
+	<div>
+		<a th:href="@{/DeleteQuestionnairePage}">Delete a past questionnaire.</a>
+	</div>
+</body>
+</html>

@@ -24,6 +24,11 @@ public class QuestionnaireService {
 		return em.createNamedQuery("Questionnaire.findByDate", Questionnaire.class).setParameter("date", date).getResultList();
 	}
 	
+	public List<Questionnaire> findPastQuestionnaires(Date date) { 
+		// maybe it needs hint refresh
+		return em.createNamedQuery("Questionnaire.findPastQuestionnaires", Questionnaire.class).setParameter("date", date).getResultList();
+	}
+	
 	public void addQuestionnaire(Date date, int productId) throws ProductNotFoundException, QuestionnaireAlreadyPresentException { 
 		//E' possibile avere massimo un questionario per giorno
 		Questionnaire q = findByDate(date).get(0);

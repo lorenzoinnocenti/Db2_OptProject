@@ -15,7 +15,8 @@ import java.util.List;
 
 
 @NamedQueries({ @NamedQuery(name="Questionnaire.findAll", query="SELECT q FROM Questionnaire q"),
-	            @NamedQuery(name = "Questionnaire.findByDate", query = "SELECT q FROM Questionnaire q WHERE q.date = :date")})
+				@NamedQuery(name = "Questionnaire.findByDate", query = "SELECT q FROM Questionnaire q WHERE q.date = :date"),
+    			@NamedQuery(name = "Questionnaire.findPastQuestionnaires", query = "SELECT q FROM Questionnaire q WHERE q.date < :date")})
  
 
 public class Questionnaire implements Serializable {
