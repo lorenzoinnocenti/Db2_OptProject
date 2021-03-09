@@ -16,6 +16,8 @@ public class LoginService {
 	private EntityManager em;
 	
 	public LoginService() {
+		//Debug purposes
+		System.out.println("costruttore: em is " + em);
 	}
 	
 	public List<Login> findTSByUser (int accountId) throws AccountNotFoundException {
@@ -25,6 +27,9 @@ public class LoginService {
 	}
 	
 	public void addTS (int accountId) {
+		//Debug purposes
+		System.out.println("BBBBBBBBBBBB " + accountId);
+		System.out.println(em);
 		Account account = em.find(Account.class, accountId);		
 		Login login = new Login();
 		login.setTimestamp( new Timestamp(System.currentTimeMillis()));

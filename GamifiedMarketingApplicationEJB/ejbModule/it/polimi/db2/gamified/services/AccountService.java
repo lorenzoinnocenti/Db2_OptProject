@@ -22,7 +22,8 @@ public class AccountService {
 	public Account checkCredentials(String usrn, String pwd) throws CredentialsException, NonUniqueResultException, BannedUserException {
 		List<Account> aList = null;
 		try {
-			aList = em.createNamedQuery("Account.checkCredentials", Account.class).setParameter(1, usrn).setParameter(2, pwd)
+			
+			aList = em.createNamedQuery("Account.checkCredentials", Account.class).setParameter("usrn", usrn).setParameter("pwd", pwd)
 					.getResultList();
 		} catch (PersistenceException e) {
 			e.printStackTrace();
