@@ -5,9 +5,8 @@
 <title>Answer Questionnaire</title>
 </head>
 <body>
-	<div align="right">
-		<a th:href="@{/Home}">Home</a>
-	</div>
+
+	
 	<h2>In order to gain points, answer the following questions:</h2>
 	<div>
 		<form th:action="@{/SendAnswers}" method="POST">
@@ -19,8 +18,15 @@
 				<input type="text" name="Answer" required="required">
 			</div>
 		</div>
-		<button type="submit" name="action" value="submit">Submit Answers</button>	
+			<button type="submit" name="action" value="submit">Submit Answers</button>				
 		</form>
 	</div>
+	<div>
+		<form th:action="@{/ExitQuestionnaire}" method="POST">
+		  <input type="hidden" name="extra_submit_param" value="extra_submit_value">
+		  <button type="submit" name="submit_param" value="submit">Cancel Questionnaire</button>
+		</form>
+	</div>
+	
 </body>
 </html>
