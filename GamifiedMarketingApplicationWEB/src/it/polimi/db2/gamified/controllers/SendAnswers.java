@@ -70,8 +70,7 @@ public class SendAnswers extends HttpServlet{
 		    path = ctxpath + "/Statistic";
 		} catch (BannedUserException e) {
 			//Redirect to logout
-			path = ctxpath + "/Logout";	
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Account has been banned.");
+			path = ctxpath + "/Banned";	
 		} catch (Exception e) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Wrong query.");
 		}
