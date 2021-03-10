@@ -29,6 +29,8 @@ public class GoToHomePage extends HttpServlet {
 	private QuestionnaireService qService;
 	@EJB(name = "it.polimi.db2.gamified.services/ReviewService")
 	private ReviewService rService;
+	@EJB(name = "it.polimi.db2.gamified.services/UserQuestionnaireService")
+	private UserQuestionnaireService uqService;
 
 	public GoToHomePage() {
 		super();
@@ -56,13 +58,12 @@ public class GoToHomePage extends HttpServlet {
 		List<Questionnaire> questionnaires = null;
 		Product product = null;
 		List<Review> reviews = null;
-
+		int status = -1;
 		try {
 			questionnaires = qService.findByDate(new Date(java.lang.System.currentTimeMillis()));
 			if (questionnaires.size() != 0) {
 				product = questionnaires.get(0).getProduct();
 				reviews = rService.findReviewByProduct(product.getId());
-				
 				if (reviews.size() == 0) {
 					reviews = null;
 				}
@@ -73,12 +74,20 @@ public class GoToHomePage extends HttpServlet {
 			return;
 		}
 
+		try {
+			if (uqService.getUserQuestionnaire(((Account) session.getAttribute("account")).getId(), questionnaires.get(0).getId()) != null) {
+				status = uqService.getUserQuestionnaire(((Account) session.getAttribute("account")).getId(), questionnaires.get(0).getId()).getStatus();
+			}
+		} catch (Exception e) {
+			//User never pressed "Answer questionnaire", so there isn't any entity in the DB.
+		}
 		// Redirect to the Home page and add missions to the parameters
 		String path = "/WEB-INF/Home.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("product", product);
 		ctx.setVariable("reviews", reviews);
+		ctx.setVariable("status", status);
 
 		templateEngine.process(path, ctx, response.getWriter());
 	}
