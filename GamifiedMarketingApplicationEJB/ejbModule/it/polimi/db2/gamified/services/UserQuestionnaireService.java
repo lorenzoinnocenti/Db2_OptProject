@@ -67,6 +67,7 @@ public class UserQuestionnaireService {
 		new_userquestionnaire.setAccount(user);
 		new_userquestionnaire.setQuestionnaire(questionnaire);
 		new_userquestionnaire.setStatus(status);
+		em.merge(new_userquestionnaire);
 		return new_userquestionnaire;
 	}
 	
