@@ -41,7 +41,7 @@ public class AnswersService {
 			throw new AnswersNotFoundException("It's impossible to find the answers given the user and the questionnaire");
 		}
 	
-	public void AddAllAnswer(int userid, int questionnaireid, List<String>answers_text) throws AccountNotFoundException, QuestionnaireNotFoundException{
+	public void AddAllAnswer(int userid, int questionnaireid, List<String>answers_text) throws AccountNotFoundException, QuestionnaireNotFoundException, QuestionNotFoundException{
 		Account user = em.find(Account.class, userid);
 		if (user == null) 
 			throw new AccountNotFoundException("User not found");
@@ -54,19 +54,25 @@ public class AnswersService {
 		List<String> checkBadWords = badwords.checkBadword(answers_text);	
 		if(checkBadWords != null) {
 			for (int i=0; i<len; i++) {
-				AddAnswer(userid, questions.get(i).getId(), answers_text.get(i));
+				AddAnswer(userid, questions.get(i).getId(), answers_text.get(i), user);
 			}
 		}			
 	}
 
 	
-	private void AddAnswer(int userid, int questionid, String answerText) {
+	private void AddAnswer(int userid, int questionid, String answerText, Account user) throws QuestionNotFoundException {
+		Question question = em.find(Question.class, questionid);
+		if(question == null)
+			throw new QuestionNotFoundException("It is impossible to find such a question");
 		AnswerPK id = new AnswerPK();
 		id.setUserid(userid);
 		id.setQuestionid(questionid);
-		Answer answer = em.find(Answer.class, id );
-		id = null;
+		Answer answer = new Answer();
+		answer.setId(id);
 		answer.setAnswerText(answerText);
+		answer.setAccount(user);
+		answer.setQuestion(question);
+		em.persist(answer);
 	}
 	 
 }
