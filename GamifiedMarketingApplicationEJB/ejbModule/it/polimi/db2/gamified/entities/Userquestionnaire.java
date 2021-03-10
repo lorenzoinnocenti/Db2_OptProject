@@ -11,8 +11,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="userquestionnaire")
 @NamedQueries({@NamedQuery(name="Userquestionnaire.findAll", query="SELECT u FROM Userquestionnaire u"),
-			  @NamedQuery(name="Userquestionnaire.findNonCancelled", query="SELECT u FROM Userquestionnaire u WHERE u.status = 1"),
-			  @NamedQuery(name="Userquestionnaire.findCancelled", query="SELECT u FROM Userquestionnaire u WHERE u.status = 0")})
+			  @NamedQuery(name="Userquestionnaire.findNonCancelled", query="SELECT u FROM Userquestionnaire u WHERE u.status = it.polimi.db2.gamified.entities.QuestionnaireStatus.FINISHED"),
+			  @NamedQuery(name="Userquestionnaire.findCancelled", query="SELECT u FROM Userquestionnaire u WHERE u.status = it.polimi.db2.gamified.entities.QuestionnaireStatus.CANCELLED")})
 public class Userquestionnaire implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -31,7 +31,7 @@ public class Userquestionnaire implements Serializable {
 	private int score;
 
 	@Column(nullable=false)
-	private int status;
+	private QuestionnaireStatus status;
 
 	//bi-directional many-to-one association to Account
 	@ManyToOne
@@ -88,11 +88,11 @@ public class Userquestionnaire implements Serializable {
 		this.score = score;
 	}
 
-	public int getStatus() {
+	public QuestionnaireStatus getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(QuestionnaireStatus status) {
 		this.status = status;
 	}
 

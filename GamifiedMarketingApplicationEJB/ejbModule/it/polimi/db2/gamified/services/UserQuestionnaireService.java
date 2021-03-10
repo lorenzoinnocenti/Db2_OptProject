@@ -52,7 +52,7 @@ public class UserQuestionnaireService {
 		return userquest;
 	}
 	
-	public Userquestionnaire addUserquestionnaire(int accountid, int questionnaireid) throws  AccountNotFoundException, QuestionnaireNotFoundException{
+	public Userquestionnaire addUserquestionnaire(int accountid, int questionnaireid, QuestionnaireStatus status) throws  AccountNotFoundException, QuestionnaireNotFoundException{
 		Account user = em.find(Account.class, accountid);
 		if (user == null )
 			throw new AccountNotFoundException("Account not found");
@@ -66,6 +66,7 @@ public class UserQuestionnaireService {
 		new_userquestionnaire.setId(id);
 		new_userquestionnaire.setAccount(user);
 		new_userquestionnaire.setQuestionnaire(questionnaire);
+		new_userquestionnaire.setStatus(status);
 		return new_userquestionnaire;
 	}
 	
