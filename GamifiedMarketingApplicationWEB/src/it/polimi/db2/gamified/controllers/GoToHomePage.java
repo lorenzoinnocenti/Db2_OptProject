@@ -58,7 +58,7 @@ public class GoToHomePage extends HttpServlet {
 		List<Questionnaire> questionnaires = null;
 		Product product = null;
 		List<Review> reviews = null;
-		int status = -1;
+		QuestionnaireStatus status = null;
 		try {
 			questionnaires = qService.findByDate(new Date(java.lang.System.currentTimeMillis()));
 			if (questionnaires.size() != 0) {

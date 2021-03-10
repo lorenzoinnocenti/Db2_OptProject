@@ -51,14 +51,19 @@
 	</div>
 	<h2 th:if="${reviews == null and product != null}">This product doesn't have any review.</h2>
 
-	<div th:if="${product != null and status == -1}">
-		<a th:href="@{/AnswerQuestionnaire}">Answer to the questionnaire.</a>
+	<div th:if="${product != null}">
+		<div th:if= "${status == null}">
+			<a th:href="@{/AnswerQuestionnaire}">Answer to the questionnaire.</a>
+		</div>
+		<div th:unless= "${status == null}">
+			<div th:if="${status.name() == 'CANCELLED'}">
+				<p>You left the questionnaire uncompleted: come back tomorrow to complete a new questionnaire.</p>
+			</div>
+			<div th:if="${status.name() == 'FINISHED'}">
+				<p>You already completed today's questionnaire. Come back tomorrow for more!</p>
+			</div>		
+		</div>
 	</div>
-	<div th:if="${product != null and status == 0}">
-		<p>You left the questionnaire uncompleted: come back tomorrow to complete a new questionnaire.</p>
-	</div>
-	<div th:if="${product != null and status == 1}">
-		<p>You already completed today's questionnaire. Come back tomorrow for more!</p>
-	</div>
+	
 </body>
 </html>
