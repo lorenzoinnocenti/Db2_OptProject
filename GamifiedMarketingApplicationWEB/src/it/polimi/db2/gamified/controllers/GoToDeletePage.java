@@ -30,7 +30,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import it.polimi.db2.gamified.entities.*;
 import it.polimi.db2.gamified.services.*;
 
-@WebServlet("/DeletePage")
+@WebServlet("/DeleteQuestionnairePage")
 public class GoToDeletePage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;

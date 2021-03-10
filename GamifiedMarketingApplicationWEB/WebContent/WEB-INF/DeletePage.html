@@ -20,9 +20,9 @@
 		</thead>
 		<tbody>
 			<tr th:each="q : ${questionnaires}">
-				<td th:text="${q.id}"></td>    <!-- TODO: show product name  -->
+				<td th:text="${q.product.getName()}"></td>
 				<td th:text="${q.date}"></td>
-				<td><a th:href="@{/DeleteQuestionnaire(missionid=${q.id})}">Delete</a></td>
+				<td><a th:href="@{/DeleteQuestionnaire(questionnaireid=${q.id})}">Delete</a></td>
 			</tr>
 		</tbody>
 	</table>
