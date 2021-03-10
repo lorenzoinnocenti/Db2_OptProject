@@ -44,7 +44,7 @@ public class AnswersService {
 			throw new AnswersNotFoundException("It's impossible to find the answers given the user and the questionnaire");
 		}
 	
-	public void AddAllAnswer(int userid, int questionnaireid, List<String>answers_text) throws AccountNotFoundException, QuestionnaireNotFoundException, QuestionNotFoundException, AlreadyBannedException, BanAdminException{
+	public void AddAllAnswer(int userid, int questionnaireid, List<String>answers_text) throws BannedUserException, AccountNotFoundException, QuestionnaireNotFoundException, QuestionNotFoundException, AlreadyBannedException, BanAdminException{
 		Account user = em.find(Account.class, userid);
 		if (user == null) 
 			throw new AccountNotFoundException("User not found");
@@ -62,9 +62,9 @@ public class AnswersService {
 		}
 		else {
 			accountService.banUser(userid);
+			throw new BannedUserException("The user has been banned");
 		}
 	}
-
 	
 	private void AddAnswer(int userid, int questionid, String answerText, Account user) throws QuestionNotFoundException {
 		Question question = em.find(Question.class, questionid);
