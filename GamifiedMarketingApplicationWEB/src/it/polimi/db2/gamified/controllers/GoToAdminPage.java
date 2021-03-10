@@ -34,6 +34,8 @@ import it.polimi.db2.gamified.services.*;
 public class GoToAdminPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
+	@EJB(name = "it.polimi.db2.gamified.services/QuestionnaireService")
+	private QuestionnaireService qService;
 	
     public GoToAdminPage() {
         super();
@@ -59,9 +61,23 @@ public class GoToAdminPage extends HttpServlet {
 			response.sendRedirect(getServletContext().getContextPath() + "/Home");
 			return;
 		}
+		
+		List<Questionnaire> questionnaires = null;
+		Product product = null;
+		try {
+			questionnaires = qService.findByDate(new Date(java.lang.System.currentTimeMillis()));
+			if (questionnaires.size() != 0) {
+				product = questionnaires.get(0).getProduct();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
+			return;
+		}
 		String path = "/WEB-INF/AdminPage.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		ctx.setVariable("product", product);
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 
