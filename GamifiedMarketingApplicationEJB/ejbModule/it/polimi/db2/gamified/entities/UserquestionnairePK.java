@@ -20,6 +20,10 @@ public class UserquestionnairePK implements Serializable {
 
 	public UserquestionnairePK() {
 	}
+	public UserquestionnairePK(int userid, int questionnaireid) {
+		this.userid = userid;
+		this.questionnaireid = questionnaireid;
+	}
 	public int getUserid() {
 		return this.userid;
 	}

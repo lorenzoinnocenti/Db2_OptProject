@@ -46,4 +46,10 @@ public class UserQuestionnaireService {
 			throw new UserNotFoundException("There is no user which has cancelled a such a questionnaire");	
 	}
 	
+	public Userquestionnaire getUserQuestionnaire(int accountId, int questionnaireId) throws UserQuestionnaireNotFoundException{
+		Userquestionnaire userquest = em.find(Userquestionnaire.class, new UserquestionnairePK(accountId, questionnaireId));
+		if (userquest == null) throw new UserQuestionnaireNotFoundException("Userquestionnaire not found");
+		return userquest;
+	}
+	
 }
