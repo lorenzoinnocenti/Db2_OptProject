@@ -25,8 +25,10 @@ public class QuestionnaireService {
 	}
 	
 	public List<Questionnaire> findPastQuestionnaires(Date date) { 
-		// maybe it needs hint refresh
-		return em.createNamedQuery("Questionnaire.findPastQuestionnaires", Questionnaire.class).setParameter("date", date).getResultList();
+		return em.createNamedQuery("Questionnaire.findPastQuestionnaires", Questionnaire.class)
+				.setParameter("date", date)
+				.setHint("javax.persistence.cache.storeMode", "REFRESH") // refresh in case a new questionnaire is present, to keep them ordered
+				.getResultList();
 	}
 	
 	public void addQuestionnaire(Date date, int productId) throws ProductNotFoundException, QuestionnaireAlreadyPresentException { 

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Home</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+</head>
+<body>
+	<div align="right">
+		<a th:href="@{/Logout}">Logout</a>
+	</div>
+	<table>
+		<thead>
+			<tr>
+				<th>Product</th>
+				<th>Date</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="q : ${questionnaires}">
+				<td th:text="${q.product.getName()}"></td>
+				<td th:text="${q.date}"></td>
+				<td><a th:href="@{/Results(questionnaireid=${q.id})}">See all the answers</a></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
