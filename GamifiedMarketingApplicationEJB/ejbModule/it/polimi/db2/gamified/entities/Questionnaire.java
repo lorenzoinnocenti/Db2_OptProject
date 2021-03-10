@@ -32,9 +32,6 @@ public class Questionnaire implements Serializable {
 	@Column(nullable=false)
 	private Date date;
 
-	@Column(nullable=false)
-	private int maxscore;
-
 	//bi-directional many-to-one association to Question
 	@OneToMany(mappedBy="questionnaire",cascade = CascadeType.ALL)
 	private List<Question> questions;
@@ -66,14 +63,6 @@ public class Questionnaire implements Serializable {
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public int getMaxscore() {
-		return this.maxscore;
-	}
-
-	public void setMaxscore(int maxscore) {
-		this.maxscore = maxscore;
 	}
 
 	public List<Question> getQuestions() {

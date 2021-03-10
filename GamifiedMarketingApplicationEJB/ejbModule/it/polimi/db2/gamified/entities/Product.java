@@ -3,6 +3,7 @@ package it.polimi.db2.gamified.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Base64;
 import java.util.List;
 
 
@@ -28,6 +29,10 @@ public class Product implements Serializable {
 
 	@Column(nullable=false, precision=10, scale=2)
 	private BigDecimal price;
+	
+	@Basic(fetch = FetchType.LAZY)
+	@Lob
+	private byte[] image;
 
 	//bi-directional many-to-one association to Questionnaire
 	@OneToMany(mappedBy="product", cascade = CascadeType.REMOVE)
@@ -70,6 +75,18 @@ public class Product implements Serializable {
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
+	}
+	
+	public byte[] getImage() {
+		return this.image;
+	}
+
+	public String getImageData() {
+		return Base64.getMimeEncoder().encodeToString(image);
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
 	public List<Questionnaire> getQuestionnaires() {
