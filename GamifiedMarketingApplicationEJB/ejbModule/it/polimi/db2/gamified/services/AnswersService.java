@@ -20,6 +20,9 @@ public class AnswersService {
 	@EJB(name="it.polimi.db2.gamified.services/BadwordService")
 	BadwordService badwords;
 	
+	@EJB(name="it.polimi.db2.gamified.services/AccountService")
+	AccountService accountService;
+	
 	public AnswersService(){
 		}
 	
@@ -41,7 +44,7 @@ public class AnswersService {
 			throw new AnswersNotFoundException("It's impossible to find the answers given the user and the questionnaire");
 		}
 	
-	public void AddAllAnswer(int userid, int questionnaireid, List<String>answers_text) throws AccountNotFoundException, QuestionnaireNotFoundException, QuestionNotFoundException{
+	public void AddAllAnswer(int userid, int questionnaireid, List<String>answers_text) throws AccountNotFoundException, QuestionnaireNotFoundException, QuestionNotFoundException, AlreadyBannedException, BanAdminException{
 		Account user = em.find(Account.class, userid);
 		if (user == null) 
 			throw new AccountNotFoundException("User not found");
@@ -56,7 +59,10 @@ public class AnswersService {
 			for (int i=0; i<len; i++) {
 				AddAnswer(userid, questions.get(i).getId(), answers_text.get(i), user);
 			}
-		}			
+		}
+		else {
+			accountService.banUser(userid);
+		}
 	}
 
 	
