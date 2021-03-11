@@ -25,7 +25,7 @@
 			<tr th:each="q : ${questionnaires}">
 				<td th:text="${q.product.getName()}"></td>
 				<td th:text="${#dates.format(q.date, 'dd-MMM-yyyy')}"></td>
-				<td><a th:href="@{/Results(questionnaireid=${q.id})}">See all the answers</a></td>
+				<td><a th:href="@{/UsersResults(questionnaireid=${q.id})}">See all the answers</a></td>
 			</tr>
 		</tbody>
 	</table>

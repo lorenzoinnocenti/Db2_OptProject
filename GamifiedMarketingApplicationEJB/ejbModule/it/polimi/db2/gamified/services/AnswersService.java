@@ -80,5 +80,12 @@ public class AnswersService {
 		answer.setQuestion(question);
 		em.persist(answer);
 	}
+	
+	private List<Answer> findAnsByUserOrdered(int userID) {
+		return em.createNamedQuery("Answer.findAnsByUserOrdered", Answer.class)
+				.setParameter("usID", userID)
+				.setHint("javax.persistence.cache.storeMode", "REFRESH") 
+				.getResultList();
+	}
 	 
 }

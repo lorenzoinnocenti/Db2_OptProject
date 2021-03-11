@@ -66,7 +66,7 @@ public class AccountService {
 	public List<Account> computeLeaderboard(){
 		return em.createNamedQuery("Account.computeLeaderboard", Account.class)
 				.setMaxResults(10)
-				.setHint("javax.persistence.cache.storeMode", "REFRESH") // not sure about that
+				.setHint("javax.persistence.cache.storeMode", "REFRESH")
 				.getResultList();
 	}
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Home</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+</head>
+<body>
+	<div align="right">
+		<a th:href="@{/PastResults}">Go back to all the past questionnaires</a>
+	</div>
+	<div align="right">
+		<a th:href="@{/Logout}">Logout</a>
+	</div>
+	
+	<div th:if="${usercompleted != null}">
+		<p>Users who completed this questionnaire:</p>
+		<table>
+			<tr th:each="u : ${usercompleted}">
+				<th th:text= "${u.getUsername()}"></th>
+				<th><a th:href="@{/SingleResult/{questionnaireid}/{userid} (questionnaireid = ${questionnaireid}, userid=${u.id})}">See all the answers</a></th>
+			</tr>
+		</table>
+	</div>
+	<div th:if="${usercompleted == null}">
+		<p>Nobody has completed this questionnaire.</p>
+	</div>
+	
+	<div th:if="${usercancelled != null}">
+		<p>Users who cancelled this questionnaire:</p>
+		<table>
+			<tr th:each="u : ${usercancelled">
+				<th th:text= "${u.getUsername()}"></th>
+			</tr>
+		</table>
+	</div>
+	<div th:if="${usercancelled == null}">
+		<p>Nobody has cancelled this questionnaire.</p>
+	</div>
+</body>
+</html>
