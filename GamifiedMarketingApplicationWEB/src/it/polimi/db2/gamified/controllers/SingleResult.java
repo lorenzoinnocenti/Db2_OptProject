@@ -19,20 +19,26 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.db2.gamified.entities.Account;
 import it.polimi.db2.gamified.entities.AccountStatus;
+import it.polimi.db2.gamified.entities.Answer;
+import it.polimi.db2.gamified.entities.Userquestionnaire;
+import it.polimi.db2.gamified.exceptions.AnswersNotFoundException;
 import it.polimi.db2.gamified.exceptions.UserNotFoundException;
+import it.polimi.db2.gamified.exceptions.UserQuestionnaireNotFoundException;
+import it.polimi.db2.gamified.services.AnswersService;
 import it.polimi.db2.gamified.services.QuestionnaireService;
-import it.polimi.db2.gamified.services.ReviewService;
 import it.polimi.db2.gamified.services.UserQuestionnaireService;
 
-@WebServlet("/UsersResults")
-public class UsersResults extends HttpServlet {
+@WebServlet("/SingleResult")
+public class SingleResult extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
+	@EJB(name = "it.polimi.db2.gamified.services/AnswersService")
+	private AnswersService answersService;
 	@EJB(name = "it.polimi.db2.gamified.services/UserQuestionnaireService")
 	private UserQuestionnaireService uqService;
 	
 	
-    public UsersResults() {
+    public SingleResult() {
         super();
     }
     
@@ -57,31 +63,36 @@ public class UsersResults extends HttpServlet {
 			return;
 		}
 		Integer questionnaireId = null;
+		Integer userId = null;
 		try {
 			questionnaireId = Integer.parseInt(request.getParameter("questionnaireid"));
+			userId = Integer.parseInt(request.getParameter("userid"));
 		} catch (NumberFormatException | NullPointerException e) {
 			// only for debugging e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect param values");
 			return;
 		}
-		List<Account> userCompleted;
-		List<Account> userCancelled;
+		
+		Userquestionnaire uq = null;
+		List<Answer> answers = null;
 		try {
-			userCompleted = uqService.findUsersByQuestionnaireId(questionnaireId);
-		} catch (UserNotFoundException e) {
-			userCompleted = null;
+			uq = uqService.getUserQuestionnaire(userId, questionnaireId);
+		} catch (UserQuestionnaireNotFoundException e) {
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
+			return;
 		}
 		try {
-			userCancelled = uqService.FindUsersByQuestionnaireCancelled(questionnaireId);
-		} catch (UserNotFoundException e) {
-			userCancelled = null;
+			answers = answersService.FindAnswersByUserByQuestionnaire(userId, questionnaireId);
+		} catch (AnswersNotFoundException e) {
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
+			return;
 		}
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		ctx.setVariable("usercompleted", userCompleted);
-		ctx.setVariable("usercancelled", userCancelled);
+		ctx.setVariable("userquestionnaire", uq);
+		ctx.setVariable("answers", answers);
 		ctx.setVariable("questionnaireid", questionnaireId);
-		templateEngine.process("/WEB-INF/UsersResults.html", ctx, response.getWriter()); 
+		templateEngine.process("/WEB-INF/SingleResult.html", ctx, response.getWriter()); 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

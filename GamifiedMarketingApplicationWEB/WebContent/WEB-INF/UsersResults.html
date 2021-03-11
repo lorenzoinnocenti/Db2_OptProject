@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Home</title>
+<title>List of users</title>
 <link rel="stylesheet" type="text/css" media="all"
 	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
 </head>
@@ -19,7 +19,7 @@
 		<table>
 			<tr th:each="u : ${usercompleted}">
 				<th th:text= "${u.getUsername()}"></th>
-				<th><a th:href="@{/SingleResult/{questionnaireid}/{userid} (questionnaireid = ${questionnaireid}, userid=${u.id})}">See all the answers</a></th>
+				<th><a th:href="@{/SingleResult(questionnaireid = ${questionnaireid}, userid=${u.id})}">See all the answers</a></th>
 			</tr>
 		</table>
 	</div>
@@ -30,7 +30,7 @@
 	<div th:if="${usercancelled != null}">
 		<p>Users who cancelled this questionnaire:</p>
 		<table>
-			<tr th:each="u : ${usercancelled">
+			<tr th:each="u : ${usercancelled}">
 				<th th:text= "${u.getUsername()}"></th>
 			</tr>
 		</table>
