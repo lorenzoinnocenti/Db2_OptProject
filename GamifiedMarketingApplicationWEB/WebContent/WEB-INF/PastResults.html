@@ -8,6 +8,9 @@
 </head>
 <body>
 	<div align="right">
+		<a th:href="@{/AdminPage}">Go back to the admin page</a>
+	</div>	
+	<div align="right">
 		<a th:href="@{/Logout}">Logout</a>
 	</div>
 	<table>
@@ -21,7 +24,7 @@
 		<tbody>
 			<tr th:each="q : ${questionnaires}">
 				<td th:text="${q.product.getName()}"></td>
-				<td th:text="${q.date}"></td>
+				<td th:text="${#dates.format(q.date, 'dd-MMM-yyyy')}"></td>
 				<td><a th:href="@{/Results(questionnaireid=${q.id})}">See all the answers</a></td>
 			</tr>
 		</tbody>

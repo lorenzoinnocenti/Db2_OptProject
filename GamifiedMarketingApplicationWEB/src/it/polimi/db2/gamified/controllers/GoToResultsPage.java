@@ -1,6 +1,7 @@
 package it.polimi.db2.gamified.controllers;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -65,9 +66,9 @@ public class GoToResultsPage extends HttpServlet {
 		try {
 			questionnaires = qService.findPastQuestionnaires(new Date(java.lang.System.currentTimeMillis()));
 		} catch (Exception e) {
-				e.printStackTrace();
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
-				return;
+			e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
+			return;
 		}
 		String path = "/WEB-INF/PastResults.html";
 		ServletContext servletContext = getServletContext();
