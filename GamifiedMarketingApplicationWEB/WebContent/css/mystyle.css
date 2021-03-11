@@ -1,3 +1,89 @@
-table, th, tr {
-  border: 1px solid black;
+
+.styled-table {
+	border-collapse: collapse;
+	margin: 25px 0;
+	font-size: 0.9em;
+    font-family: sans-serif;
+	min-width: 400px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.product-table{
+	  border-collapse: collapse;
+	  border-bottom: 1px solid black;	
+}
+.product-table thead th,
+.styled-table thead tr {
+    background-color: #989898;
+    color: #ffffff;
+    text-align: left;
+}
+.product-table thead td,
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.product-table thead,
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #989898;
+}
+
+#review {
+	border-style:none none none solid;
+	border-color: #989898;
+ 	background-image: linear-gradient(to right, #f3f3f3 , white, white);
+  	margin-top: 1%;
+  	max-width: 75%;
+}
+.row{
+	margin-left:1%;
+}
+#Links{
+	font-size: large;
+}
+#authorname {
+	font-size: large;
+	margin-bottom: 0.5%;
+}
+#AdminLink {
+  background-color: #989898;
+  color: white;
+  padding: 1% 1.5%;
+  text-decoration: none;
+  display: inline-block;
+  width:500px;
+  text-align: center;
+  margin-top: 0.25%;
+}
+#AdminLink:visited {
+  background-color: #989898;
+}
+#AdminLink:hover {
+	background-color: #555;
+}
+#Link {
+  background-color: #989898;
+  color: white;
+  padding: 1% 1.5%;
+  text-decoration: none;
+  display: inline-block;
+  width:200px;
+  text-align: center;
+  margin-top: 0.25%;
+}
+#Link:visited {
+  background-color: #989898;
+}
+#Link:hover {
+	background-color: #555;
+}
+.box {
+	margin-top: 100000000px;
 }

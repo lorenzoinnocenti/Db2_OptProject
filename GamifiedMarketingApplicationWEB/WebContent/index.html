@@ -3,17 +3,57 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Login page</title>
+<style>
+input[type=text],[type=password]{
+	width: 25%;
+	padding: 7px 5px;
+	margin: 8px 0;
+	box-sizing: border-box;
+	border: none;
+	border-bottom: 2px solid gray;
+}
+button[type="submit"] {
+  background-color: #989898 !important;
+  color: white !important;
+  padding: 1% 1.5% !important;
+  display: inline-block !important;
+  width:100px !important;
+  text-align: center !important;
+}
+button[type="submit"]:hover {
+	background-color: #555 !important;
+}
+</style>
 </head>
-<body>
-	<h1>Welcome!</h1>
-	<p>Insert your username and your password to continue:</p>
-
-	<form action="CheckLogin" method="POST">
-		Username: <input type="text" name="username" required> <br>
-		Password: <input type="password" name="pwd" required><br>
-		<input type="submit" value="login">
-		<p th:text=" ${errorMsg}"></p>
-	</form>
-
+<body style="text-align:center">
+	<div>
+		<h1>Welcome!</h1>
+	</div>
+	<br>
+	<br>
+	<div class="box">
+		<form action="CheckLogin" method="POST">
+			<div class="row">
+				<label for="Username">Username</label>
+			</div>
+			<div class="row">
+				<input type="text" name="username" required>
+			</div>
+			<div class="row">
+				<label for="Password">Password</label>
+			</div>
+			<div class="row">
+				<input type="password" name="pwd" required>
+			</div>
+			<br>
+			<div class="row">
+				<button type="submit" value="login">Login</button>
+			</div>
+			<br>
+			<div class="row">
+				<p  style="color:red;" th:text=" ${errorMsg}"></p>
+			</div>
+		</form>
+	</div>
 </body>
 </html>

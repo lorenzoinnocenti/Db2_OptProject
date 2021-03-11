@@ -8,60 +8,69 @@
 </head>
 <body>
 	<div align="right">
-		<a th:href="@{/Leaderboard}">Leaderboard</a>
+		<a id="Links" th:href="@{/Leaderboard}">Leaderboard</a>
 	</div>
 	<div align="right">
-		<a th:href="@{/Logout}">Logout</a>
+		<a id="Links" th:href="@{/Logout}">Logout</a>
 	</div>
-	<h1 th:if="${product != null}">Product of the day</h1>
-	<table th:if="${product != null}">
-		<thead>
-			<tr>
-				<th>Product Name</th>
-				<th>Product Description</th>
-				<th>Product Price</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<th th:text= "${product.name}"></th>
-				<th th:text= "${product.description}"></th>
-				<th th:text= "${product.price}"></th>
-			</tr>
-		</tbody>
-	</table>
-	<div th:if="${product == null}">
-		<h2>We are sorry</h2>
-		<p>Unfortunately there isn't any highlighted product today. Try log-in tomorrow</p>
-	</div>
-
-
-	<h2 th:if="${reviews != null}" th:text="${'Reviews for ' + product.name}"></h2>
-	<div th:if="${reviews != null}" >
-		<div th:each= "a : ${reviews}">
-			<div class="row">
-				<span th:text= "${'From '}"></span>
-				<b th:text= "${a.authorname +';'}"></b>
-				<span th:text="${'rating: ' + a.rating + ' stars.'}"></span>
-			</div>		
-			<div class="row">
-				<i th:text="${a.reviewtext}"></i>
+		<div align="center">
+		<h1 th:if="${product != null}">Product of the day</h1>
+		<br>
+		<table class="product-table">
+			<thead>
+		     	<tr class="border_bottom">
+		        	<td rowspan="4">
+						<img height="250px" alt="product_image" th:src="*{'data:image/png;base64,' + product.getImageData()}">
+		        	</td>
+		        	<th width="250px">Product Name, Price</th>
+		        </tr>
+		        <tr>
+					<td th:text= "${product.name + ', '+ product.price}"></td>
+		      	</tr>
+		      	<tr>
+		      		<th>Description</th>
+		      	</tr>
+		      	<tr class="border_bottom">
+					<td th:text= "${product.description}"></td>
+		      	</tr>
+	      	</thead>
+	     </table> 
+	
+		<div th:if="${product == null}">
+			<h2>We are sorry</h2>
+			<p>Unfortunately there isn't any highlighted product today. Try log-in tomorrow</p>
+		</div>
+	
+	
+		<h2 th:if="${reviews != null}" th:text="${'Reviews for ' + product.name}"></h2>
+		<div th:if="${reviews != null}" >
+			<div th:each= "a : ${reviews}">
+				<div id="review">
+					<div id="authorname" class="row">
+						<span th:text= "${'From '}"></span>
+						<b th:text= "${a.authorname}"></b>
+						<span th:text="${'rating: ' + a.rating + ' stars.'}"></span>
+					</div>		
+					<div class="row">
+						<i th:text="${a.reviewtext}"></i>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<h2 th:if="${reviews == null and product != null}">This product doesn't have any review.</h2>
-
-	<div th:if="${product != null}">
-		<div th:if= "${status == null}">
-			<a th:href="@{/AnswerQuestionnaire}">Answer to the questionnaire.</a>
-		</div>
-		<div th:unless= "${status == null}">
-			<div th:if="${status.name() == 'CANCELLED'}">
-				<p>You left the questionnaire uncompleted: come back tomorrow to complete a new questionnaire.</p>
+		<h2 th:if="${reviews == null and product != null}">This product doesn't have any review.</h2>
+	
+		<div th:if="${product != null}">
+			<div style="margin-top: 2%" th:if= "${status == null}">
+				<a id="Link" th:href="@{/AnswerQuestionnaire}">Answer to the questionnaire.</a>
 			</div>
-			<div th:if="${status.name() == 'FINISHED'}">
-				<p>You already completed today's questionnaire. Come back tomorrow for more!</p>
-			</div>		
+			<div th:unless= "${status == null}">
+				<div th:if="${status.name() == 'CANCELLED'}">
+					<p style="color:red;">You left the questionnaire uncompleted: come back tomorrow to complete a new questionnaire.</p>
+				</div>
+				<div th:if="${status.name() == 'FINISHED'}">
+					<p>You already completed today's questionnaire. Come back tomorrow for more!</p>
+				</div>		
+			</div>
 		</div>
 	</div>
 	

@@ -8,40 +8,50 @@
 </head>
 <body>
 	<div align="right">
-		<a th:href="@{/Leaderboard}">Leaderboard</a>
+		<a id="Links" th:href="@{/Leaderboard}">Leaderboard</a>
 	</div>
 	<div align="right">
-		<a th:href="@{/Logout}">Logout</a>
+		<a id="Links" th:href="@{/Logout}">Logout</a>
 	</div>
+	<div align="center">
 	<h1 th:if="${product != null}">Product of the day</h1>
-	<table th:if="${product != null}">
+	<br>
+	<table class="product-table">
 		<thead>
-			<tr>
-				<th>Product Name</th>
-				<th>Product Description</th>
-				<th>Product Price</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<th th:text= "${product.name}"></th>
-				<th th:text= "${product.description}"></th>
-				<th th:text= "${product.price}"></th>
-			</tr>
-		</tbody>
-	</table>
-	<div th:if="${product == null}">
+	     	<tr class="border_bottom">
+	        	<td rowspan="4">
+					<img height="250px" alt="product_image" th:src="*{'data:image/png;base64,' + product.getImageData()}">
+	        	</td>
+	        	<th width="250px">Product Name, Price</th>
+	        </tr>
+	        <tr>
+				<td th:text= "${product.name + ', '+ product.price}"></td>
+	      	</tr>
+	      	<tr>
+	      		<th>Description</th>
+	      	</tr>
+	      	<tr class="border_bottom">
+				<td th:text= "${product.description}"></td>
+	      	</tr>
+      	</thead>
+     </table> 
+     
+     <div th:if="${product == null}">
 		<p>There isn't any highlighted product today.</p>
 	</div>
 	<br> 
 	<div>
-		<a th:href="@{/CreateQuestionnaire}">Create a new questionnaire.</a>
+		<a id="AdminLink" th:href="@{/CreateQuestionnaire}">Create a new questionnaire.</a>
 	</div>	
 	<div>
-		<a th:href="@{/PastResults}">See the results of past questionnaires.</a>
+		<a id="AdminLink" th:href="@{/PastResults}">See the results of past questionnaires.</a>
 	</div>	
 	<div>
-		<a th:href="@{/DeleteQuestionnairePage}">Delete a past questionnaire.</a>
+		<a id="AdminLink" th:href="@{/DeleteQuestionnairePage}">Delete a past questionnaire.</a>
 	</div>
+	
+ 	</div>
+	
+	
 </body>
 </html>

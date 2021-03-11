@@ -3,29 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <title>Answer Questionnaire</title>
+<style>
+input[type=text],[type=password]{
+	width: 25%;
+	padding: 7px 5px;
+	margin: 8px 0;
+	box-sizing: border-box;
+	border: none;
+	border-bottom: 2px solid gray;
+}
+button[type="submit"] {
+  background-color: #989898 !important;
+  color: white !important;
+  padding: 1% 1.5% !important;
+  display: inline-block !important;
+  width:150px !important;
+  text-align: center !important;
+}
+button[type="submit"]:hover {
+	background-color: #555 !important;
+}
+</style>
 </head>
 <body>
 
-	
-	<h2>In order to gain points, answer the following questions:</h2>
-	<div>
-		<form th:action="@{/SendAnswers}" method="POST">
-		<div th:each="a : ${questions}">
-			<div class="row">
-				<span th:text="${a.questionText}"></span>
+	<div align="center">
+		<h2>In order to gain points, answer the following questions:</h2>
+		<br>
+		<br>
+		<div>
+			<form th:action="@{/SendAnswers}" method="POST">
+			<div th:each="a : ${questions}">
+				<div class="row">
+					<span th:text="${a.questionText}"></span>
+				</div>
+				<div class="row">
+					<input type="text" name="Answer" required="required">
+				</div>
 			</div>
-			<div class="row">
-				<input type="text" name="Answer" required="required">
-			</div>
+				<br>
+				<button type="submit" name="action" value="submit">Submit Answers</button>				
+			</form>
 		</div>
-			<button type="submit" name="action" value="submit">Submit Answers</button>				
-		</form>
-	</div>
-	<div>
-		<form th:action="@{/ExitQuestionnaire}" method="POST">
-		  <input type="hidden" name="extra_submit_param" value="extra_submit_value">
-		  <button type="submit" name="submit_param" value="submit">Cancel Questionnaire</button>
-		</form>
+		<div>
+			<form th:action="@{/ExitQuestionnaire}" method="POST">
+			  <input type="hidden" name="extra_submit_param" value="extra_submit_value">
+			  <button type="submit" name="submit_param" value="submit">Cancel Questionnaire</button>
+			</form>
+		</div>
 	</div>
 	
 </body>

@@ -8,25 +8,37 @@
 </head>
 <body>
 	<div align="right">
-		<a th:href="@{/AdminPage}">Go back to the admin page</a>
-	</div>	<div align="right">
-		<a th:href="@{/Logout}">Logout</a>
+		<a id="Links" th:href="@{/AdminPage}">Go back to the admin page</a>
 	</div>
-	<table>
-		<thead>
-			<tr>
-				<th>Product</th>
-				<th>Date</th>
-				<th>Delete</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="q : ${questionnaires}">
-				<td th:text="${q.product.getName()}"></td>
-				<td th:text="${#dates.format(q.date, 'dd-MMM-yyyy')}"></td>
-				<td><a th:href="@{/DeleteQuestionnaire(questionnaireid=${q.id})}">Delete</a></td>
-			</tr>
-		</tbody>
-	</table>
+	<div align="right">
+		<a id="Links" th:href="@{/Logout}">Logout</a>
+	</div>
+	<div>
+		<div th:if="${questionnaires.size() != 0}">
+			<div align="center">
+				<table class="styled-table">
+					<thead>
+						<tr>
+							<th>Product</th>
+							<th>Date</th>
+							<th>Delete</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="q : ${questionnaires}">
+							<td th:text="${q.product.getName()}"></td>
+							<td th:text="${q.date}"></td>
+							<td><a th:href="@{/DeleteQuestionnaire(questionnaireid=${q.id})}">Delete</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div th:unless="${questionnaires.size() != 0}">
+			<div align="center">
+				<p id="Links" style="color:red;">There aren't any past questionnaires.</p>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
