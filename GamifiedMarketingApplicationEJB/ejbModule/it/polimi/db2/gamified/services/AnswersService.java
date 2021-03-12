@@ -70,14 +70,8 @@ public class AnswersService {
 		Question question = em.find(Question.class, questionid);
 		if(question == null)
 			throw new QuestionNotFoundException("It is impossible to find such a question");
-		AnswerPK id = new AnswerPK();
-		id.setUserid(userid);
-		id.setQuestionid(questionid);
-		Answer answer = new Answer();
-		answer.setId(id);
-		answer.setAnswerText(answerText);
-		answer.setAccount(user);
-		answer.setQuestion(question);
+		AnswerPK id = new AnswerPK(userid, questionid);
+		Answer answer = new Answer(id, answerText, user, question);
 		em.persist(answer);
 	}
 	

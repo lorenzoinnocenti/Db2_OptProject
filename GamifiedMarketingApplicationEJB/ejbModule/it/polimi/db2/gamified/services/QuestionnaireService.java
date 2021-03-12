@@ -37,17 +37,14 @@ public class QuestionnaireService {
 		if (q != null) throw new QuestionnaireAlreadyPresentException("There is already a questionnaire on this date.");
 		Product p = em.find(Product.class, productId);
 		if (p == null) throw new ProductNotFoundException("Product not found");
-		q = new Questionnaire();
-		q.setDate(date);
-		q.setProduct(p);
+		q = new Questionnaire(date, p);
 		em.persist(q);
 	}
 	
 	public void addQuestion(int questionnaireId, String text) throws QuestionnaireNotFoundException{
 		Questionnaire q = em.find(Questionnaire.class, questionnaireId);
 		if (q == null) throw new QuestionnaireNotFoundException("Questionnaire not found");
-		Question question = new Question();
-		question.setQuestionText(text);
+		Question question = new Question(text);
 		q.addQuestion(question);
 		em.persist(q); 
 	}

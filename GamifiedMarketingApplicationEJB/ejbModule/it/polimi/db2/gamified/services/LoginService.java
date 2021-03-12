@@ -27,17 +27,10 @@ public class LoginService {
 	}
 	
 	public void addTS (int accountId) {
-		//Debug purposes
-		System.out.println("BBBBBBBBBBBB " + accountId);
-		System.out.println(em);
 		Account account = em.find(Account.class, accountId);		
-		Login login = new Login();
-		login.setTimestamp( new Timestamp(System.currentTimeMillis()));
-		login.setAccount(account);
-		
+		Login login = new Login(new Timestamp(System.currentTimeMillis()), account);
 		//Binding bi-directional 
 		account.addLogin(login);
 		em.persist(login);
-		System.out.println("BBBBBBBBBBBB " + login.getId());
 		}
 }

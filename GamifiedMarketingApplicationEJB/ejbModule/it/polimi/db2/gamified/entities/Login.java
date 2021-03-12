@@ -32,6 +32,11 @@ public class Login implements Serializable {
 	public Login() {
 	}
 
+	public Login(Timestamp ts, Account account) {
+		this.timestamp = ts;
+		this.account = account;
+	}
+	
 	public int getId() {
 		return this.id;
 	}

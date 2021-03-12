@@ -20,6 +20,12 @@ public class AnswerPK implements Serializable {
 
 	public AnswerPK() {
 	}
+	
+	public AnswerPK(int userId, int questionId) {
+		this.userid = userId;
+		this.questionid = questionId;
+	}
+	
 	public int getUserid() {
 		return this.userid;
 	}

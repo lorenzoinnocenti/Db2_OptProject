@@ -47,6 +47,13 @@ public class Userquestionnaire implements Serializable {
 
 	public Userquestionnaire() {
 	}
+	
+	public Userquestionnaire(UserquestionnairePK id, Account account, Questionnaire questionnaire, QuestionnaireStatus status) {
+		this.id = id;
+		this.account = account;
+		this.questionnaire = questionnaire;
+		this.status = status;
+	}
 
 	public UserquestionnairePK getId() {
 		return this.id;

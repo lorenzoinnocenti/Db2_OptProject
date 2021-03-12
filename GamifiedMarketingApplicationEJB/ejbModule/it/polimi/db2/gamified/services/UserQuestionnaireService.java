@@ -59,14 +59,8 @@ public class UserQuestionnaireService {
 		Questionnaire questionnaire = em.find(Questionnaire.class, questionnaireid);
 		if (questionnaire == null)
 			throw new QuestionnaireNotFoundException("Questionnaire not found");
-		Userquestionnaire new_userquestionnaire = new Userquestionnaire();
-		UserquestionnairePK id = new UserquestionnairePK();
-		id.setQuestionnaireid(questionnaireid);
-		id.setUserid(accountid);
-		new_userquestionnaire.setId(id);
-		new_userquestionnaire.setAccount(user);
-		new_userquestionnaire.setQuestionnaire(questionnaire);
-		new_userquestionnaire.setStatus(status);
+		UserquestionnairePK id = new UserquestionnairePK(accountid, questionnaireid);
+		Userquestionnaire new_userquestionnaire = new Userquestionnaire(id, user, questionnaire, status);
 		em.merge(new_userquestionnaire);
 		return new_userquestionnaire;
 	}
