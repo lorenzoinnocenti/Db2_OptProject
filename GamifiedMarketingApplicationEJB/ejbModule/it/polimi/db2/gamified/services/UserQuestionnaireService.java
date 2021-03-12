@@ -24,7 +24,7 @@ public class UserQuestionnaireService {
 	
 	public List<Account> findUsersByQuestionnaireId(int questionnaireId) throws UserNotFoundException{
 		List<Userquestionnaire> questionnaires = em.createNamedQuery("Userquestionnaire.findNonCancelled", Userquestionnaire.class).setParameter("questID", questionnaireId).getResultList();
-		if(questionnaires != null) {
+		if(questionnaires.size() != 0) {
 			List<Account> users_account = new ArrayList<Account>();
 			for (Userquestionnaire u: questionnaires)
 				users_account.add(u.getAccount());
@@ -36,7 +36,7 @@ public class UserQuestionnaireService {
 	
 	public List<Account> FindUsersByQuestionnaireCancelled(int questionnaireId) throws UserNotFoundException{
 		List<Userquestionnaire> questionnaires = em.createNamedQuery("Userquestionnaire.findCancelled", Userquestionnaire.class).setParameter("questID", questionnaireId).getResultList();
-		if(questionnaires != null) {
+		if(questionnaires.size() != 0) {
 			List<Account> users_account = new ArrayList<Account>();
 			for (Userquestionnaire u: questionnaires)
 				users_account.add(u.getAccount());

@@ -23,7 +23,7 @@
 			</tr>
 		</table>
 	</div>
-	<div th:if="${usercompleted == null}">
+	<div th:unless="${usercompleted != null}">
 		<p>Nobody has completed this questionnaire.</p>
 	</div>
 	
