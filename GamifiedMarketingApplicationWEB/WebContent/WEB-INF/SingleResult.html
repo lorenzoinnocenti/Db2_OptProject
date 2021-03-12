@@ -7,26 +7,40 @@
 	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
 </head>
 <body>
-	<div align="right">
-		<a th:href="@{/UsersResults(questionnaireid=${questionnaireid})}">Go back to the list of users</a>
+	<div align="center">
+		<div align="right">
+			<a id="Links"  th:href="@{/UsersResults(questionnaireid=${questionnaireid})}">Go back to the list of users</a>
+		</div>
+		<div align="right">
+			<a id="Links"  th:href="@{/Logout}">Logout</a>
+		</div>
+		
+		<h1>Statistical section:</h1>
+		<table class="answer">
+			<tr>
+				<th>Age:</th>
+				<th th:text= "${userquestionnaire.getAnswerAge()}"></th>
+			</tr>
+			<tr>
+				<th>Sex:</th>
+				<th th:text= "${userquestionnaire.getAnswerSex()}"></th>
+			</tr>
+			<tr>
+				<th>Expertise Level:</th>
+				<th th:text= "${userquestionnaire.getAnswerExp()}"></th>
+			</tr>
+		</table>
+		
+		<h1>Marketing section:</h1>
+		
+		<table class="answ" th:each="a : ${answers}">
+			<tr>
+				<th th:text= "${a.getQuestion().getQuestionText()}"></th>
+			</tr>
+			<tr>
+				<th th:text= "${a.getAnswerText()}"></th>
+			</tr>
+		</table>
 	</div>
-	<div align="right">
-		<a th:href="@{/Logout}">Logout</a>
-	</div>
-	
-	<h1>Statistical section:</h1>
-	<p>Age:</p>
-	<div th:text= "${userquestionnaire.getAnswerAge()}"></div>
-	<p>Sex:</p>
-	<div th:text= "${userquestionnaire.getAnswerSex()}"></div>
-	<p>Expertise:</p>
-	<div th:text= "${userquestionnaire.getAnswerExp()}"></div>
-	
-	<h1>Marketing section:</h1>
-	<div th:each="a : ${answers}">
-		<p th:text= "${a.getQuestion().getQuestionText()}"></p>
-		<p th:text= "${a.getAnswerText()}"></p>
-	</div>
-	
 </body>
 </html>

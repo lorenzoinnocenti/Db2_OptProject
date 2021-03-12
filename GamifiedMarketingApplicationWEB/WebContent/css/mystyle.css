@@ -1,10 +1,23 @@
-
+.answer{
+	border-collapse: collapse;
+	margin: 25px 0;
+	font-size: 0.9em;
+    font-family: sans-serif;
+	min-width: 225px;
+}
+.answ{
+	border-collapse: none;
+	margin: 25px 0;
+	font-size: 0.9em;
+    font-family: sans-serif;
+	min-width: 500px;
+}
 .styled-table {
 	border-collapse: collapse;
 	margin: 25px 0;
 	font-size: 0.9em;
     font-family: sans-serif;
-	min-width: 400px;
+	min-width: 225px;
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 .product-table{
@@ -25,7 +38,7 @@
 .styled-table tbody tr {
     border-bottom: 1px solid #dddddd;
 }
-
+.answ tr:nth-of-type(4n+1),
 .styled-table tbody tr:nth-of-type(even) {
     background-color: #f3f3f3;
 }

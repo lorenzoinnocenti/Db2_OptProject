@@ -8,35 +8,48 @@
 </head>
 <body>
 	<div align="right">
-		<a th:href="@{/PastResults}">Go back to all the past questionnaires</a>
+		<a id="Links"  th:href="@{/PastResults}">Go back to all the past questionnaires</a>
 	</div>
 	<div align="right">
-		<a th:href="@{/Logout}">Logout</a>
+		<a id="Links" th:href="@{/Logout}">Logout</a>
 	</div>
 	
-	<div th:if="${usercompleted != null}">
-		<p>Users who completed this questionnaire:</p>
-		<table>
-			<tr th:each="u : ${usercompleted}">
-				<th th:text= "${u.getUsername()}"></th>
-				<th><a th:href="@{/SingleResult(questionnaireid = ${questionnaireid}, userid=${u.id})}">See all the answers</a></th>
-			</tr>
-		</table>
-	</div>
-	<div th:unless="${usercompleted != null}">
-		<p>Nobody has completed this questionnaire.</p>
+	<div align="center">
+		<div th:if="${usercompleted != null}">
+			<table class="styled-table">
+			<thead>
+				<tr>
+					<th colspan="2">Users who completed this questionnaire:</th>
+				</tr>
+			</thead>
+				<tr th:each="u : ${usercompleted}">
+					<th th:text= "${u.getUsername()}"></th>
+					<th><a th:href="@{/SingleResult(questionnaireid = ${questionnaireid}, userid=${u.id})}">See all the answers</a></th>
+				</tr>
+			</table>
+		</div>
+		<div th:unless="${usercompleted != null}">
+			<p>Nobody has completed this questionnaire.</p>
+		</div>
+		
+		<br>
+		
+		<div th:if="${usercancelled != null}">
+			<table class="styled-table">
+				<thead>
+					<tr>
+						<th colspan="2">Users who cancelled this questionnaire:</th>
+					</tr>
+				</thead>
+				<tr th:each="u : ${usercancelled}">
+					<th th:text= "${u.getUsername()}"></th>
+				</tr>
+			</table>
+		</div>
+		<div th:if="${usercancelled == null}">
+			<p>Nobody has cancelled this questionnaire.</p>
+		</div>
 	</div>
 	
-	<div th:if="${usercancelled != null}">
-		<p>Users who cancelled this questionnaire:</p>
-		<table>
-			<tr th:each="u : ${usercancelled}">
-				<th th:text= "${u.getUsername()}"></th>
-			</tr>
-		</table>
-	</div>
-	<div th:if="${usercancelled == null}">
-		<p>Nobody has cancelled this questionnaire.</p>
-	</div>
 </body>
 </html>
