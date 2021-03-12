@@ -65,4 +65,15 @@ public class UserQuestionnaireService {
 		return new_userquestionnaire;
 	}
 	
+	public void SetStatisticalAttributes(int questionnaireId, int userId, String age_answer, String sex_answer, String expertise_answer) {
+		Userquestionnaire userquestionnaire = em.find(Userquestionnaire.class, new UserquestionnairePK(userId, questionnaireId));
+		if(age_answer != null)
+			userquestionnaire.setAnswerAge(age_answer);
+		if(sex_answer != null)
+			userquestionnaire.setAnswerSex(sex_answer);
+		if(expertise_answer != null)
+			userquestionnaire.setAnswerExp(expertise_answer);
+		em.merge(userquestionnaire);
+	}
+	
 }

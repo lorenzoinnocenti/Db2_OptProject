@@ -68,13 +68,16 @@ public class SendAnswers extends HttpServlet{
 		    uqService.addUserquestionnaire(accountId, questId, QuestionnaireStatus.FINISHED);		    
 		    // return the user to the right view
 		    path = ctxpath + "/Statistic";
+		    System.out.println(aService +" "+  uqService+  " " + path);
 		} catch (BannedUserException e) {
 			//Redirect to logout
 			path = ctxpath + "/Banned";	
 		} catch (Exception e) {
+			System.out.print("ciao");
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Wrong query.");
 		}
 		response.sendRedirect(path);
+		return;
 	}
 	
 	public void destroy() {

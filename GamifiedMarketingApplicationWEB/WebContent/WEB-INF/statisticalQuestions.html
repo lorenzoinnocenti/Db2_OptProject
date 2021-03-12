@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Album Management Home</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+</head>
+<body>
+
+
+	<h2>Statistical Questions</h2>
+	
+	<div align="right">
+		<a th:href="@{/Logout}">Logout</a>
+	</div>	
+	
+	<br>
+	<br>
+	
+	<div align="right">
+		<a th:href="@{/GoToHomePage}">Go to the homepage and cancel the questionnaire</a>
+	</div>	
+	
+	<form action="#" th:action="@{/Statistic}" method="POST">
+				<p>
+					<label for="age_choice">Insert your age</label> 
+					<select name="age_answer" id="age_answer">
+					    <option value="under 18">under 18</option>
+						<option value="18-25">18-25</option>
+					    <option value="25-50">25-50</option>
+						<option value="50-75">50-75</option>
+						<option value="above 75">above 75</option>
+						<option value=null>I don't want to answer</option>
+					</select>
+				</p>
+				
+				<br>
+				<br>
+				
+				<p>
+					<label for="sex_choice">Insert your sex</label> 
+					<select name="sex_answer" id="sex_answer">
+						<option value="male">Male</option>
+					    <option value="female">Female</option>
+						<option value=null>I don't want to answer</option>
+					</select>
+				</p>
+				
+				<br>
+				<br>
+				
+				<p>
+					<label for="sex_choice">Insert your expertise level</label> 
+					<select name="expertise_answer" id="expertise_answer">
+						<option value="High">High</option>
+						<option value="Medium">Medium</option>
+					    <option value="Low">Low</option>
+						<option value=null>I don't want to answer</option>
+					</select>
+				</p>
+				
+				<br>
+				<br>
+				
+				<div align="center">
+					<input type="submit" name="action" value="submit">
+				</div>
+	</form>
+	
+	<br>
+	<br>
+	
+	
+</body>
+</html>
