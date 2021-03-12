@@ -67,7 +67,7 @@ public class SendAnswers extends HttpServlet{
 		    //If account is not banned, we can addUserQuestionnaire
 		    uqService.addUserquestionnaire(accountId, questId, QuestionnaireStatus.FINISHED);		    
 		    // return the user to the right view
-		    path = ctxpath + "/Statistic";
+		    path = ctxpath + "/Statistical";
 		    System.out.println(aService +" "+  uqService+  " " + path);
 		} catch (BannedUserException e) {
 			//Redirect to logout

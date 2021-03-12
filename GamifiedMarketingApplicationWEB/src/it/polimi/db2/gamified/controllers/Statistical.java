@@ -17,7 +17,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.db2.gamified.entities.Account;
 
-@WebServlet("/Statistic")
+@WebServlet("/Statistical")
 public class Statistical extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;

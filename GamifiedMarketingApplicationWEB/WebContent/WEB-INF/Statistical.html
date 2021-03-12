@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Album Management Home</title>
+<title>StatisticalQuestionsQuestionnaire</title>
 <link rel="stylesheet" type="text/css" media="all"
 	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
 </head>
@@ -23,7 +23,7 @@
 		<a th:href="@{/GoToHomePage}">Go to the homepage and cancel the questionnaire</a>
 	</div>	
 	
-	<form action="#" th:action="@{/Statistical}" method="POST">
+	<form action="#" th:action="@{/SendStatisticalData}" method="POST">
 				<p>
 					<label for="age_choice">Insert your age</label> 
 					<select name="age_answer" id="age_answer">
@@ -52,7 +52,7 @@
 				<br>
 				
 				<p>
-					<label for="sex_choice">Insert your expertise level</label> 
+					<label for="expertise_choice">Insert your expertise level</label> 
 					<select name="expertise_answer" id="expertise_answer">
 						<option value="High">High</option>
 						<option value="Medium">Medium</option>
