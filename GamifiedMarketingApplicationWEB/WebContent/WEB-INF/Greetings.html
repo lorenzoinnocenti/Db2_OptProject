@@ -2,23 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Greetings</title>
+<title>Thank you</title>
 <link rel="stylesheet" type="text/css" media="all"
 	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
 </head>
 <body>
 	
 	<div id="Links" align="right">
-		<a th:href="@{/Home}">Homepage</a>
+		<a th:href="@{/Home}">Go back Home</a>
 	</div>
 	<div id="Links" align="right">
 		<a th:href="@{/Logout}">Logout</a>
 	</div>	
 
-	<h2 align = "center">Greetings!</h2>
-	<br>
-	<br>
-	<p th:text="${'Greetings ' + session.account.username}"></p>
-	<p> You're helping us in our marketing decisions and you're getting useful points for your purchasing purposes</p>
-	
+	<div align= "center">
+		<h2>Thank You!</h2>
+		<h3>Your opinion matters.</h3>
+		<br>
+		<br>
+		<div id="greeting">
+			<p th:text="${'Confìgratulations ' + session.account.username + ', you just earned ' + newPoints + ' points.'}"></p>
+			<p>Come back tomorrow for a new questionnaire!</p>
+		</div>
+	</div>
 </body>
