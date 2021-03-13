@@ -51,9 +51,21 @@ public class Leaderboard extends HttpServlet {
 			return;
 		}
 		List<Account> users = null;
+		Account first =null;
+		Account second = null;
+		Account third = null;
 		try {
 			users = qService.computeLeaderboard();
 			users = this.filterUsers(users);
+			if (users.size() != 0) {
+				first = users.remove(0);
+			}
+			if (users.size() != 0) {
+				second = users.remove(0);
+			}
+			if (users.size() != 0) {
+				third = users.remove(0);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
@@ -62,6 +74,9 @@ public class Leaderboard extends HttpServlet {
 		String path = "/WEB-INF/Leaderboard.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		ctx.setVariable("first", first);
+		ctx.setVariable("second", second);
+		ctx.setVariable("third", third);
 		ctx.setVariable("accounts", users);
 		templateEngine.process(path, ctx, response.getWriter());
 	}
@@ -77,7 +92,6 @@ public class Leaderboard extends HttpServlet {
 			if(user.getStatus() == AccountStatus.USER) 
 				resultList.add(user);			
 		}
-		System.out.println(resultList.size());
 		return resultList;
 	}
 

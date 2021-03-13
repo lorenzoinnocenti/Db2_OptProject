@@ -3,6 +3,24 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Leaderboard</title>
+<style>
+.first {
+	height: 50px;
+	font-size: xx-large;
+	
+}
+.second {
+	height: 42px;
+	font-size: x-large;
+}
+.third {
+	height: 35px;
+	font-size: large;
+}
+table, th {
+	text-align: center
+}
+</style>
 <link rel="stylesheet" type="text/css" media="all"
 	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
 </head>
@@ -15,14 +33,14 @@
 		<a id="Links"  th:href="@{/Logout}">Logout</a>
 	</div>
 	
-	<h2 align = "center">Users LeaderBoard</h2>
+	<h1 align = "center">Leaderboard</h1>
 	
 	<br>
 	<br>
 	
 	
 	<div align="center">
-		<table class="styled-table">
+		<table class="styled-table" style="min-width:50%;">
 			<thead>
 				<tr>
 					<th>Username</th>
@@ -30,10 +48,35 @@
 				</tr>
 			</thead>
 			<tbody>
+				<tr>
+					<td class="first">
+						<div th:text="${first.getUsername()}"></div>
+					</td>
+					<td class="first">
+						<div th:text="${first.getTotalpoints()}"></div>
+					</td>
+				</tr>
+				<tr>
+					<td class="second">
+						<div th:text="${second.getUsername()}"></div>
+					</td>
+					<td class="second">
+						<div th:text="${second.getTotalpoints()}"></div>
+					</td>
+				</tr>
+				<tr >
+					<td class="third">
+						<div th:text="${third.getUsername()}"></div>
+					</td>
+					<td class="third">
+						<div th:text="${third.getTotalpoints()}"></div>
+					</td>
+				</tr>
 				<tr th:each="a: ${accounts}">
 					<td th:text="${a.getUsername()}"></td>
 					<td th:text="${a.getTotalpoints()}"></td>
 				</tr>
+				<tr></tr>
 			</tbody>
 		</table>	
 	</div>
