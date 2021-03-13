@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Leaderboard</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+</head>
+<body>
+
+	<div align="right">
+		<a id="Links"  th:href="@{/Logout}">Logout</a>
+	</div>
+	
+	<h2 align = "center">Users LeaderBoard</h2>
+	
+	<br>
+	<br>
+	
+	
+	<div align="center">
+		<table class="styled-table">
+			<thead>
+				<tr>
+					<th>Username</th>
+					<th>Total points</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="a: ${accounts}">
+					<td th:text="${a.getUsername()}"></td>
+					<td th:text="${a.getTotalpoints()}"></td>
+				</tr>
+			</tbody>
+		</table>
+		
+		
+	</div>
+</body>
+</html>
