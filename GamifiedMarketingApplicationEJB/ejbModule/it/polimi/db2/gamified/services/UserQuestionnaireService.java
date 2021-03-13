@@ -49,6 +49,7 @@ public class UserQuestionnaireService {
 	public Userquestionnaire getUserQuestionnaire(int accountId, int questionnaireId) throws UserQuestionnaireNotFoundException{
 		Userquestionnaire userquest = em.find(Userquestionnaire.class, new UserquestionnairePK(accountId, questionnaireId));
 		if (userquest == null) throw new UserQuestionnaireNotFoundException("Userquestionnaire not found");
+		em.refresh(userquest);
 		return userquest;
 	}
 	
