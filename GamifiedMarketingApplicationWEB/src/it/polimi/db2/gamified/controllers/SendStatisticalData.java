@@ -62,6 +62,8 @@ public class SendStatisticalData extends HttpServlet{
 			String expertise_answer = request.getParameter("expertise_answer");
 			int questId = qService.findByDate(new Date(java.lang.System.currentTimeMillis())).get(0).getId();
 			uqService.SetStatisticalAttributes(questId, u.getId(), age_answer, sex_answer, expertise_answer);
+			String path = ctxpath + "/Greetings";
+			response.sendRedirect(path);
 	}
 
 	public void destroy() {

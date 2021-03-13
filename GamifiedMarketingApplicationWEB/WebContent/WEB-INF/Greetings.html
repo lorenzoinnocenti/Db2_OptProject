@@ -7,7 +7,18 @@
 	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
 </head>
 <body>
+	
+	<div id="Links" align="right">
+		<a th:href="@{/Home}">Homepage</a>
+	</div>
+	<div id="Links" align="right">
+		<a th:href="@{/Logout}">Logout</a>
+	</div>	
 
-	<h2>Greetings!</h2>
-
+	<h2 align = "center">Greetings!</h2>
+	<br>
+	<br>
+	<p th:text="${'Greetings ' + session.account.username}"></p>
+	<p> You're helping us in our marketing decisions and you're getting useful points for your purchasing purposed</p>
+	
 </body>
