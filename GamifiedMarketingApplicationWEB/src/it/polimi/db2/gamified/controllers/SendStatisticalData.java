@@ -20,6 +20,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.db2.gamified.entities.Account;
+import it.polimi.db2.gamified.entities.AccountStatus;
 import it.polimi.db2.gamified.services.QuestionnaireService;
 import it.polimi.db2.gamified.services.UserQuestionnaireService;
 
@@ -49,21 +50,24 @@ public class SendStatisticalData extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// If the user is not logged in (not present in session) redirect to the login
-			HttpSession session = request.getSession();
-			Account u = (Account) session.getAttribute("account");
-			String ctxpath = getServletContext().getContextPath();
-			if (session.isNew() || u == null) {
-				String loginpath = ctxpath + "/index.html";
-				response.sendRedirect(loginpath);
-				return;
-			}			
-			String age_answer = request.getParameter("age_answer");
-			String sex_answer = request.getParameter("sex_answer");
-			String expertise_answer = request.getParameter("expertise_answer");
-			int questId = qService.findByDate(new Date(java.lang.System.currentTimeMillis())).get(0).getId();
-			uqService.SetStatisticalAttributes(questId, u.getId(), age_answer, sex_answer, expertise_answer);
-			String path = ctxpath + "/Greetings";
-			response.sendRedirect(path);
+		String ctxpath = getServletContext().getContextPath();
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("account");
+		if (session.isNew() || account == null) {
+			response.sendRedirect(getServletContext().getContextPath() + "/index.html");
+			return;
+		}
+		if (account.getStatus()==AccountStatus.ADMIN) {
+			response.sendRedirect(getServletContext().getContextPath() + "/AdminPage");
+			return;
+		}			
+		String age_answer = request.getParameter("age_answer");
+		String sex_answer = request.getParameter("sex_answer");
+		String expertise_answer = request.getParameter("expertise_answer");
+		int questId = qService.findByDate(new Date(java.lang.System.currentTimeMillis())).get(0).getId();
+		uqService.SetStatisticalAttributes(questId, account.getId(), age_answer, sex_answer, expertise_answer);
+		String path = ctxpath + "/Greetings";
+		response.sendRedirect(path);
 	}
 
 	public void destroy() {

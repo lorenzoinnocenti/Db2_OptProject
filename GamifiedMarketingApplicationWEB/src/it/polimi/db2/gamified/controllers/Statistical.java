@@ -16,6 +16,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.db2.gamified.entities.Account;
+import it.polimi.db2.gamified.entities.AccountStatus;
 
 @WebServlet("/Statistical")
 public class Statistical extends HttpServlet{
@@ -40,12 +41,16 @@ public class Statistical extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// If the user is not logged in (not present in session) redirect to the login
 		HttpSession session = request.getSession();
-		Account u = (Account) session.getAttribute("account");
-		if (session.isNew() || u == null) {
-			String loginpath = getServletContext().getContextPath() + "/index.html";
-			response.sendRedirect(loginpath);
+		Account account = (Account) session.getAttribute("account");
+		if (session.isNew() || account == null) {
+			response.sendRedirect(getServletContext().getContextPath() + "/index.html");
 			return;
 		}
+		if (account.getStatus()==AccountStatus.ADMIN) {
+			response.sendRedirect(getServletContext().getContextPath() + "/AdminPage");
+			return;
+		}
+		
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		templateEngine.process("/WEB-INF/Statistical.html", ctx, response.getWriter()); 

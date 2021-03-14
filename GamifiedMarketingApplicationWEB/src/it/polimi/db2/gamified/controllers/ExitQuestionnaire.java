@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import it.polimi.db2.gamified.entities.Account;
+import it.polimi.db2.gamified.entities.AccountStatus;
 import it.polimi.db2.gamified.entities.QuestionnaireStatus;
 import it.polimi.db2.gamified.services.QuestionnaireService;
 import it.polimi.db2.gamified.services.UserQuestionnaireService;
@@ -35,13 +36,16 @@ public class ExitQuestionnaire extends HttpServlet{
 			throws ServletException, IOException {
 		// If the user is not logged in (not present in session) redirect to the login
 		HttpSession session = request.getSession();
-		Account u = (Account) session.getAttribute("account");
-		if (session.isNew() || u == null) {
-			String loginpath = getServletContext().getContextPath() + "/index.html";
-			response.sendRedirect(loginpath);
+		Account account = (Account) session.getAttribute("account");
+		if (session.isNew() || account == null) {
+			response.sendRedirect(getServletContext().getContextPath() + "/index.html");
 			return;
 		}
-
+		if (account.getStatus()==AccountStatus.ADMIN) {
+			response.sendRedirect(getServletContext().getContextPath() + "/AdminPage");
+			return;
+		}
+		
 		try {
 			uqService.addUserquestionnaire(((Account)session.getAttribute("account")).getId(), qService.findByDate(new Date(java.lang.System.currentTimeMillis())).get(0).getId(), QuestionnaireStatus.CANCELLED);
 		} catch (Exception e) {
