@@ -14,22 +14,27 @@
 		<a id="Links"  th:href="@{/Logout}">Logout</a>
 	</div>
 	<div align="center">
-		<table class="styled-table">
-			<thead>
-				<tr>
-					<th>Product</th>
-					<th>Date</th>
-					<th>Details</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="q : ${questionnaires}">
-					<td th:text="${q.product.getName()}"></td>
-					<td th:text="${#dates.format(q.date, 'dd-MMM-yyyy')}"></td>
-					<td><a th:href="@{/UsersResults(questionnaireid=${q.id})}">See all the answers</a></td>
-				</tr>
-			</tbody>
-		</table>
+		<div th:if="${questionnaires.size() == 0}">
+			<p id="Links" style="color:red;">There aren't any past questionnaires.</p>
+		</div>
+		<div th:unless="${questionnaires.size() == 0}">
+			<table class="styled-table">
+				<thead>
+					<tr>
+						<th>Product</th>
+						<th>Date</th>
+						<th>Details</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="q : ${questionnaires}">
+						<td th:text="${q.product.getName()}"></td>
+						<td th:text="${#dates.format(q.date, 'dd-MMM-yyyy')}"></td>
+						<td><a th:href="@{/UsersResults(questionnaireid=${q.id})}">See all the answers</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </body>
 </html>
