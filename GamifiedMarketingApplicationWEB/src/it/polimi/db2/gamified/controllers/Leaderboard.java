@@ -50,6 +50,7 @@ public class Leaderboard extends HttpServlet {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.html");
 			return;
 		}
+		
 		List<Account> users = null;
 		Account first =null;
 		Account second = null;
@@ -74,6 +75,7 @@ public class Leaderboard extends HttpServlet {
 		String path = "/WEB-INF/Leaderboard.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		ctx.setVariable("status", account.getStatus());
 		ctx.setVariable("first", first);
 		ctx.setVariable("second", second);
 		ctx.setVariable("third", third);

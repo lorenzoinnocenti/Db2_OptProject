@@ -26,13 +26,21 @@ table, th {
 </head>
 <body>
 
-    <div id="Links" align="right">
+	<div th:if="${status.name() == 'USER'}">
+		<div id="Links" align="right">
 		<a th:href="@{/Home}">Homepage</a>
+		</div>	
 	</div>
-	<div align="right">
-		<a id="Links"  th:href="@{/Logout}">Logout</a>
+	<div th:unless="${status.name() == 'USER'}">
+		<div id="Links" align="right">Go back to Admin Page
+		<a th:href="@{/AdminPage}">Homepage</a>
+		</div>
 	</div>
 	
+	<div align="right">
+			<a id="Links"  th:href="@{/Logout}">Logout</a>
+		</div>
+		
 	<h1 align = "center">Leaderboard</h1>
 	
 	<br>
