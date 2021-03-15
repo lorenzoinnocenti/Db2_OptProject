@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+<meta charset="ISO-8859-1">
+<title>ProductOfTheDayInsertion</title><link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+</head>
+
+
+<body>
+
+	<div id="Links" align="right">
+		<a th:href="@{/AdminPage}">Homepage</a>
+	</div>
+	<div id="Links" align="right">
+		<a th:href="@{/Logout}">Logout</a>
+	</div>	
+	
+	
+		
+	<div align="center">
+	
+		<h2>Creation page</h2>
+		
+		<br>
+		<br>
+		<br>
+		
+		<div th:if="${wrongParameters == null}">
+			<h4>You have to set these parameters and click on the button to proceed (it's mandatory) </h4>
+			<br>
+			<form action="#" th:action="@{/SavequestionnaireParameters}" method="POST">		
+				<label for="numer of questions">Insert the number of questions you want to insert</label>	
+				<br>
+				<input type="number" id="numberOfQuestions" name="numberOfQuestions" min="1" max="8" value="3" required="required">
+		
+				<br>
+				<br>
+		
+				<label for="numer of questions">Insert the date for the new questionnaire</label>	
+				<br>
+				<input type="date" id="questionnaireDate" name="questionnaireDate" required="required">
+			
+				<br>
+				<br>
+				<div align="center">
+					<button type="submit" name="submit_param" value="submit">Set the date and the number of questions</button>
+				</div>
+			</form>
+		</div>
+		
+		<div th:if="${rightParameters != null}">
+			<h4>The parameter you just set are right and you can now proceed</h4>
+		</div>
+		
+		<div th:if="${wrongDate != null}">
+			<h4> The date you inserted is wrong, it is earlier than today</h4>
+			<form action="#" th:action="@{/SavequestionnaireParameters}" method="POST">
+			<label for="numer of questions">Reinsert the date for the new questionnaire</label>	
+			<br>
+			<input type="date" id="questionnaireDate" name="questionnaireDate" required="required">
+			<div align="center">
+			<button type="submit" name="submit_param" value="submit">Set this date</button>
+			</div>
+			</form>
+		</div>
+		
+		
+		<br>
+		<br>
+		<br>
+		<br>
+		
+		<div>
+			<a id="AdminLink" th:href="@{/GoToQuestionnaireNewProduct}">Create a new questionnaire for a new product</a>
+		</div>	
+		
+		<div>
+			<a id="AdminLink" th:href="@{/GoToQuestionnaireOldProduct}">Create e new questionnaire for an already existing product</a>
+		</div>
+		
+		<br>
+		<br>
+		
+				
+	</div>
+	
+		
+</body>
+</html>
