@@ -2,9 +2,12 @@ package it.polimi.db2.gamified.controllers;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
+import java.util.Calendar;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import it.polimi.db2.gamified.services.QuestionnaireService;
+import it.polimi.db2.gamified.entities.Questionnaire;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -24,6 +29,8 @@ import it.polimi.db2.gamified.entities.AccountStatus;
 public class SavequestionnaireParameters extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
+	@EJB(name = "it.polimi.db2.gamified.services/QuestionnaireService")
+	private QuestionnaireService qService;
 
 	public SavequestionnaireParameters() {
 		super();
@@ -56,15 +63,34 @@ public class SavequestionnaireParameters extends HttpServlet{
 		Date questionnaireDate;
 		try {
 			questionnaireDate = new SimpleDateFormat("yyyy-MM-dd").parse(stringDate);
-			Date todayDate = new Date(System.currentTimeMillis());
-			int before =questionnaireDate.compareTo(todayDate);
-			if(before >0) {
-				request.getSession().setAttribute("dateOk", Integer.valueOf(1));
-				System.out.println("Dati sessione");
-			}
+			Date todayDate = new Date();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(todayDate);
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
+			todayDate = cal.getTime();
+			Boolean isTheDateNotBeforeToday = (questionnaireDate.after(todayDate) || questionnaireDate.equals(todayDate));			
+			List<Questionnaire> questionnaires = null;
+			questionnaires = qService.findByDate(questionnaireDate);
+			Boolean alreadyExistingQuestionnaires = (!questionnaires.isEmpty());
+			if(alreadyExistingQuestionnaires)
+				session.setAttribute("alreadyExisting", Integer.valueOf(1));
 			else
-				request.getSession().setAttribute("dateOk", Integer.valueOf(0));
-			request.getSession().setAttribute("numberOfQuestions", request.getParameter("numberOfQuestions"));
+				session.setAttribute("alreadyExisting", Integer.valueOf(0));
+			if (isTheDateNotBeforeToday)
+				session.setAttribute("dateOk", Integer.valueOf(1));
+			else
+				session.setAttribute("dateOk", Integer.valueOf(0));
+			if (session.getAttribute("numberOfQuestions") == null) {
+				Integer numberOfQuestions = Integer.parseInt(request.getParameter("numberOfQuestions").toString());
+				session.setAttribute("numberOfQuestions", numberOfQuestions);
+			}
+			String path = null;
+			String ctxpath = getServletContext().getContextPath();
+			path = ctxpath + "/CreateQuestionnaire";
+			response.sendRedirect(path);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

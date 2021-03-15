@@ -54,17 +54,21 @@ public class CreateQuestionnaire extends HttpServlet{
 			return;
 		}
 		Integer questionnaireDateOk = (Integer) session.getAttribute("dateOk");
-		String numberOfQuestions =(String) session.getAttribute("numberOfQuestions");
+		Integer numberOfQuestions =(Integer) session.getAttribute("numberOfQuestions");
+		Integer alreadyExisting = (Integer) session.getAttribute("alreadyExisting");
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		if(questionnaireDateOk == 1 && numberOfQuestions!=null) {
-			ctx.setVariable("rightParameters", 1);
-			System.out.println("the parameters are ok");
-		}
-		if(questionnaireDateOk == 0) {
-			ctx.setVariable("wrongDate", 1);
-			System.out.println("the date is wrong");
-
+		if(questionnaireDateOk!=null && numberOfQuestions!=null && alreadyExisting != null) {
+			if(questionnaireDateOk == 1) {
+				if (alreadyExisting == 0)
+					ctx.setVariable("rightParameters", Integer.valueOf(1));
+				else
+					ctx.setVariable("questAlreadyExists", Integer.valueOf(1));
+			}
+			else{
+				ctx.setVariable("wrongDate", Integer.valueOf(1));
+			}
+			ctx.setVariable("wrongParameters", Integer.valueOf(0));
 		}
 		templateEngine.process("/WEB-INF/CreateQuestionnaire.html", ctx, response.getWriter()); 
 	}

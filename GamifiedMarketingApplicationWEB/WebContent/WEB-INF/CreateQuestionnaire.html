@@ -67,17 +67,29 @@
 			</form>
 		</div>
 		
+		<div th:if="${questAlreadyExists != null}">
+			<h4> The date you inserted is wrong, there is already an existing questionnaire on that date</h4>
+			<form action="#" th:action="@{/SavequestionnaireParameters}" method="POST">
+			<label for="numer of questions">Reinsert the date for the new questionnaire</label>	
+			<br>
+			<input type="date" id="questionnaireDate" name="questionnaireDate" required="required">
+			<div align="center">
+			<button type="submit" name="submit_param" value="submit">Set this date</button>
+			</div>
+			</form>
+		</div>
+		
 		
 		<br>
 		<br>
 		<br>
 		<br>
 		
-		<div>
+		<div th:if="${rightParameters != null}">
 			<a id="AdminLink" th:href="@{/GoToQuestionnaireNewProduct}">Create a new questionnaire for a new product</a>
 		</div>	
 		
-		<div>
+		<div th:if="${rightParameters != null}">
 			<a id="AdminLink" th:href="@{/GoToQuestionnaireOldProduct}">Create e new questionnaire for an already existing product</a>
 		</div>
 		
