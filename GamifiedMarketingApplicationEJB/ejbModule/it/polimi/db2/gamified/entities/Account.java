@@ -12,6 +12,8 @@ import java.util.List;
 @Entity
 @Table(name="account")
 @NamedQueries({ @NamedQuery(name = "Account.checkCredentials", query = "SELECT r FROM Account r  WHERE r.username = :usrn and r.password = :pwd"),
+				@NamedQuery(name = "Account.findByUsername", query = "SELECT r FROM Account r  WHERE r.username = :usrn"),
+				@NamedQuery(name = "Account.findByEmail", query = "SELECT r FROM Account r  WHERE r.email = :email"),
 	            @NamedQuery(name = "Account.computeLeaderboard", query = "SELECT r FROM Account r ORDER BY r.totalpoints DESC")})
 
 
@@ -19,7 +21,7 @@ public class Account implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int id;
 
@@ -51,6 +53,14 @@ public class Account implements Serializable {
 	private List<Userquestionnaire> userquestionnaires;
 
 	public Account() {
+	}
+	
+	public Account(String usrn, String psw, String email) {
+		this.username=usrn;
+		this.password=psw;
+		this.email=email;
+		this.totalpoints=0;
+		this.status = AccountStatus.USER;
 	}
 
 	public int getId() {
@@ -112,14 +122,12 @@ public class Account implements Serializable {
 	public Answer addAnswer(Answer answer) {
 		getAnswers().add(answer);
 		answer.setAccount(this);
-
 		return answer;
 	}
 
 	public Answer removeAnswer(Answer answer) {
 		getAnswers().remove(answer);
 		answer.setAccount(null);
-
 		return answer;
 	}
 
@@ -134,14 +142,12 @@ public class Account implements Serializable {
 	public Login addLogin(Login login) {
 		getLogins().add(login);
 		login.setAccount(this);
-
 		return login;
 	}
 
 	public Login removeLogin(Login login) {
 		getLogins().remove(login);
 		login.setAccount(null);
-
 		return login;
 	}
 
@@ -156,14 +162,12 @@ public class Account implements Serializable {
 	public Userquestionnaire addUserquestionnaire(Userquestionnaire userquestionnaire) {
 		getUserquestionnaires().add(userquestionnaire);
 		userquestionnaire.setAccount(this);
-
 		return userquestionnaire;
 	}
 
 	public Userquestionnaire removeUserquestionnaire(Userquestionnaire userquestionnaire) {
 		getUserquestionnaires().remove(userquestionnaire);
 		userquestionnaire.setAccount(null);
-
 		return userquestionnaire;
 	}
 

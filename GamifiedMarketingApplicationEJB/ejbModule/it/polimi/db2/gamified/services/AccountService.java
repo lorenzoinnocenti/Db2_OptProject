@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
@@ -68,6 +69,32 @@ public class AccountService {
 				.setMaxResults(10)
 				.setHint("javax.persistence.cache.storeMode", "REFRESH")
 				.getResultList();
+	}
+	
+	public boolean isUsernameUsed(String usrn){
+		List<Account> accounts = em.createNamedQuery("Account.findByUsername", Account.class)
+					.setParameter("usrn", usrn)
+					.setHint("javax.persistence.cache.storeMode", "REFRESH")
+					.getResultList();
+		if (accounts.size()==0) return false;
+		else return true;
+	}
+	
+	public boolean isEmailUsed(String email){
+		List<Account> accounts =  em.createNamedQuery("Account.findByEmail", Account.class)
+					.setParameter("email", email)
+					.setHint("javax.persistence.cache.storeMode", "REFRESH")
+					.getResultList();
+		if (accounts.size()==0) return false;
+		else return true;
+	}
+	
+	public void createNewAccount(String usrn, String psw, String email) 
+			throws UsernameAlreadyUsedException, EmailAlreadyUsedException{
+		if (isUsernameUsed(usrn)) throw new UsernameAlreadyUsedException("Username altready in use");
+		if (isEmailUsed(email)) throw new EmailAlreadyUsedException("Email altready in use");
+		Account account = new Account(usrn, psw, email);
+		em.persist(account);
 	}
 }
 

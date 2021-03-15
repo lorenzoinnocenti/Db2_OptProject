@@ -23,13 +23,13 @@ button[type="submit"] {
 button[type="submit"]:hover {
 	background-color: #555 !important;
 }
+
 </style>
 </head>
 <body style="text-align:center">
 	<div>
 		<h1>Welcome!</h1>
 	</div>
-	<br>
 	<br>
 	<div class="box">
 		<form action="CheckLogin" method="POST">
@@ -52,6 +52,40 @@ button[type="submit"]:hover {
 			<br>
 			<div class="row">
 				<p  style="color:red;" th:text=" ${errorMsg}"></p>
+			</div>
+		</form>
+		<br>
+		<p>You don't have and account? Sign up!</p>
+		<br>
+		<form action="SignUp" method="POST">
+			<div class="row">
+				<label for="Username">Username</label>
+			</div>
+			<div class="row">
+				<input type="text" name="username" required>
+			</div>
+			<div class="row">
+				<label for="Password">Password</label>
+			</div>
+			<div class="row">
+				<input type="password" name="pwd" required>
+			</div>			
+			<div class="row">
+				<label for="Password">Email address</label>
+			</div>
+			<div class="row">
+				<input type="text" name="email" required>
+			</div>
+			<br>
+			<div class="row">
+				<button type="submit" value="login">Sign Up</button>
+			</div>
+			<br>
+			<div class="row">
+				<p  style="color:red;" th:text=" ${errorMsgSignup}"></p>
+			</div>			
+			<div class="row">
+				<p th:text=" ${successMsg}"></p>
 			</div>
 		</form>
 	</div>
