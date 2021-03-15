@@ -84,9 +84,10 @@ public class SavequestionnaireParameters extends HttpServlet{
 			else
 				session.setAttribute("dateOk", Integer.valueOf(0));
 			if (session.getAttribute("numberOfQuestions") == null) {
-				Integer numberOfQuestions = Integer.parseInt(request.getParameter("numberOfQuestions").toString());
+				Integer numberOfQuestions = Integer.parseInt(request.getParameter("numberOfQuestions"));
 				session.setAttribute("numberOfQuestions", numberOfQuestions);
 			}
+			session.setAttribute("questionnaireDate", questionnaireDate);
 			String path = null;
 			String ctxpath = getServletContext().getContextPath();
 			path = ctxpath + "/CreateQuestionnaire";

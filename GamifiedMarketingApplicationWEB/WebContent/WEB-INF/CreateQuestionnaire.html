@@ -34,7 +34,7 @@
 			<form action="#" th:action="@{/SavequestionnaireParameters}" method="POST">		
 				<label for="numer of questions">Insert the number of questions you want to insert</label>	
 				<br>
-				<input type="number" id="numberOfQuestions" name="numberOfQuestions" min="1" max="8" value="3" required="required">
+				<input type="number" id="numberOfQuestions" name="numberOfQuestions" min="1" max="10" value="3" required="required">
 		
 				<br>
 				<br>
@@ -53,6 +53,7 @@
 		
 		<div th:if="${rightParameters != null}">
 			<h4>The parameter you just set are right and you can now proceed</h4>
+			<p th:text="${'The date you chose ' + session.questionnaireDate}"></p>
 		</div>
 		
 		<div th:if="${wrongDate != null}">
@@ -85,13 +86,24 @@
 		<br>
 		<br>
 		
+		
+		
 		<div th:if="${rightParameters != null}">
-			<a id="AdminLink" th:href="@{/GoToQuestionnaireNewProduct}">Create a new questionnaire for a new product</a>
+			<a id="AdminLink" th:href="@{/InsertNewProduct}">Create a new questionnaire for a new product</a>
 		</div>	
 		
 		<div th:if="${rightParameters != null}">
-			<a id="AdminLink" th:href="@{/GoToQuestionnaireOldProduct}">Create e new questionnaire for an already existing product</a>
+			<a id="AdminLink" th:href="@{/SelectOldProduct}">Create e new questionnaire for an already existing product</a>
 		</div>
+		
+		<div th:if="${rightParameters == null}">
+			<button type = "button" disabled>Create a new questionnaire for a new product</button>
+		</div>	
+		
+		<div th:if="${rightParameters== null}">
+			<button type = "button" disabled>Create e new questionnaire for an already existing product</button>
+		</div>
+		
 		
 		<br>
 		<br>

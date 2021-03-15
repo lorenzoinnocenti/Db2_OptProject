@@ -1,7 +1,14 @@
 package it.polimi.db2.gamified.controllers;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import it.polimi.db2.gamified.services.ProductService;
+
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -17,18 +26,20 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.db2.gamified.entities.Account;
 import it.polimi.db2.gamified.entities.AccountStatus;
+import it.polimi.db2.gamified.entities.Product;
 
-@WebServlet("/CreateQuestionnaire")
-public class CreateQuestionnaire extends HttpServlet{
-	
+@WebServlet("/SelectOldProduct")
+public class GoToQuestionnaireOldProduct extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
+	@EJB(name = "it.polimi.db2.gamified.services/ProductSrvice")
+	private ProductService pService;
 
-	
-	public CreateQuestionnaire() {
+	public GoToQuestionnaireOldProduct() {
 		super();
 	}
-		
+	
+	
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
 		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
@@ -42,46 +53,30 @@ public class CreateQuestionnaire extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// If the user is not logged in (not present in session) redirect to the login
 		HttpSession session = request.getSession();
-		Account adminAccount = (Account) session.getAttribute("account");
-		if (session.isNew() || adminAccount == null) {
-			String loginpath = getServletContext().getContextPath() + "/index.html";
-			response.sendRedirect(loginpath);
+		Account account = (Account) session.getAttribute("account");
+		if (session.isNew() || account == null) {
+			response.sendRedirect(getServletContext().getContextPath() + "/index.html");
 			return;
 		}
-		if (adminAccount.getStatus()==AccountStatus.USER) {
+		if (account.getStatus()==AccountStatus.USER) {
 			response.sendRedirect(getServletContext().getContextPath() + "/Home");
 			return;
 		}
-		Integer questionnaireDateOk = (Integer) session.getAttribute("dateOk");
-		Integer numberOfQuestions =(Integer) session.getAttribute("numberOfQuestions");
-		Integer alreadyExisting = (Integer) session.getAttribute("alreadyExisting");
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		if(questionnaireDateOk!=null && numberOfQuestions!=null && alreadyExisting != null) {
-			if(questionnaireDateOk == 1) {
-				if (alreadyExisting == 0) {
-					ctx.setVariable("rightParameters", Integer.valueOf(1));
-					this.removeSessionAttributes(session);
-				}
-				else
-					ctx.setVariable("questAlreadyExists", Integer.valueOf(1));
-			}
-			else{
-				ctx.setVariable("wrongDate", Integer.valueOf(1));
-			}
-			ctx.setVariable("wrongParameters", Integer.valueOf(0));
-		}
-		templateEngine.process("/WEB-INF/CreateQuestionnaire.html", ctx, response.getWriter()); 
+		Integer numberOfQuestions =(Integer) session.getAttribute("numberOfQuestions");
+		System.out.println(numberOfQuestions);
+		List<Integer> numberList = new ArrayList<Integer>();
+		for (int i=1; i<numberOfQuestions+1; i=i+1)
+			numberList.add(i);
+		ctx.setVariable("numbers", numberList);
+		List<Product> products = pService.findAllProduct();
+		ctx.setVariable("products", products);
+		templateEngine.process("/WEB-INF/SelectOldProduct.html", ctx, response.getWriter());		
 	}
-	
-	
-	private void removeSessionAttributes(HttpSession session) {
-		session.removeAttribute("dateOk");
-		session.removeAttribute("alreadyExisting");
-	}
-	
+		
 	public void destroy() {
 	}
-	
 }
+
 

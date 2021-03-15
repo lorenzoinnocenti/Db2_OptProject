@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+<meta charset="ISO-8859-1">
+<title>ProductOfTheDayInsertion</title><link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+</head>
+
+
+<body>
+
+	<div id="Links" align="right">
+		<a th:href="@{/AdminPage}">Homepage</a>
+	</div>
+	<div id="Links" align="right">
+		<a th:href="@{/Logout}">Logout</a>
+	</div>	
+	
+	
+		
+	<div align="center">
+	
+		<h2>Creation page</h2>
+		
+		<br>
+		<br>
+		<br>
+		
+		<div>
+			<h4>The parameter you just set are right and you can now proceed</h4>
+			<p th:text="${'The date you chose ' + session.questionnaireDate}"></p>
+		</div>
+				
+		<br>
+		<br>
+		<br>
+		<br>
+		
+		
+		
+		<form action="#" th:action="@{/SaveQuestionnaireOldProduct}" method="POST">			
+			<select th:field="*{products}">
+				<option value="">Choose the product of the day</option>
+				<option th:each="p: ${products}" th:value="${p.getId()}" th:text="${p.getName()}" />
+			</select>
+				
+			<br>
+			<br>
+				
+			<div th:each="n : ${numbers}">
+				<div class="row">
+					<span th:text="'question number ' + ${n}"></span>
+				</div>
+				<div class="row">
+					<input type="text" name="Answer" required="required">
+				</div>
+			</div>
+			<div align="center">
+				<button type="submit" name="submit_param" value="submit">Set the date and the number of questions</button>
+			</div>				
+		</form>
+		
+		
+		
+		
+		
+		<br>
+		<br>
+		
+				
+	</div>
+	
+		
+</body>
+</html>
