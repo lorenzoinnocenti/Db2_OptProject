@@ -4,7 +4,21 @@
 
 <head>
 <meta charset="ISO-8859-1">
-<title>ProductOfTheDayInsertion</title><link rel="stylesheet" type="text/css" media="all"
+<title>ProductOfTheDayInsertion</title>
+<style>
+button[type="submit"] {
+  background-color: #989898 !important;
+  color: white !important;
+  padding: 1% 1.5% !important;
+  display: inline-block !important;
+  width:300px !important;
+  text-align: center !important;
+}
+button[type="submit"]:hover {
+	background-color: #555 !important;
+}
+</style>
+<link rel="stylesheet" type="text/css" media="all"
 	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
 </head>
 
@@ -22,7 +36,7 @@
 		
 	<div align="center">
 	
-		<h2>Creation page</h2>
+		<h1>Creation page</h1>
 		
 		<br>
 		<br>
@@ -32,14 +46,14 @@
 			<h4>You have to set these parameters and click on the button to proceed (it's mandatory) </h4>
 			<br>
 			<form action="#" th:action="@{/SavequestionnaireParameters}" method="POST">		
-				<label for="numer of questions">Insert the number of questions you want to insert</label>	
+				<label for="numer of questions">Insert the number of questions you want to ask:</label>	
 				<br>
 				<input type="number" id="numberOfQuestions" name="numberOfQuestions" min="1" max="10" value="3" required="required">
 		
 				<br>
 				<br>
 		
-				<label for="numer of questions">Insert the date for the new questionnaire</label>	
+				<label for="numer of questions">Insert the date for the new questionnaire:</label>	
 				<br>
 				<input type="date" id="questionnaireDate" name="questionnaireDate" required="required">
 			
@@ -53,11 +67,11 @@
 		
 		<div th:if="${rightParameters != null}">
 			<h4>The parameter you just set are right and you can now proceed</h4>
-			<p th:text="${'The date you chose ' + session.questionnaireDate}"></p>
+			<p th:text="${'The date you chose: ' + #dates.format(session.questionnaireDate, 'dd-MMM-yyyy')}"></p>
 		</div>
 		
 		<div th:if="${wrongDate != null}">
-			<h4> The date you inserted is wrong, it is earlier than today</h4>
+			<h4 style="color:red;"> The date you inserted is wrong, can't be previous than today</h4>
 			<form action="#" th:action="@{/SavequestionnaireParameters}" method="POST">
 			<label for="numer of questions">Reinsert the date for the new questionnaire</label>	
 			<br>
@@ -69,7 +83,7 @@
 		</div>
 		
 		<div th:if="${questAlreadyExists != null}">
-			<h4> The date you inserted is wrong, there is already an existing questionnaire on that date</h4>
+			<h4 style="color:red;"> The date you inserted is wrong, there is already an existing questionnaire on that date</h4>
 			<form action="#" th:action="@{/SavequestionnaireParameters}" method="POST">
 			<label for="numer of questions">Reinsert the date for the new questionnaire</label>	
 			<br>

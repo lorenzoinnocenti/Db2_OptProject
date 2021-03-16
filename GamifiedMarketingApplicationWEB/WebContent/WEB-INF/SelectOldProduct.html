@@ -4,33 +4,42 @@
 
 <head>
 <meta charset="ISO-8859-1">
+<style>
+input[type=text],[type=password]{
+	width: 25%;
+	padding: 7px 5px;
+	margin: 8px 0;
+}
+button[type="submit"] {
+  background-color: #989898 !important;
+  color: white !important;
+  padding: 1% 1.5% !important;
+  display: inline-block !important;
+  width:100px !important;
+  text-align: center !important;
+}
+button[type="submit"]:hover {
+	background-color: #555 !important;
+}
+</style>
 <title>ProductOfTheDayInsertion</title><link rel="stylesheet" type="text/css" media="all"
 	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
 </head>
 
 
 <body>
-
-	<div id="Links" align="right">
-		<a th:href="@{/AdminPage}">Homepage</a>
-	</div>
-	<div id="Links" align="right">
-		<a th:href="@{/Logout}">Logout</a>
-	</div>	
-	
-	
 		
 	<div align="center">
 	
-		<h2>Creation page</h2>
-		
 		<br>
+		<h1>Creation page</h1>
+		
 		<br>
 		<br>
 		
 		<div>
 			<h4>The parameter you just set are right and you can now proceed</h4>
-			<p th:text="${'The date you chose ' + session.questionnaireDate}"></p>
+			<p th:text="${'The date you chose: ' + #dates.format(session.questionnaireDate, 'dd-MMM-yyyy')}"></p>
 		</div>
 				
 		<br>
@@ -53,7 +62,7 @@
 				
 			<div th:each="n : ${numbers}">
 				<div class="row">
-					<span th:text="'question number ' + ${n}"></span>
+					<span th:text="'Insert question number ' + ${n} + ':'"></span>
 				</div>
 				<div class="row">
 					<input type="text" name="Questions" required="required">
