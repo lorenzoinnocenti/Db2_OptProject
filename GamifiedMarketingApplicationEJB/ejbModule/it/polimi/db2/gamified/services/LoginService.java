@@ -16,8 +16,6 @@ public class LoginService {
 	private EntityManager em;
 	
 	public LoginService() {
-		//Debug purposes
-		System.out.println("costruttore: em is " + em);
 	}
 	
 	public List<Login> findTSByUser (int accountId) throws AccountNotFoundException {

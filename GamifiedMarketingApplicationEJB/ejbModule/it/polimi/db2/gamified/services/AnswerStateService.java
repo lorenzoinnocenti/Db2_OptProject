@@ -17,7 +17,6 @@ public class AnswerStateService {
 	private List<String> answers;
 	
 	public AnswerStateService() {
-		System.out.println("Sono nel costruttore");
 	}
 	
 	public void addAnswers(String ans) {

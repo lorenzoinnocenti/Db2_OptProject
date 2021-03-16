@@ -66,7 +66,6 @@ public class GoToStatistical extends HttpServlet {
 			for (String a : answers) {
 				a =  StringEscapeUtils.escapeJava(a);
 			}
-			System.out.println("Ho caricato "+ answers);
 			asService.setAnswers(answers);
 		} catch (Exception e) {
 			e.printStackTrace();
