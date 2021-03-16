@@ -2,11 +2,6 @@ package it.polimi.db2.gamified.controllers;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -17,8 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import it.polimi.db2.gamified.services.ProductService;
-
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -26,16 +19,13 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.db2.gamified.entities.Account;
 import it.polimi.db2.gamified.entities.AccountStatus;
-import it.polimi.db2.gamified.entities.Product;
 
-@WebServlet("/SelectOldProduct")
-public class GoToQuestionnaireOldProduct extends HttpServlet{
+@WebServlet("/QuestionnaireSaved")
+public class QuestionnaireSaved extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
-	@EJB(name = "it.polimi.db2.gamified.services/ProductSrvice")
-	private ProductService pService;
 
-	public GoToQuestionnaireOldProduct() {
+	public QuestionnaireSaved() {
 		super();
 	}
 	
@@ -61,19 +51,18 @@ public class GoToQuestionnaireOldProduct extends HttpServlet{
 		if (account.getStatus()==AccountStatus.USER) {
 			response.sendRedirect(getServletContext().getContextPath() + "/Home");
 			return;
-		}
+		}		
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		Integer numberOfQuestions =(Integer) session.getAttribute("numberOfQuestions");
-		List<Integer> numberList = new ArrayList<Integer>();
-		for (int i=1; i<numberOfQuestions+1; i=i+1)
-			numberList.add(i);
-		ctx.setVariable("numbers", numberList);
-		List<Product> products = pService.findAllProduct();
-		ctx.setVariable("products", products);
-		templateEngine.process("/WEB-INF/SelectOldProduct.html", ctx, response.getWriter());		
+		this.deleteSessionParameters(session);
+		templateEngine.process("/WEB-INF/QuestionnaireSaved.html", ctx, response.getWriter()); 
 	}
-		
+	
+	private void deleteSessionParameters(HttpSession session) {
+		session.removeAttribute("questionnaireDate");
+		session.removeAttribute("questionnaireDate");
+	}
+	
 	public void destroy() {
 	}
 }

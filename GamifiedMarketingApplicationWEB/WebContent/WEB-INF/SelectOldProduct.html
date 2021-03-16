@@ -40,12 +40,14 @@
 		
 		
 		
-		<form action="#" th:action="@{/SaveQuestionnaireOldProduct}" method="POST">			
-			<select th:field="*{products}">
+		<form action="#" th:action="@{/SendQuestionnaireOldProduct}" method="POST">			
+			<select th:field="*{products}" id="productId" name="productId" required>
 				<option value="">Choose the product of the day</option>
 				<option th:each="p: ${products}" th:value="${p.getId()}" th:text="${p.getName()}" />
 			</select>
 				
+			<br>
+			<br>
 			<br>
 			<br>
 				
@@ -54,11 +56,13 @@
 					<span th:text="'question number ' + ${n}"></span>
 				</div>
 				<div class="row">
-					<input type="text" name="Answer" required="required">
+					<input type="text" name="Questions" required="required">
 				</div>
 			</div>
+			<br>
+			<br>
 			<div align="center">
-				<button type="submit" name="submit_param" value="submit">Set the date and the number of questions</button>
+				<button type="submit" name="submit_param" value="submit">Submit</button>
 			</div>				
 		</form>
 		

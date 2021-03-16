@@ -33,12 +33,12 @@ public class QuestionnaireService {
 	
 	public void addQuestionnaire(Date date, int productId) throws ProductNotFoundException, QuestionnaireAlreadyPresentException { 
 		//E' possibile avere massimo un questionario per giorno
-		Questionnaire q = findByDate(date).get(0);
-		if (q != null) throw new QuestionnaireAlreadyPresentException("There is already a questionnaire on this date.");
+		List<Questionnaire> q = findByDate(date);
+		if (!q.isEmpty()) throw new QuestionnaireAlreadyPresentException("There is already a questionnaire on this date.");
 		Product p = em.find(Product.class, productId);
 		if (p == null) throw new ProductNotFoundException("Product not found");
-		q = new Questionnaire(date, p);
-		em.persist(q);
+		Questionnaire questionnaire = new Questionnaire(date, p);
+		em.persist(questionnaire);
 	}
 	
 	public void addQuestion(int questionnaireId, String text) throws QuestionnaireNotFoundException{
