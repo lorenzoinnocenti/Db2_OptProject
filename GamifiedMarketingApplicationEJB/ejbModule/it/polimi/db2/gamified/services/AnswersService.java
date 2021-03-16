@@ -18,7 +18,7 @@ public class AnswersService {
 	private EntityManager em;
 	
 	@EJB(name="it.polimi.db2.gamified.services/BadwordService")
-	BadwordService badwords;
+	BadwordService bwService;
 	
 	@EJB(name="it.polimi.db2.gamified.services/AccountService")
 	AccountService accountService;
@@ -54,7 +54,7 @@ public class AnswersService {
 		List<Question> questions = questionnaire.getQuestions();
 		int len = questions.size();
 		assert(len == answers_text.size());
-		List<String> checkBadWords = badwords.checkBadword(answers_text);	
+		List<String> checkBadWords = bwService.checkBadword(answers_text);	
 		if(checkBadWords != null) {
 			for (int i=0; i<len; i++) {
 				AddAnswer(userid, questions.get(i).getId(), answers_text.get(i), user);

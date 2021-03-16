@@ -19,6 +19,7 @@ import it.polimi.db2.gamified.entities.Account;
 import it.polimi.db2.gamified.entities.AccountStatus;
 import it.polimi.db2.gamified.entities.QuestionnaireStatus;
 import it.polimi.db2.gamified.exceptions.BannedUserException;
+import it.polimi.db2.gamified.services.AnswerStateService;
 import it.polimi.db2.gamified.services.AnswersService;
 import it.polimi.db2.gamified.services.QuestionnaireService;
 import it.polimi.db2.gamified.services.UserQuestionnaireService;
@@ -62,23 +63,25 @@ public class SendAnswers extends HttpServlet{
 		String path = null;
 		try {
 			//Get answers
-			answers = Arrays.asList(request.getParameterValues("Answer"));
-			//Escape answers
-			for (String a : answers) {
-				a =  StringEscapeUtils.escapeJava(a);
-			}
-			
+			AnswerStateService asService = null;
+			asService = (AnswerStateService) request.getSession().getAttribute("AnswerStateService");
+			answers = asService.getAnswerList();
 		    aService.AddAllAnswer(accountId, questId, answers);
 		    //If account is not banned, we can addUserQuestionnaire
 		    uqService.addUserquestionnaire(accountId, questId, QuestionnaireStatus.FINISHED);		    
-		    // return the user to the right view
-		    path = ctxpath + "/Statistical";
-		    System.out.println(aService +" "+  uqService+  " " + path);
+			//Clearing the list
+			asService.setAnswers(null);
+			//Adding statistical info
+			String age_answer = request.getParameter("age_answer");
+			String sex_answer = request.getParameter("sex_answer");
+			String expertise_answer = request.getParameter("expertise_answer");
+			uqService.SetStatisticalAttributes(questId, account.getId(), age_answer, sex_answer, expertise_answer);
+			path = ctxpath + "/Greetings";
 		} catch (BannedUserException e) {
 			//Redirect to logout
 			path = ctxpath + "/Banned";	
 		} catch (Exception e) {
-			System.out.print("ciao");
+			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Wrong query.");
 		}
 		response.sendRedirect(path);

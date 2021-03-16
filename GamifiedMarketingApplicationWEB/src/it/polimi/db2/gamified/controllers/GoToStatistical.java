@@ -1,10 +1,8 @@
 package it.polimi.db2.gamified.controllers;
 
 import java.io.IOException;
-//import java.io.IOException;
 import java.util.Arrays;
-import java.util.Date;
-//import java.util.List;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -15,29 +13,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.db2.gamified.entities.Account;
 import it.polimi.db2.gamified.entities.AccountStatus;
-import it.polimi.db2.gamified.services.QuestionnaireService;
-import it.polimi.db2.gamified.services.UserQuestionnaireService;
+import it.polimi.db2.gamified.services.AnswerStateService;
 
-@WebServlet("/SendStatisticalData")
-public class SendStatisticalData extends HttpServlet{
+
+@WebServlet("/GoToStatistical")
+public class GoToStatistical extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
-	//private TemplateEngine templateEngine;
-	@EJB(name = "it.polimi.db2.gamified.services/QuestionnaireService")
-	private QuestionnaireService qService;
-	@EJB(name = "it.polimi.db2.gamified.services/UserQuestionnaireService")
-	private UserQuestionnaireService uqService;
 
-	public SendStatisticalData() {
+	public GoToStatistical() {
 		super();
 	}
-
+	
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
 		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
@@ -46,11 +40,11 @@ public class SendStatisticalData extends HttpServlet{
 		this.templateEngine.setTemplateResolver(templateResolver);
 		templateResolver.setSuffix(".html");
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		// If the user is not logged in (not present in session) redirect to the login
-		String ctxpath = getServletContext().getContextPath();
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("account");
 		if (session.isNew() || account == null) {
@@ -60,14 +54,32 @@ public class SendStatisticalData extends HttpServlet{
 		if (account.getStatus()==AccountStatus.ADMIN) {
 			response.sendRedirect(getServletContext().getContextPath() + "/AdminPage");
 			return;
-		}			
-		String age_answer = request.getParameter("age_answer");
-		String sex_answer = request.getParameter("sex_answer");
-		String expertise_answer = request.getParameter("expertise_answer");
-		int questId = qService.findByDate(new Date(java.lang.System.currentTimeMillis())).get(0).getId();
-		uqService.SetStatisticalAttributes(questId, account.getId(), age_answer, sex_answer, expertise_answer);
-		String path = ctxpath + "/Greetings";
+		}
+		String ctxpath = getServletContext().getContextPath();
+		List<String> answers;
+		try {
+			AnswerStateService asService = null;
+			asService = (AnswerStateService) request.getSession().getAttribute("AnswerStateService");
+			//Get answers
+			answers = Arrays.asList(request.getParameterValues("Answer"));
+			//Escape answers
+			for (String a : answers) {
+				a =  StringEscapeUtils.escapeJava(a);
+			}
+			System.out.println("Ho caricato "+ answers);
+			asService.setAnswers(answers);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String path = ctxpath + "/Statistical";
 		response.sendRedirect(path);
+		return;
+		
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
 	}
 
 	public void destroy() {

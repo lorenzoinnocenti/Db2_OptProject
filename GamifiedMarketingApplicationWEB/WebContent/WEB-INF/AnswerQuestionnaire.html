@@ -31,25 +31,36 @@ button[type="submit"]:hover {
 		<h2>In order to gain points, answer the following questions:</h2>
 		<br>
 		<br>
+		
 		<div>
-			<form th:action="@{/SendAnswers}" method="POST">
-			<div th:each="a : ${questions}">
-				<div class="row">
-					<span th:text="${a.questionText}"></span>
-				</div>
-				<div class="row">
-					<input type="text" name="Answer" required="required">
-				</div>
+			<div th:if="${answers == null}">
+				<form th:action="@{/GoToStatistical}" method="POST">
+					<div th:each="q : ${questions}">
+						<div class="row">
+							<span th:text="${q.questionText}"></span>
+						</div>
+						<div class="row">
+							<input type="text" name="Answer" required="required">
+						</div>
+					</div>
+					<br>
+					<button type="submit" name="action" value="submit">Next Page</button>				
+				</form>
 			</div>
-				<br>
-				<button type="submit" name="action" value="submit">Submit Answers</button>				
-			</form>
-		</div>
-		<div>
-			<form th:action="@{/ExitQuestionnaire}" method="POST">
-			  <input type="hidden" name="extra_submit_param" value="extra_submit_value">
-			  <button type="submit" name="submit_param" value="submit">Cancel Questionnaire</button>
-			</form>
+			<div th:unless="${answers == null}">
+				<form th:action="@{/GoToStatistical}" method="POST">
+					<div th:each="q,i : ${questions}">
+						<div class="row">
+							<span th:text="${q.questionText}"></span>
+						</div>
+						<div class="row">
+							<input type="text" name="Answer" required="required" th:value="${answers[i.index]}">
+						</div>
+					</div>
+					<br>
+					<button type="submit" name="action" value="submit">Next Page</button>				
+				</form>
+			</div>
 		</div>
 	</div>
 	

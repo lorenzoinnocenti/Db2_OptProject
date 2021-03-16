@@ -1,6 +1,7 @@
 package it.polimi.db2.gamified.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import it.polimi.db2.gamified.entities.Account;
 import it.polimi.db2.gamified.entities.AccountStatus;
 import it.polimi.db2.gamified.entities.Question;
+import it.polimi.db2.gamified.services.AnswerStateService;
 import it.polimi.db2.gamified.services.QuestionnaireService;
 
 @WebServlet("/AnswerQuestionnaire")
@@ -46,7 +48,6 @@ public class AnswerQuestionnaire extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// If the user is not logged in (not present in session) redirect to the login
-		String loginpath = getServletContext().getContextPath() + "/index.html";
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("account");
 		if (session.isNew() || account == null) {
@@ -59,20 +60,22 @@ public class AnswerQuestionnaire extends HttpServlet{
 		}
 
 		List<Question> questions;
+		List<String> answers = null;
 		
 		try {
+			AnswerStateService asService = null;
+			asService = (AnswerStateService) request.getSession().getAttribute("AnswerStateService");
 			questions = qService.findByDate(new Date(java.lang.System.currentTimeMillis())).get(0).getQuestions();
-			
+			answers = asService.getAnswerList();			
 		} catch (Exception e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
 			return;
 		}
-		
 		String path = "/WEB-INF/AnswerQuestionnaire.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		
 		ctx.setVariable("questions", questions);
+		ctx.setVariable("answers", answers);
 
 		templateEngine.process(path, ctx, response.getWriter());
 	}

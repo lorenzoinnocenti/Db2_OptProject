@@ -25,64 +25,71 @@ select {
 <link rel="stylesheet" type="text/css" media="all"
 	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
 </head>
-<body>
-	<div id="Links" align="right">
-		<a th:href="@{/Home}">Leave statistical questions</a>
-	</div>
-	<div id="Links" align="right">
-		<a th:href="@{/Logout}">Logout</a>
-	</div>	
+<body>	
 	<div align="center">
 		<h2>Statistical Questions</h2>
 		<br>
-	
-		<form action="#" th:action="@{/SendStatisticalData}" method="POST">
-					<p>
-						<label for="age_choice">What is your age?</label> 
-						<select name="age_answer" id="age_answer">
-							<option value=null>I don't want to answer</option>
-						    <option value="under 18">under 18</option>
-							<option value="18-25">18-25</option>
-						    <option value="24-50">24-50</option>
-							<option value="51-75">51-75</option>
-							<option value="above 75">above 75</option>
-						</select>
-					</p>
-					
-					<br>
-					<br>
-					
-					<p>
-						<label for="sex_choice">How do you identify yourself?</label> 
-						<select name="sex_answer" id="sex_answer">
-							<option value=null>I don't want to answer</option>
-							<option value="male">Male</option>
-						    <option value="female">Female</option>
-	   					    <option value="non-binary">Non Binary</option>
-						    
-						</select>
-					</p>
-					
-					<br>
-					<br>
-					
-					<p>
-						<label for="expertise_choice">What is your expertise level?</label> 
-						<select name="expertise_answer" id="expertise_answer">
-							<option value=null>I don't want to answer</option>
-						    <option value="Low">Low</option>
-							<option value="Medium">Medium</option>
-							<option value="High">High</option>
-						</select>
-					</p>
-					
-					<br>
-					<br>
-					
-					<div align="center">
-						<button type="submit" name="submit_param" value="submit">Send Answers</button>
-					</div>
-		</form>
+		<div>
+			<form action="#" th:action="@{/SendAnswers}" method="POST">
+						<p>
+							<label for="age_choice">What is your age?</label> 
+							<select name="age_answer" id="age_answer">
+								<option value=null>I don't want to answer</option>
+							    <option value="under 18">under 18</option>
+								<option value="18-25">18-25</option>
+							    <option value="24-50">24-50</option>
+								<option value="51-75">51-75</option>
+								<option value="above 75">above 75</option>
+							</select>
+						</p>
+						
+						<br>
+						<br>
+						
+						<p>
+							<label for="sex_choice">How do you identify yourself?</label> 
+							<select name="sex_answer" id="sex_answer">
+								<option value=null>I don't want to answer</option>
+								<option value="Male">Male</option>
+							    <option value="Female">Female</option>
+		   					    <option value="Non-Binary">Non Binary</option>
+							    
+							</select>
+						</p>
+						
+						<br>
+						<br>
+						
+						<p>
+							<label for="expertise_choice">What is your expertise level?</label> 
+							<select name="expertise_answer" id="expertise_answer">
+								<option value=null>I don't want to answer</option>
+							    <option value="Low">Low</option>
+								<option value="Medium">Medium</option>
+								<option value="High">High</option>
+							</select>
+						</p>
+						
+						<br>
+						<br>
+						
+						<div align="center">
+							<button type="submit" name="submit_param" value="submit">Send Answers</button>
+						</div>
+			</form>
+		</div>
+		<div>
+			<form th:action="@{/AnswerQuestionnaire}" method="POST">
+			  <input type="hidden" name="extra_submit_param" value="extra_submit_value">
+			  <button type="submit" name="submit_param" value="submit">Previous Page</button>
+			</form>
+		</div>
+		<div>
+			<form th:action="@{/ExitQuestionnaire}" method="POST">
+			  <input type="hidden" name="extra_submit_param" value="extra_submit_value">
+			  <button type="submit" name="submit_param" value="submit">Cancel Questionnaire</button>
+			</form>
+		</div>
 	</div>
 
 	

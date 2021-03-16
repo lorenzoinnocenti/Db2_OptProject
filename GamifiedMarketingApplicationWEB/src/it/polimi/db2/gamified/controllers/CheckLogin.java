@@ -3,6 +3,7 @@ package it.polimi.db2.gamified.controllers;
 import java.io.IOException;
 
 import javax.ejb.EJB;
+import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +18,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.db2.gamified.services.AccountService;
+import it.polimi.db2.gamified.services.AnswerStateService;
 import it.polimi.db2.gamified.entities.Account;
 import it.polimi.db2.gamified.entities.AccountStatus;
 import it.polimi.db2.gamified.exceptions.CredentialsException;
@@ -95,6 +97,14 @@ public class CheckLogin extends HttpServlet {
 		} else {
 			request.getSession().setAttribute("account", account);
 			if (account.getStatus()==AccountStatus.USER) {
+				AnswerStateService asService = null;
+				try {
+					InitialContext ic = new InitialContext();
+					asService = (AnswerStateService) ic.lookup("java:/openejb/local/AnswerStateServiceLocalBean");
+					request.getSession().setAttribute("AnswerStateService", asService);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				path = getServletContext().getContextPath() + "/Home";
 				response.sendRedirect(path);
 			}
