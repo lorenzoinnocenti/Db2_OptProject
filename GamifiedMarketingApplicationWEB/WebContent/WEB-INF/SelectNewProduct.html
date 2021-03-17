@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+<meta charset="ISO-8859-1">
+<style>
+input[type=text],[type=password]{
+	width: 25%;
+	padding: 7px 5px;
+	margin: 8px 0;
+}
+button[type="submit"] {
+  background-color: #989898 !important;
+  color: white !important;
+  padding: 1% 1.5% !important;
+  display: inline-block !important;
+  width:100px !important;
+  text-align: center !important;
+}
+button[type="submit"]:hover {
+	background-color: #555 !important;
+}
+</style>
+<title>ProductOfTheDayInsertion</title><link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+</head>
+
+
+<body>
+		
+	<div align="center">
+	
+		<br>
+		<h1>Creation page</h1>
+		
+		<br>
+		<br>
+		
+		<div>
+			<h4>The parameter you just set are right and you can now proceed</h4>
+			<p th:text="${'The date you chose: ' + #dates.format(session.questionnaireDate, 'dd-MMM-yyyy')}"></p>
+		</div>
+				
+		<br>
+		<br>
+				
+		<form action="#" th:action="@{/SendQuestionnaireNewProduct}" method="POST" enctype="multipart/form-data">	
+		
+			<div class="row">
+					<span>Insert the name of the product</span>
+			</div>
+			<div class="row">
+				<input type="text" name="ProductName" id="ProductName" required="required">
+			</div>
+			
+			<br>
+			
+			<div class="row">
+					<span>Insert the description of the product</span>
+			</div>
+			<div class="row">
+				<input type="text" name="ProductDescription" required="required">
+			</div>
+			
+			<br>
+		
+			<div class="row">
+					<span>Insert the price of the product</span>
+			</div>						
+			<div class="row">
+				<input type="number" min=0.01 name="ProductPrice" required="required" step=0.01>
+			</div>
+			
+			<br>
+			<br>
+			
+			<span>Upload the product picture</span>
+			<br>
+			<input type="file" name="picture" required="required">
+			
+			<br>										
+			<br>
+			
+			<h4>Insert the questions </h4>
+			<div th:each="n : ${numbers}">
+				<div class="row">
+					<span th:text="'Insert question number ' + ${n} + ':'"></span>
+				</div>
+				<div class="row">
+					<input type="text" name="Questions" required="required">
+				</div>
+			</div>
+			
+				
+			<br>
+			<br>
+			
+			<div class="row" th:if="${errorMsg!=null}">
+				<p  style="color:red;" th:text=" ${errorMsg}"></p>
+			</div>
+					
+			<div align="center">
+				<button type="submit" name="submit_param" value="submit">Submit</button>
+			</div>
+			
+													
+		</form>
+		
+	</div>
+	
+		
+</body>
+</html>

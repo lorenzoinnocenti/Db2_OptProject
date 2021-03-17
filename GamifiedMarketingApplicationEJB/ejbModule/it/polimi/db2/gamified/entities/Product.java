@@ -13,7 +13,8 @@ import java.util.List;
  */
 @Entity
 @Table(name="product")
-@NamedQuery(name="Product.findAll", query="SELECT p FROM Product p")
+@NamedQueries({@NamedQuery(name="Product.findAll", query="SELECT p FROM Product p"),
+			   @NamedQuery(name="Product.findByName", query="SELECT p FROM Product p WHERE p.name = :prodName")})
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -43,6 +44,15 @@ public class Product implements Serializable {
 	private List<Review> reviews;
 
 	public Product() {
+	}
+	
+	public Product(String name, BigDecimal price, String description, byte[] image) {
+		this.name=name;
+		this.price=price;
+		this.description=description;
+		this.image=image;
+		this.questionnaires = null;
+		this.reviews = null;
 	}
 
 	public int getId() {

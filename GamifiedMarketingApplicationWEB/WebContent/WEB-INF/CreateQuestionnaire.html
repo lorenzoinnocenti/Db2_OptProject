@@ -71,7 +71,7 @@ button[type="submit"]:hover {
 		</div>
 		
 		<div th:if="${wrongDate != null}">
-			<h4 style="color:red;"> The date you inserted is wrong, can't be previous than today</h4>
+			<h4 style="color:red;"> The date you entered is wrong,it can't be previous than today</h4>
 			<form action="#" th:action="@{/SavequestionnaireParameters}" method="POST">
 			<label for="numer of questions">Reinsert the date for the new questionnaire</label>	
 			<br>
