@@ -34,19 +34,12 @@ button[type="submit"]:hover {
 		<br>
 		<h1>Creation page</h1>
 		
-		<br>
-		<br>
-		
-		<div>
-			<h4>The parameter you just set are right and you can now proceed</h4>
-			<p th:text="${'The date you chose: ' + #dates.format(session.questionnaireDate, 'dd-MMM-yyyy')}"></p>
-		</div>
 				
 		<br>
 		<br>
 				
 		<form action="#" th:action="@{/SendQuestionnaireNewProduct}" method="POST" enctype="multipart/form-data">	
-		
+		<fieldset>
 			<div class="row">
 					<span>Insert the name of the product</span>
 			</div>
@@ -80,31 +73,18 @@ button[type="submit"]:hover {
 			<input type="file" name="picture" required="required">
 			
 			<br>										
-			<br>
-			
-			<h4>Insert the questions </h4>
-			<div th:each="n : ${numbers}">
-				<div class="row">
-					<span th:text="'Insert question number ' + ${n} + ':'"></span>
-				</div>
-				<div class="row">
-					<input type="text" name="Questions" required="required">
-				</div>
-			</div>
-			
+			<br>						
 				
-			<br>
-			<br>
 			
 			<div class="row" th:if="${errorMsg!=null}">
 				<p  style="color:red;" th:text=" ${errorMsg}"></p>
 			</div>
 					
+					
 			<div align="center">
 				<button type="submit" name="submit_param" value="submit">Submit</button>
 			</div>
-			
-													
+			</fieldset>								
 		</form>
 		
 	</div>

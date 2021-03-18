@@ -64,13 +64,8 @@ public class GoToQuestionnaireNewProduct extends HttpServlet{
 		}
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		Integer numberOfQuestions =(Integer) session.getAttribute("numberOfQuestions");
 		String errorMsg = (String) session.getAttribute("errorMsg");
 		ctx.setVariable("errorMsg", errorMsg);
-		List<Integer> numberList = new ArrayList<Integer>();
-		for (int i=1; i<numberOfQuestions+1; i=i+1)
-			numberList.add(i);
-		ctx.setVariable("numbers", numberList);
 		templateEngine.process("/WEB-INF/SelectNewProduct.html", ctx, response.getWriter());		
 	}
 		

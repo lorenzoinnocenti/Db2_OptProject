@@ -37,7 +37,7 @@ public class Questionnaire implements Serializable {
 	private List<Question> questions;
 
 	//bi-directional many-to-one association to Product
-	@ManyToOne(fetch=FetchType.EAGER) 
+	@ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.PERSIST) 
 	// needed to display the product name with the questionnaire. Actually, EAGER is default for ManyToOne realtion.
 	@JoinColumn(name="productid", nullable=false)
 	private Product product;

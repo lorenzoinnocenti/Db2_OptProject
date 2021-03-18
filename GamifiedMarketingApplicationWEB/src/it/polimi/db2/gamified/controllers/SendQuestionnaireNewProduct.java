@@ -12,6 +12,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +35,7 @@ import it.polimi.db2.gamified.services.ProductService;
 import it.polimi.db2.gamified.services.QuestionnaireService;
 
 @WebServlet("/SendQuestionnaireNewProduct")
+@MultipartConfig
 public class SendQuestionnaireNewProduct extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
@@ -41,8 +43,7 @@ public class SendQuestionnaireNewProduct extends HttpServlet{
 	private TemplateEngine templateEngine;
 	//private TemplateEngine templateEngine;
 	
-	@EJB(name = "it.polimi.db2.gamified.services/QuestionnaireService")
-	private QuestionnaireService qService;
+	
 	@EJB(name="it.polimi.db2.gamified.services/ProductService")
 	private ProductService pService;
 
@@ -80,27 +81,15 @@ public class SendQuestionnaireNewProduct extends HttpServlet{
 		Part imgFile = request.getPart("picture");
 		InputStream imgContent = imgFile.getInputStream();
 		byte[] imgByteArray = ImageUtils.readImage(imgContent);
-		
 		try {
-			int ProductId = pService.addProduct(ProductName, ProductPrice, ProductDescription, imgByteArray);
-			System.out.println(ProductId);
-			Date questionnaireDate = (Date) session.getAttribute("questionnaireDate");
-			List<String> questions = Arrays.asList(request.getParameterValues("Questions"));
-			
-			qService.addQuestionnaire(questionnaireDate, ProductId);
-			int questionnaireId = qService.findByDate(questionnaireDate).get(0).getId();
-			 for(String q : questions)
-				 qService.addQuestion(questionnaireId, q);
-			 
-			String ctxpath = getServletContext().getContextPath();
-			String path = ctxpath + "/QuestionnaireSaved";
-			response.sendRedirect(path);
-		} catch (ProductAlreadyExistingException | ProductNotFoundException | QuestionnaireAlreadyPresentException | QuestionnaireNotFoundException e) {
-			String ctxpath = getServletContext().getContextPath();
-			String path = ctxpath + "/InsertNewProduct";
-			session.setAttribute("errorMsg", "The product already exists");
-			response.sendRedirect(path);
-		} 	
+			pService.createProduct(ProductName, ProductPrice, ProductDescription, imgByteArray);
+		} catch (ProductAlreadyExistingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String ctxpath = getServletContext().getContextPath();
+		String path = ctxpath + "/AdminPage";
+		response.sendRedirect(path);
 	}
 
 	public void destroy() {

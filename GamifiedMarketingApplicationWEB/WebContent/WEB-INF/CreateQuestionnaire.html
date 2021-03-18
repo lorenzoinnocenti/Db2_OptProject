@@ -64,12 +64,7 @@ button[type="submit"]:hover {
 				</div>
 			</form>
 		</div>
-		
-		<div th:if="${rightParameters != null}">
-			<h4>The parameter you just set are right and you can now proceed</h4>
-			<p th:text="${'The date you chose: ' + #dates.format(session.questionnaireDate, 'dd-MMM-yyyy')}"></p>
-		</div>
-		
+				
 		<div th:if="${wrongDate != null}">
 			<h4 style="color:red;"> The date you entered is wrong,it can't be previous than today</h4>
 			<form action="#" th:action="@{/SavequestionnaireParameters}" method="POST">
@@ -93,34 +88,6 @@ button[type="submit"]:hover {
 			</div>
 			</form>
 		</div>
-		
-		
-		<br>
-		<br>
-		<br>
-		<br>
-		
-		
-		
-		<div th:if="${rightParameters != null}">
-			<a id="AdminLink" th:href="@{/InsertNewProduct}">Create a new questionnaire for a new product</a>
-		</div>	
-		
-		<div th:if="${rightParameters != null}">
-			<a id="AdminLink" th:href="@{/SelectOldProduct}">Create e new questionnaire for an already existing product</a>
-		</div>
-		
-		<div th:if="${rightParameters == null}">
-			<button type = "button" disabled>Create a new questionnaire for a new product</button>
-		</div>	
-		
-		<div th:if="${rightParameters== null}">
-			<button type = "button" disabled>Create e new questionnaire for an already existing product</button>
-		</div>
-		
-		
-		<br>
-		<br>
 		
 				
 	</div>

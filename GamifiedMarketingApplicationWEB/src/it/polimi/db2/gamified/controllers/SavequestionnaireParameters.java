@@ -89,7 +89,7 @@ public class SavequestionnaireParameters extends HttpServlet{
 			}
 			session.setAttribute("questionnaireDate", questionnaireDate);
 			String path = null;
-			String ctxpath = getServletContext().getContextPath();
+			String ctxpath = getServletContext().getContextPath();				
 			path = ctxpath + "/CreateQuestionnaire";
 			response.sendRedirect(path);
 		} catch (ParseException e) {

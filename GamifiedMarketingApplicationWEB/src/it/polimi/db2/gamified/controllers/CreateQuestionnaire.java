@@ -60,8 +60,10 @@ public class CreateQuestionnaire extends HttpServlet{
 		if(questionnaireDateOk!=null && numberOfQuestions!=null && alreadyExisting != null) {
 			if(questionnaireDateOk == 1) {
 				if (alreadyExisting == 0) {
-					ctx.setVariable("rightParameters", Integer.valueOf(1));
 					this.removeSessionAttributes(session);
+					String path = getServletContext().getContextPath() + "/SelectOldProduct";
+					response.sendRedirect(path);
+					return;
 				}
 				else
 					ctx.setVariable("questAlreadyExists", Integer.valueOf(1));

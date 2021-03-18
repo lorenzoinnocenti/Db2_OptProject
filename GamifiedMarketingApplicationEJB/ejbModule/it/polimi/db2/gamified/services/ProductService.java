@@ -24,14 +24,13 @@ public class ProductService {
 		return products;
 	}
 	
-	public int addProduct(String name, BigDecimal price, String description, byte[] image ) throws ProductAlreadyExistingException {
-		List<Product> products = em.createNamedQuery("Product.findByName", Product.class).setParameter("prodName", name).getResultList();
+	public Product createProduct(String ProductName,BigDecimal ProductPrice, String ProductDescription, byte[] imgByteArray) throws ProductAlreadyExistingException {
+		List<Product> products = em.createNamedQuery("Product.findByName", Product.class).setParameter("prodName", ProductName).getResultList();
 		if(!products.isEmpty())
 			throw  new ProductAlreadyExistingException("The products with that name already exists");
-		Product product = new Product(name, price,description, image);
-		em.persist(product);
-		em.flush();
-		return product.getId();
+		Product newProduct = new Product(ProductName, ProductPrice, ProductDescription, imgByteArray);
+		em.persist(newProduct);
+		return newProduct;
 	}
 	
 }
