@@ -1,6 +1,6 @@
 package it.polimi.db2.gamified.services;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -26,9 +26,18 @@ public class LoginService {
 	
 	public void addTS (int accountId) {
 		Account account = em.find(Account.class, accountId);		
-		Login login = new Login(new Timestamp(System.currentTimeMillis()), account);
+		Login login = new Login(new Date(System.currentTimeMillis()), account);
 		//Binding bi-directional 
 		account.addLogin(login);
 		em.persist(login);
 		}
+	
+	public List<Login> findByUserDate (int accountId, Date dateStart){
+		Date dateEnd = new Date(dateStart.getTime() + (1000 * 60 * 60 * 24));
+		return em.createNamedQuery("Login.findByUserDate", Login.class)
+				.setParameter("dateStart", dateStart)
+				.setParameter("dateEnd", dateEnd)
+				.setParameter("usrId", accountId)
+				.getResultList();
+	}
 }

@@ -2,7 +2,7 @@ package it.polimi.db2.gamified.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 
 /**
@@ -12,16 +12,21 @@ import java.sql.Timestamp;
 @Entity
 @Table(name="login")
 @NamedQuery(name = "Login.findByUserId", query = "SELECT l FROM Login l WHERE l.account = :usrId")
+
+@NamedQueries({	@NamedQuery(name = "Login.findByUserId", query = "SELECT l FROM Login l WHERE l.account = :usrId"),
+	            @NamedQuery(name = "Login.findByUserDate", query = "SELECT l FROM Login l WHERE (l.account.id = :usrId AND l.timestamp >= :dateStart AND l.timestamp < :dateEnd)")})
+
 public class Login implements Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L; 
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int id;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private Timestamp timestamp;
+	private Date timestamp;
 
 	//bi-directional many-to-one association to Account
 	@ManyToOne
@@ -31,7 +36,7 @@ public class Login implements Serializable {
 	public Login() {
 	}
 
-	public Login(Timestamp ts, Account account) {
+	public Login(Date ts, Account account) {
 		this.timestamp = ts;
 		this.account = account;
 	}
@@ -44,11 +49,11 @@ public class Login implements Serializable {
 		this.id = id;
 	}
 
-	public Timestamp getTimestamp() {
+	public Date getTimestamp() {
 		return this.timestamp;
 	}
 
-	public void setTimestamp(Timestamp timestamp) {
+	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
 

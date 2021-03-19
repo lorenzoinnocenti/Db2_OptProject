@@ -41,8 +41,15 @@
 						<th colspan="2">Users who cancelled this questionnaire:</th>
 					</tr>
 				</thead>
-				<tr th:each="u : ${usercancelled}">
+				<tr th:each="u,i : ${usercancelled}">
 					<th th:text= "${u.getUsername()}"></th>
+					<th th:if="${logincancelled[i.index]== null}">
+						<span>This user never logged in in this day</span>
+					</th>
+					<th th:if="${logincancelled[i.index]!= null}">
+						This user logged on that day at 
+						<span th:text="${#dates.format(logincancelled[i.index].getTimestamp(), 'HH:mm:ss')}"></span>
+					</th>
 				</tr>
 			</table>
 		</div>

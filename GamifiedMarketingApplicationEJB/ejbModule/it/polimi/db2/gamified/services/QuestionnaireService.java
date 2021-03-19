@@ -26,6 +26,12 @@ public class QuestionnaireService {
 		return em.createNamedQuery("Questionnaire.findByDate", Questionnaire.class).setParameter("date", date).getResultList();
 	}
 	
+	public Questionnaire findById(int id) throws QuestionnaireNotFoundException{ 
+		Questionnaire q = em.find(Questionnaire.class, id);
+		if (q == null) throw new QuestionnaireNotFoundException("Questionnaire not found");
+		return q;
+	}
+	
 	public List<Questionnaire> findPastQuestionnaires(Date date) { 
 		return em.createNamedQuery("Questionnaire.findPastQuestionnaires", Questionnaire.class)
 				.setParameter("date", date)
