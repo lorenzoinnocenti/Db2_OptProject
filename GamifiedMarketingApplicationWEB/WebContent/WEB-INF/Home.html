@@ -13,37 +13,38 @@
 	<div align="right">
 		<a id="Links" th:href="@{/Logout}">Logout</a>
 	</div>
-		<div align="center">
-		<h1 th:if="${product != null}">Product of the day</h1>
+		<div align="center" th:if="${product != null}">
+		<h1 >Product of the day</h1>
+		
 		<br>
-		<table class="product-table">
-			<thead>
-		     	<tr class="border_bottom">
-		        	<td rowspan="4">
-						<img height="250px" alt="product_image" th:src="*{'data:image/png;base64,' + product.getImageData()}">
-		        	</td>
-		        	<th width="250px">Product Name, Price</th>
-		        </tr>
-		        <tr>
-					<td th:text= "${product.name + ', '+ product.price}"></td>
-		      	</tr>
-		      	<tr>
-		      		<th>Description</th>
-		      	</tr>
-		      	<tr class="border_bottom">
-					<td th:text= "${product.description}"></td>
-		      	</tr>
-	      	</thead>
-	     </table> 
-	
-		<div th:if="${product == null}">
+			<table class="product-table">
+				<thead>
+			     	<tr class="border_bottom">
+			        	<td rowspan="4">
+							<img height="250px" alt="product_image" th:src="*{'data:image/png;base64,' + product.getImageData()}">
+			        	</td>
+			        	<th width="250px">Product Name, Price</th>
+			        </tr>
+			        <tr>
+						<td th:text= "${product.name + ', '+ product.price}"></td>
+			      	</tr>
+			      	<tr>
+			      		<th>Description</th>
+			      	</tr>
+			      	<tr class="border_bottom">
+						<td th:text= "${product.description}"></td>
+			      	</tr>
+		      	</thead>
+		    </table> 
+	    </div>
+		<div align="center" th:if="${product == null}">
 			<h2>We are sorry</h2>
 			<p>Unfortunately there isn't any highlighted product today. Try log-in tomorrow</p>
 		</div>
 	
 	
-		<h2 th:if="${reviews != null}" th:text="${'Reviews for ' + product.name}"></h2>
-		<div th:if="${reviews != null}" >
+		<h2 align="center" th:if="${reviews != null}" th:text="${'Reviews for ' + product.name}"></h2>
+		<div align="center" th:if="${reviews != null}" >
 			<div th:each= "a : ${reviews}">
 				<div id="review">
 					<div id="authorname" class="row">
@@ -59,7 +60,7 @@
 		</div>
 		<h2 th:if="${reviews == null and product != null}">This product doesn't have any review.</h2>
 	
-		<div th:if="${product != null}">
+		<div align="center" th:if="${product != null}">
 			<div style="margin-top: 2%" th:if= "${status == null}">
 				<a id="Link" th:href="@{/AnswerQuestionnaire}">Answer to the questionnaire.</a>
 			</div>
@@ -72,7 +73,6 @@
 				</div>		
 			</div>
 		</div>
-	</div>
 	
 </body>
 </html>

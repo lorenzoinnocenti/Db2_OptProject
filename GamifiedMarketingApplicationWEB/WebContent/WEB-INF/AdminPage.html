@@ -13,8 +13,8 @@
 	<div align="right">
 		<a id="Links" th:href="@{/Logout}">Logout</a>
 	</div>
-	<div align="center">
-	<h1 th:if="${product != null}">Product of the day</h1>
+	<div align="center" th:if="${product != null}">
+	<h1>Product of the day</h1>
 	<br>
 	<table class="product-table">
 		<thead>
@@ -35,26 +35,25 @@
 	      	</tr>
       	</thead>
      </table> 
+    </div> 
      
-     <div th:if="${product == null}">
+    <div align="center" th:if="${product == null}">
 		<p>There isn't any highlighted product today.</p>
 	</div>
 	<br> 
 	
-	<div>
+	<div align="center">
 		<a id="AdminLink" th:href="@{/InsertNewProduct}">Insert a new Product</a>
-	</div>	
-	<div>
+	</div >	
+	<div align="center">
 		<a id="AdminLink" th:href="@{/CreateQuestionnaire}">Create a new questionnaire.</a>
 	</div>	
-	<div>
+	<div align="center">
 		<a id="AdminLink" th:href="@{/PastResults}">See the results of past questionnaires.</a>
 	</div>	
-	<div>
+	<div align="center">
 		<a id="AdminLink" th:href="@{/DeleteQuestionnairePage}">Delete a past questionnaire.</a>
 	</div>
-	
- 	</div>
 	
 	
 </body>
