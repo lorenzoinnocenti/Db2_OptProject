@@ -1,8 +1,6 @@
 package it.polimi.db2.gamified.controllers;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.math.BigDecimal;
 //import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
@@ -12,42 +10,35 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 
 import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import it.polimi.db2.gamified.utils.ImageUtils;
 import it.polimi.db2.gamified.entities.Account;
 import it.polimi.db2.gamified.entities.AccountStatus;
-import it.polimi.db2.gamified.exceptions.ProductAlreadyExistingException;
+import it.polimi.db2.gamified.entities.Questionnaire;
 import it.polimi.db2.gamified.exceptions.ProductNotFoundException;
 import it.polimi.db2.gamified.exceptions.QuestionnaireAlreadyPresentException;
 import it.polimi.db2.gamified.exceptions.QuestionnaireNotFoundException;
-import it.polimi.db2.gamified.services.ProductService;
 import it.polimi.db2.gamified.services.QuestionnaireService;
+import it.polimi.db2.gamified.services.UserQuestionnaireService;
 
-@WebServlet("/SendQuestionnaireNewProduct")
-@MultipartConfig
-public class SendQuestionnaireNewProduct extends HttpServlet{
-	
+@WebServlet("/SendQuestionnaireData")
+public class SendQuestionnaireData extends HttpServlet{
 	private static final long serialVersionUID = 1L;
-	
 	private TemplateEngine templateEngine;
 	//private TemplateEngine templateEngine;
-	
-	
-	@EJB(name="it.polimi.db2.gamified.services/ProductService")
-	private ProductService pService;
+	@EJB(name = "it.polimi.db2.gamified.services/QuestionnaireService")
+	private QuestionnaireService qService;
 
-	public SendQuestionnaireNewProduct() {
+	public SendQuestionnaireData() {
 		super();
 	}
 
@@ -73,23 +64,21 @@ public class SendQuestionnaireNewProduct extends HttpServlet{
 			response.sendRedirect(getServletContext().getContextPath() + "/Home");
 			return;
 		}
-		
-		String ProductName = request.getParameter("ProductName");
-		System.out.println(ProductName);
-		String ProductDescription = (String) request.getParameter("ProductDescription");
-		BigDecimal ProductPrice = new BigDecimal(request.getParameter("ProductPrice"));
-		Part imgFile = request.getPart("picture");
-		InputStream imgContent = imgFile.getInputStream();
-		byte[] imgByteArray = ImageUtils.readImage(imgContent);
+		int productId = Integer.parseInt(request.getParameter("productId"));
+		List<String> questions = null;
+		questions = Arrays.asList(request.getParameterValues("Questions"));
+		Date questionnaireDate = (Date) session.getAttribute("questionnaireDate");
 		try {
-			pService.createProduct(ProductName, ProductPrice, ProductDescription, imgByteArray);
-		} catch (ProductAlreadyExistingException e) {
-			// TODO Auto-generated catch block
+			qService.addQuestionnaire(questionnaireDate, productId);
+			 int questionnaireId = qService.findByDate(questionnaireDate).get(0).getId();
+			 for(String q : questions)
+				 qService.addQuestion(questionnaireId, q);
+			 String ctxpath = getServletContext().getContextPath();
+			 String path = ctxpath + "/QuestionnaireSaved";
+			 response.sendRedirect(path);
+		} catch (ProductNotFoundException | QuestionnaireAlreadyPresentException | QuestionnaireNotFoundException e) {
 			e.printStackTrace();
 		}
-		String ctxpath = getServletContext().getContextPath();
-		String path = ctxpath + "/AdminPage";
-		response.sendRedirect(path);
 	}
 
 	public void destroy() {

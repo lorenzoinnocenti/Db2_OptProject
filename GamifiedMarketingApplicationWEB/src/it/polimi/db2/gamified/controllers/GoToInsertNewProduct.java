@@ -29,13 +29,13 @@ import it.polimi.db2.gamified.entities.AccountStatus;
 import it.polimi.db2.gamified.entities.Product;
 
 @WebServlet("/InsertNewProduct")
-public class GoToQuestionnaireNewProduct extends HttpServlet{
+public class GoToInsertNewProduct extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
 	@EJB(name = "it.polimi.db2.gamified.services/ProductSrvice")
 	private ProductService pService;
 
-	public GoToQuestionnaireNewProduct() {
+	public GoToInsertNewProduct() {
 		super();
 	}
 	
@@ -66,7 +66,7 @@ public class GoToQuestionnaireNewProduct extends HttpServlet{
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		String errorMsg = (String) session.getAttribute("errorMsg");
 		ctx.setVariable("errorMsg", errorMsg);
-		templateEngine.process("/WEB-INF/SelectNewProduct.html", ctx, response.getWriter());		
+		templateEngine.process("/WEB-INF/InsertNewProduct.html", ctx, response.getWriter());		
 	}
 		
 	public void destroy() {
