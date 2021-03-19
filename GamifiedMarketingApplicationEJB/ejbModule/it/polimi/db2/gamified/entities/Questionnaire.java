@@ -14,8 +14,7 @@ import java.util.List;
 @Table(name="questionnaire")
 
 
-@NamedQueries({ @NamedQuery(name="Questionnaire.findAll", query="SELECT q FROM Questionnaire q"),
-				@NamedQuery(name = "Questionnaire.findByDate", query = "SELECT q FROM Questionnaire q WHERE q.date = :date"),
+@NamedQueries({ @NamedQuery(name = "Questionnaire.findByDate", query = "SELECT q FROM Questionnaire q WHERE q.date = :date"),
     			@NamedQuery(name = "Questionnaire.findPastQuestionnaires", query = "SELECT q FROM Questionnaire q WHERE q.date < :date ORDER BY q.date DESC")})
  
 
@@ -23,8 +22,7 @@ public class Questionnaire implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="QUESTIONNAIRE_ID_GENERATOR" )
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="QUESTIONNAIRE_ID_GENERATOR")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int id;
 

@@ -35,27 +35,6 @@ public class QuestionService {
 		return questions;
 	}
 	
-	public List<Question> findQuestionsByQuestionnaireRefresh (int questionnaireId) {
-		Questionnaire questionnaire = em.find(Questionnaire.class, questionnaireId);
-		em.refresh(questionnaire);
-		List<Question> questions = questionnaire.getQuestions();
-		return questions;
-	}
-	
-	public List<Question> findQuestionsByQuestionnaireNoCache (int questionnaireId) {
-		List<Question> questions = em
-				.createQuery("Select q from Question q where q.questionnaire.id = :questId", Question.class)
-				.setHint("javax.persistence.cache.storeMode", "REFRESH").setParameter("questId", questionnaireId).getResultList();
-		return questions;
-	}
-	
-	public List<Question> findQuestionsByQuestionnaireJPQL (int questionnaireId) {
-		List<Question> questions = em
-				.createQuery("Select q from Question q where q.questionnaire.id = :questId", Question.class)
-				.setParameter("questId", questionnaireId).getResultList();
-		return questions;
-	}
-	
 	public void removeQuestion (int questionId) throws QuestionNotFoundException {
 		Question question = em.find(Question.class, questionId);
 		if (question == null) throw new QuestionNotFoundException("Question not found.");

@@ -11,15 +11,13 @@ import java.util.List;
  */
 @Entity
 @Table(name="question")
-@NamedQueries({	@NamedQuery(name="Question.findAll", query="SELECT q FROM Question q"),
-				@NamedQuery(name = "Question.findByQuestionnaire", query = "Select q FROM Question q WHERE q.questionnaire.id = :questId") })
+@NamedQuery(name = "Question.findByQuestionnaire", query = "Select q FROM Question q WHERE q.questionnaire.id = :questId")
 
 public class Question implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="QUESTION_ID_GENERATOR" )
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="QUESTION_ID_GENERATOR")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int id;
 

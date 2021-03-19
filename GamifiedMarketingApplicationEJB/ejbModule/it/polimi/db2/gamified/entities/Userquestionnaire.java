@@ -10,9 +10,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="userquestionnaire")
-@NamedQueries({@NamedQuery(name="Userquestionnaire.findAll", query="SELECT u FROM Userquestionnaire u"),
-			  @NamedQuery(name="Userquestionnaire.findNonCancelled", query="SELECT u FROM Userquestionnaire u WHERE u.status = it.polimi.db2.gamified.entities.QuestionnaireStatus.FINISHED AND u.id.questionnaireid = :questID"),
-			  @NamedQuery(name="Userquestionnaire.findCancelled", query="SELECT u FROM Userquestionnaire u WHERE u.status = it.polimi.db2.gamified.entities.QuestionnaireStatus.CANCELLED AND u.id.questionnaireid = :questID")})
+@NamedQueries({@NamedQuery(name="Userquestionnaire.findNonCancelled", query="SELECT u FROM Userquestionnaire u WHERE u.status = it.polimi.db2.gamified.entities.QuestionnaireStatus.FINISHED AND u.id.questionnaireid = :questID"),
+			   @NamedQuery(name="Userquestionnaire.findCancelled", query="SELECT u FROM Userquestionnaire u WHERE u.status = it.polimi.db2.gamified.entities.QuestionnaireStatus.CANCELLED AND u.id.questionnaireid = :questID")})
 public class Userquestionnaire implements Serializable {
 	private static final long serialVersionUID = 1L;
 

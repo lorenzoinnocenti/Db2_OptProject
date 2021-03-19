@@ -10,9 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="answers")
-@NamedQueries({@NamedQuery(name="Answer.findAll", query="SELECT a FROM Answer a"),
-			   @NamedQuery(name="Answer.findAnsByUserOrdered", query="SELECT a FROM Answer a WHERE a.id.userid = :usID ORDER BY a.id.questionid ASC"),
-			   @NamedQuery(name="Answer.findByQuestionByUser", query="SELECT a FROM Answer a WHERE a.id.userid = :usID and a.id.questionid = :questID")})
+@NamedQuery(name="Answer.findByQuestionByUser", query="SELECT a FROM Answer a WHERE a.id.userid = :usID and a.id.questionid = :questID")
 public class Answer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
