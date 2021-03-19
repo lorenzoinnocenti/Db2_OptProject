@@ -54,7 +54,7 @@ button[type="submit"]:hover {
 							<span th:text="${q.questionText}"></span>
 						</div>
 						<div class="row">
-							<input type="text" name="Answer" required="required" th:value="${answers[i.index]}">
+							<input type="text" name="Answer" required="required" maxlength="200" th:value="${answers[i.index]}">
 						</div>
 					</div>
 					<br>

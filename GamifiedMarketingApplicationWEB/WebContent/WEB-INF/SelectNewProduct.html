@@ -44,7 +44,7 @@ button[type="submit"]:hover {
 					<span>Insert the name of the product</span>
 			</div>
 			<div class="row">
-				<input type="text" name="ProductName" id="ProductName" required="required">
+				<input type="text" name="ProductName" id="ProductName" required="required" maxlength="40">
 			</div>
 			
 			<br>
@@ -53,7 +53,7 @@ button[type="submit"]:hover {
 					<span>Insert the description of the product</span>
 			</div>
 			<div class="row">
-				<input type="text" name="ProductDescription" required="required">
+				<input type="text" name="ProductDescription" required="required" maxlength="200">
 			</div>
 			
 			<br>
@@ -62,7 +62,7 @@ button[type="submit"]:hover {
 					<span>Insert the price of the product</span>
 			</div>						
 			<div class="row">
-				<input type="number" min=0.01 name="ProductPrice" required="required" step=0.01>
+				<input type="number" min=0.01 name="ProductPrice" required="required" step=0.01 max=1000000>
 			</div>
 			
 			<br>
