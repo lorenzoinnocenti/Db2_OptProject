@@ -20,6 +20,7 @@ public class ProductService {
 	}
 	
 	public List<Product> findAllProduct(){
+		//No need for refresh, since there is just one admin
 		List<Product> products = em.createNamedQuery("Product.findAll", Product.class).getResultList();
 		return products;
 	}

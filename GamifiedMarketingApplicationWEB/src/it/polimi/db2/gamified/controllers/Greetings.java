@@ -69,13 +69,10 @@ public class Greetings extends HttpServlet{
 			uq = uqService.getUserQuestionnaire(((Account) session.getAttribute("account")).getId(), q.getId());
 		} catch (UserQuestionnaireNotFoundException e1) {
 			e1.printStackTrace();
-		}
-		System.out.println(uq);
-		
+		}		
 		try {
 			if (uq != null) {
 				newPoints = uq.getScore();
-				System.out.println(uq.getAnswerExp());
 			}
 		} catch (Exception e) {
 			//User never pressed "Answer questionnaire", so there isn't any entity in the DB.

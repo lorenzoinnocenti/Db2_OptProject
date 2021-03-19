@@ -23,6 +23,7 @@ public class UserQuestionnaireService {
 
 	
 	public List<Account> findUsersByQuestionnaireId(int questionnaireId) throws UserNotFoundException{
+		//Only used to find already ended questionnaires. No need to refresh
 		List<Userquestionnaire> questionnaires = em.createNamedQuery("Userquestionnaire.findNonCancelled", Userquestionnaire.class).setParameter("questID", questionnaireId).getResultList();
 		if(questionnaires.size() != 0) {
 			List<Account> users_account = new ArrayList<Account>();
@@ -35,6 +36,7 @@ public class UserQuestionnaireService {
 	}
 	
 	public List<Account> FindUsersByQuestionnaireCancelled(int questionnaireId) throws UserNotFoundException{
+		//Only used to find already ended questionnaires. No need to refresh
 		List<Userquestionnaire> questionnaires = em.createNamedQuery("Userquestionnaire.findCancelled", Userquestionnaire.class).setParameter("questID", questionnaireId).getResultList();
 		if(questionnaires.size() != 0) {
 			List<Account> users_account = new ArrayList<Account>();
@@ -47,6 +49,7 @@ public class UserQuestionnaireService {
 	}
 	
 	public Userquestionnaire getUserQuestionnaire(int accountId, int questionnaireId) throws UserQuestionnaireNotFoundException{
+		//No need to Refresh, since it is used for older questionnaires or after the user change its questionnaire status
 		Userquestionnaire userquest = em.find(Userquestionnaire.class, new UserquestionnairePK(accountId, questionnaireId));
 		if (userquest == null) throw new UserQuestionnaireNotFoundException("Userquestionnaire not found");
 		em.refresh(userquest);

@@ -35,12 +35,5 @@ public class QuestionService {
 		return questions;
 	}
 	
-	public void removeQuestion (int questionId) throws QuestionNotFoundException {
-		Question question = em.find(Question.class, questionId);
-		if (question == null) throw new QuestionNotFoundException("Question not found.");
-		Questionnaire questionnaire = question.getQuestionnaire();
-		questionnaire.removeQuestion(question);
-		em.remove(question);
-	}
 }
  

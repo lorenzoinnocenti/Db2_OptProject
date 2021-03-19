@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import java.util.List;
-import java.util.ArrayList; // import the ArrayList class
+import java.util.ArrayList;
 
 import it.polimi.db2.gamified.entities.*;
 import it.polimi.db2.gamified.exceptions.*;
@@ -74,12 +74,4 @@ public class AnswersService {
 		Answer answer = new Answer(id, answerText, user, question);
 		em.persist(answer);
 	}
-	
-	private List<Answer> findAnsByUserOrdered(int userID) {
-		return em.createNamedQuery("Answer.findAnsByUserOrdered", Answer.class)
-				.setParameter("usID", userID)
-				.setHint("javax.persistence.cache.storeMode", "REFRESH") 
-				.getResultList();
-	}
-	 
 }
