@@ -100,7 +100,8 @@ public class CheckLogin extends HttpServlet {
 				AnswerStateService asService = null;
 				try {
 					InitialContext ic = new InitialContext();
-					asService = (AnswerStateService) ic.lookup("java:/openejb/local/AnswerStateServiceLocalBean");
+					asService = (AnswerStateService) ic.lookup("java:/openejb/local/GamifiedMarketingApplicationWEB/GamifiedMarketingApplicationWEB/AnswerStateServiceLocalBean");
+					// asService = (AnswerStateService) ic.lookup("java:/openejb/local/AnswerStateServiceLocalBean");
 					request.getSession().setAttribute("AnswerStateService", asService);
 				} catch (Exception e) {
 					e.printStackTrace();
