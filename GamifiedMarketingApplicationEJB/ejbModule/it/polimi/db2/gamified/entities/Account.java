@@ -14,7 +14,7 @@ import java.util.List;
 @NamedQueries({ @NamedQuery(name = "Account.checkCredentials", query = "SELECT r FROM Account r  WHERE r.username = :usrn and r.password = :pwd"),
 				@NamedQuery(name = "Account.findByUsername", query = "SELECT r FROM Account r  WHERE r.username = :usrn"),
 				@NamedQuery(name = "Account.findByEmail", query = "SELECT r FROM Account r  WHERE r.email = :email"),
-	            @NamedQuery(name = "Account.computeLeaderboard", query = "SELECT r FROM Account r ORDER BY r.totalpoints DESC")})
+	            @NamedQuery(name = "Account.computeLeaderboard", query = "SELECT r FROM Account r WHERE r.status = it.polimi.db2.gamified.entities.AccountStatus.USER ORDER BY r.totalpoints DESC")})
 
 
 public class Account implements Serializable {
