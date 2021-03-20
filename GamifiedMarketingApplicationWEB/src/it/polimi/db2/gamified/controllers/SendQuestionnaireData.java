@@ -73,6 +73,7 @@ public class SendQuestionnaireData extends HttpServlet{
 			questionnaireId = qService.addQuestionnaireReturnId(questionnaireDate, productId);
 			
 		} catch (ProductNotFoundException | QuestionnaireAlreadyPresentException e) {
+			//Unreachable block, we already checked everything in the previous page
 			e.printStackTrace();
 		}
 		try { 
@@ -80,6 +81,7 @@ public class SendQuestionnaireData extends HttpServlet{
 					qService.addQuestion(questionnaireId, q);
 			}
 		} catch (QuestionnaireNotFoundException e) {
+			//Unreachable block, we just created the questionnaire (line 73)
 			e.printStackTrace();
 		}
 		String ctxpath = getServletContext().getContextPath();

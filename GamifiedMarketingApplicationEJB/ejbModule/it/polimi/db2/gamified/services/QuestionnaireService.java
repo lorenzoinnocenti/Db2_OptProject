@@ -47,8 +47,6 @@ public class QuestionnaireService {
 		if (p == null) throw new ProductNotFoundException("Product not found");
 		Questionnaire questionnaire = new Questionnaire(date, p);
 		em.persist(questionnaire);
-		em.flush();
-		System.out.println(questionnaire.getId());
 	}
 	
 	public int addQuestionnaireReturnId (Date date, int productId) throws ProductNotFoundException, QuestionnaireAlreadyPresentException { 
@@ -59,6 +57,7 @@ public class QuestionnaireService {
 		if (p == null) throw new ProductNotFoundException("Product not found");
 		Questionnaire questionnaire = new Questionnaire(date, p);
 		em.persist(questionnaire);
+		//Flush because persist is not synchronous and we want the DB status to be updated as soon as possible
 		em.flush();
 		return questionnaire.getId();
 	}
