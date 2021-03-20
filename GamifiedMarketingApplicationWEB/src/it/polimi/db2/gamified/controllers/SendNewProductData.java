@@ -3,10 +3,6 @@ package it.polimi.db2.gamified.controllers;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-//import java.io.IOException;
-
-//import java.util.List;
-
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -23,8 +19,8 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import it.polimi.db2.gamified.utils.ImageUtils;
 import it.polimi.db2.gamified.entities.Account;
+import it.polimi.db2.gamified.utils.ImageUtils;
 import it.polimi.db2.gamified.entities.AccountStatus;
 import it.polimi.db2.gamified.exceptions.ProductAlreadyExistingException;
 
@@ -34,13 +30,8 @@ import it.polimi.db2.gamified.services.ProductService;
 @WebServlet("/SendNewProductData")
 @MultipartConfig
 public class SendNewProductData extends HttpServlet{
-	
 	private static final long serialVersionUID = 1L;
-	
-	private TemplateEngine templateEngine;
-	//private TemplateEngine templateEngine;
-	
-	
+	private TemplateEngine templateEngine;	
 	@EJB(name="it.polimi.db2.gamified.services/ProductService")
 	private ProductService pService;
 
@@ -69,14 +60,24 @@ public class SendNewProductData extends HttpServlet{
 		if (account.getStatus() == AccountStatus.USER) {
 			response.sendRedirect(getServletContext().getContextPath() + "/Home");
 			return;
-		}		
+		}
+		
 		String ProductName = request.getParameter("ProductName");
-		System.out.println(ProductName);
 		String ProductDescription = (String) request.getParameter("ProductDescription");
 		BigDecimal ProductPrice = new BigDecimal(request.getParameter("ProductPrice"));
 		Part imgFile = request.getPart("picture");
 		InputStream imgContent = imgFile.getInputStream();
 		byte[] imgByteArray = ImageUtils.readImage(imgContent);
+		
+		//Check image size
+		if (imgByteArray.length >= 16777215) {
+			session.setAttribute("errorMsg", "Image is too big. Max 16 MB");
+			String ctxpath = getServletContext().getContextPath();
+			String path = ctxpath + "/InsertNewProduct";
+			response.sendRedirect(path);
+			return;
+		}
+		
 		try {
 			pService.createProduct(ProductName, ProductPrice, ProductDescription, imgByteArray);
 		} catch (ProductAlreadyExistingException e) {
@@ -93,4 +94,5 @@ public class SendNewProductData extends HttpServlet{
 
 	public void destroy() {
 	}
+	
 }
