@@ -47,6 +47,20 @@ public class QuestionnaireService {
 		if (p == null) throw new ProductNotFoundException("Product not found");
 		Questionnaire questionnaire = new Questionnaire(date, p);
 		em.persist(questionnaire);
+		em.flush();
+		System.out.println(questionnaire.getId());
+	}
+	
+	public int addQuestionnaireReturnId (Date date, int productId) throws ProductNotFoundException, QuestionnaireAlreadyPresentException { 
+		//Max one questionnaire per day
+		List<Questionnaire> q = findByDate(date);
+		if (!q.isEmpty()) throw new QuestionnaireAlreadyPresentException("There is already a questionnaire on this date.");
+		Product p = em.find(Product.class, productId);
+		if (p == null) throw new ProductNotFoundException("Product not found");
+		Questionnaire questionnaire = new Questionnaire(date, p);
+		em.persist(questionnaire);
+		em.flush();
+		return questionnaire.getId();
 	}
 	
 	public void addQuestion(int questionnaireId, String text) throws QuestionnaireNotFoundException{

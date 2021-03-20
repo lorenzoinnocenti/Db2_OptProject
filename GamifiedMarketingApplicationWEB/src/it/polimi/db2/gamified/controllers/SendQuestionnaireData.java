@@ -68,17 +68,23 @@ public class SendQuestionnaireData extends HttpServlet{
 		List<String> questions = null;
 		questions = Arrays.asList(request.getParameterValues("Questions"));
 		Date questionnaireDate = (Date) session.getAttribute("questionnaireDate");
+		int questionnaireId = 0;
 		try {
-			qService.addQuestionnaire(questionnaireDate, productId);
-			 int questionnaireId = qService.findByDate(questionnaireDate).get(0).getId();
-			 for(String q : questions)
-				 qService.addQuestion(questionnaireId, q);
-			 String ctxpath = getServletContext().getContextPath();
-			 String path = ctxpath + "/QuestionnaireSaved";
-			 response.sendRedirect(path);
-		} catch (ProductNotFoundException | QuestionnaireAlreadyPresentException | QuestionnaireNotFoundException e) {
+			questionnaireId = qService.addQuestionnaireReturnId(questionnaireDate, productId);
+			
+		} catch (ProductNotFoundException | QuestionnaireAlreadyPresentException e) {
 			e.printStackTrace();
 		}
+		try { 
+			for(String q : questions) {				
+					qService.addQuestion(questionnaireId, q);
+			}
+		} catch (QuestionnaireNotFoundException e) {
+			e.printStackTrace();
+		}
+		String ctxpath = getServletContext().getContextPath();
+		String path = ctxpath + "/QuestionnaireSaved";
+		 response.sendRedirect(path);		
 	}
 
 	public void destroy() {
