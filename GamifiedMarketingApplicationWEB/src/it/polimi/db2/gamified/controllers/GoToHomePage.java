@@ -81,21 +81,21 @@ public class GoToHomePage extends HttpServlet {
 				if (reviews.size() == 0) {
 					reviews = null;
 				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
-			return;
-		}
-
-		try {
-			if (uqService.getUserQuestionnaire(((Account) session.getAttribute("account")).getId(), questionnaires.get(0).getId()) != null) {
-				status = uqService.getUserQuestionnaire(((Account) session.getAttribute("account")).getId(), questionnaires.get(0).getId()).getStatus();
+				
+				//Get the status of userquestionnaire
+				if (uqService.getUserQuestionnaire(((Account) session.getAttribute("account")).getId(), questionnaires.get(0).getId()) != null) {
+					status = uqService.getUserQuestionnaire(((Account) session.getAttribute("account")).getId(), questionnaires.get(0).getId()).getStatus();
+				}
 			}
 		} catch (UserQuestionnaireNotFoundException e) {
 			//User never pressed "Answer questionnaire", so there isn't any entity in the DB.
 			status = null;
-		}
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
+			return;
+		}	
+		
 		// Redirect to the Home page and add missions to the parameters
 		String path = "/WEB-INF/Home.html";
 		ServletContext servletContext = getServletContext();
