@@ -25,6 +25,8 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import it.polimi.db2.gamified.entities.Account;
 import it.polimi.db2.gamified.entities.AccountStatus;
 
+//Set the parameters used by GoToCreateQuestionnaire servlet to render the CreateQuestionnaire.html
+
 @WebServlet("/SavequestionnaireParameters")
 public class SavequestionnaireParameters extends HttpServlet{
 	private static final long serialVersionUID = 1L;
@@ -36,7 +38,6 @@ public class SavequestionnaireParameters extends HttpServlet{
 		super();
 	}
 	
-	
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
 		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
@@ -44,8 +45,7 @@ public class SavequestionnaireParameters extends HttpServlet{
 		this.templateEngine = new TemplateEngine();
 		this.templateEngine.setTemplateResolver(templateResolver);
 		templateResolver.setSuffix(".html");
-	}
-	
+	}	
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// If the user is not logged in (not present in session) redirect to the login
@@ -59,6 +59,7 @@ public class SavequestionnaireParameters extends HttpServlet{
 			response.sendRedirect(getServletContext().getContextPath() + "/Home");
 			return;
 		}
+		
 		String stringDate = request.getParameter("questionnaireDate");
 		Date questionnaireDate;
 		try {
@@ -99,6 +100,8 @@ public class SavequestionnaireParameters extends HttpServlet{
 		
 	public void destroy() {
 	}
+	
 }
+
 
 

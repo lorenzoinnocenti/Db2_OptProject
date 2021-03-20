@@ -1,9 +1,7 @@
 package it.polimi.db2.gamified.controllers;
 
 import java.io.IOException;
-import java.util.Date;
 
-import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +17,8 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.db2.gamified.entities.Account;
 import it.polimi.db2.gamified.entities.AccountStatus;
+
+//Load the message that states that the questionnaire has been saved correctly
 
 @WebServlet("/QuestionnaireSaved")
 public class QuestionnaireSaved extends HttpServlet{

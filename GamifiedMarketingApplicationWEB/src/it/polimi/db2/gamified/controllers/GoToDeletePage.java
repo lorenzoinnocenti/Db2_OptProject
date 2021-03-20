@@ -9,17 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.thymeleaf.TemplateEngine;
@@ -27,8 +20,12 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import it.polimi.db2.gamified.entities.*;
-import it.polimi.db2.gamified.services.*;
+import it.polimi.db2.gamified.entities.Account;
+import it.polimi.db2.gamified.entities.AccountStatus;
+import it.polimi.db2.gamified.entities.Questionnaire;
+import it.polimi.db2.gamified.services.QuestionnaireService;
+
+//Load the list of questionnaires that can be deleted
 
 @WebServlet("/DeleteQuestionnairePage")
 public class GoToDeletePage extends HttpServlet {
@@ -61,13 +58,14 @@ public class GoToDeletePage extends HttpServlet {
 			response.sendRedirect(getServletContext().getContextPath() + "/Home");
 			return;
 		}
+		
 		List<Questionnaire> questionnaires = null;
 		try {
 			questionnaires = qService.findPastQuestionnaires(new Date(java.lang.System.currentTimeMillis()));
 		} catch (Exception e) {
-				e.printStackTrace();
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
-				return;
+			e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
+			return;
 		}
 		String path = "/WEB-INF/DeletePage.html";
 		ServletContext servletContext = getServletContext();

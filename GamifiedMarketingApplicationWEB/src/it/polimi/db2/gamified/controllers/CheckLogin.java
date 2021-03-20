@@ -25,6 +25,8 @@ import it.polimi.db2.gamified.exceptions.CredentialsException;
 import it.polimi.db2.gamified.exceptions.BannedUserException;
 import javax.persistence.NonUniqueResultException;
 
+//Check if username and password are present in the DB
+
 @WebServlet("/CheckLogin")
 public class CheckLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;

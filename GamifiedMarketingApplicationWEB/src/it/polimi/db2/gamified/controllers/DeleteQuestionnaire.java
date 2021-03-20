@@ -10,10 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import it.polimi.db2.gamified.entities.Account;
+import it.polimi.db2.gamified.entities.AccountStatus;
 import it.polimi.db2.gamified.services.QuestionnaireService;
-import it.polimi.db2.gamified.entities.*;
-import it.polimi.db2.gamified.exceptions.*;
+import it.polimi.db2.gamified.exceptions.QuestionnaireNotFoundException;
 
+//Remove a questionnaire from the DB (Cascade all questions, answers, userquestionnaires, and removes points via trigger)
 
 @WebServlet("/DeleteQuestionnaire")
 public class DeleteQuestionnaire extends HttpServlet {
@@ -42,6 +44,7 @@ public class DeleteQuestionnaire extends HttpServlet {
 		}
 		Integer questionnaireId = null;
 		try {
+			//Getting the Id from the URL
 			questionnaireId = Integer.parseInt(request.getParameter("questionnaireid"));
 		} catch (NumberFormatException | NullPointerException e) {
 			e.printStackTrace();

@@ -9,17 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.thymeleaf.TemplateEngine;
@@ -27,8 +20,13 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import it.polimi.db2.gamified.entities.*;
-import it.polimi.db2.gamified.services.*;
+import it.polimi.db2.gamified.entities.Account;
+import it.polimi.db2.gamified.entities.Product;
+import it.polimi.db2.gamified.entities.AccountStatus;
+import it.polimi.db2.gamified.entities.Questionnaire;
+import it.polimi.db2.gamified.services.QuestionnaireService;
+
+//Load the home-page of the Administrator
 
 @WebServlet("/AdminPage")
 public class GoToAdminPage extends HttpServlet {

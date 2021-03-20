@@ -17,6 +17,8 @@ import it.polimi.db2.gamified.entities.QuestionnaireStatus;
 import it.polimi.db2.gamified.services.QuestionnaireService;
 import it.polimi.db2.gamified.services.UserQuestionnaireService;
 
+//Leave a questionnaire unanswered
+
 @WebServlet("/ExitQuestionnaire")
 public class ExitQuestionnaire extends HttpServlet{
 	private static final long serialVersionUID = 1L;

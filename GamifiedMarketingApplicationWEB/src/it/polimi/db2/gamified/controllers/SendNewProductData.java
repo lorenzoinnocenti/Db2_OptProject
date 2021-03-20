@@ -26,6 +26,7 @@ import it.polimi.db2.gamified.exceptions.ProductAlreadyExistingException;
 
 import it.polimi.db2.gamified.services.ProductService;
 
+//Load the new product into the DB
 
 @WebServlet("/SendNewProductData")
 @MultipartConfig
@@ -71,7 +72,7 @@ public class SendNewProductData extends HttpServlet{
 		
 		//Check image size
 		if (imgByteArray.length >= 16777215) {
-			session.setAttribute("errorMsg", "Image is too big. Max 16 MB");
+			session.setAttribute("errorMsg", "Image is too big. Max size: 16 MB");
 			String ctxpath = getServletContext().getContextPath();
 			String path = ctxpath + "/InsertNewProduct";
 			response.sendRedirect(path);
@@ -81,7 +82,7 @@ public class SendNewProductData extends HttpServlet{
 		try {
 			pService.createProduct(ProductName, ProductPrice, ProductDescription, imgByteArray);
 		} catch (ProductAlreadyExistingException e) {
-			session.setAttribute("errorMsg", "there exist already a product with that name");
+			session.setAttribute("errorMsg", "There exist already a product with that name");
 			String ctxpath = getServletContext().getContextPath();
 			String path = ctxpath + "/InsertNewProduct";
 			response.sendRedirect(path);

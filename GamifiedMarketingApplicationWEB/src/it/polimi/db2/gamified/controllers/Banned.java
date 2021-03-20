@@ -8,18 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-
-import javax.ejb.EJB;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.thymeleaf.TemplateEngine;
@@ -28,8 +16,8 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.db2.gamified.entities.*;
-import it.polimi.db2.gamified.services.*;
 
+//Display the Ban message after a user is banned
 
 @WebServlet("/Banned")
 public class Banned extends HttpServlet {
@@ -50,7 +38,6 @@ public class Banned extends HttpServlet {
 	}
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String loginpath = getServletContext().getContextPath() + "/Home";
 		HttpSession session = request.getSession();
 		if (session.isNew() || session.getAttribute("account") == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.html");

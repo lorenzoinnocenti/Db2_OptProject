@@ -17,16 +17,16 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import it.polimi.db2.gamified.entities.Answer;
 import it.polimi.db2.gamified.entities.Account;
 import it.polimi.db2.gamified.entities.AccountStatus;
-import it.polimi.db2.gamified.entities.Answer;
-import it.polimi.db2.gamified.entities.Userquestionnaire;
-import it.polimi.db2.gamified.exceptions.AnswersNotFoundException;
-import it.polimi.db2.gamified.exceptions.UserNotFoundException;
-import it.polimi.db2.gamified.exceptions.UserQuestionnaireNotFoundException;
 import it.polimi.db2.gamified.services.AnswersService;
-import it.polimi.db2.gamified.services.QuestionnaireService;
+import it.polimi.db2.gamified.entities.Userquestionnaire;
 import it.polimi.db2.gamified.services.UserQuestionnaireService;
+import it.polimi.db2.gamified.exceptions.AnswersNotFoundException;
+import it.polimi.db2.gamified.exceptions.UserQuestionnaireNotFoundException;
+
+//Load the page that shows all the answers of a single user.
 
 @WebServlet("/SingleResult")
 public class SingleResult extends HttpServlet {
@@ -62,13 +62,13 @@ public class SingleResult extends HttpServlet {
 			response.sendRedirect(getServletContext().getContextPath() + "/Home");
 			return;
 		}
+		
 		Integer questionnaireId = null;
 		Integer userId = null;
 		try {
 			questionnaireId = Integer.parseInt(request.getParameter("questionnaireid"));
 			userId = Integer.parseInt(request.getParameter("userid"));
 		} catch (NumberFormatException | NullPointerException e) {
-			// only for debugging e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect param values");
 			return;
 		}
@@ -99,4 +99,7 @@ public class SingleResult extends HttpServlet {
 		doGet(request, response);
 	}
 
+	public void destroy() {
+	}
+	
 }

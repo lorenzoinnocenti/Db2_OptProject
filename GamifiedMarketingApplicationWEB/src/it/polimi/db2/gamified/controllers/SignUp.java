@@ -17,13 +17,10 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.db2.gamified.services.AccountService;
-import it.polimi.db2.gamified.entities.Account;
-import it.polimi.db2.gamified.entities.AccountStatus;
-import it.polimi.db2.gamified.exceptions.CredentialsException;
 import it.polimi.db2.gamified.exceptions.EmailAlreadyUsedException;
 import it.polimi.db2.gamified.exceptions.UsernameAlreadyUsedException;
-import it.polimi.db2.gamified.exceptions.BannedUserException;
-import javax.persistence.NonUniqueResultException;
+
+//Checks if username or email is not already in use, and if not, load the new account into DB.
 
 @WebServlet("/SignUp")
 public class SignUp extends HttpServlet {
@@ -63,6 +60,7 @@ public class SignUp extends HttpServlet {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing credential value");
 			return;
 		}
+		
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		try {
@@ -86,4 +84,5 @@ public class SignUp extends HttpServlet {
 
 	public void destroy() {
 	}
+	
 }

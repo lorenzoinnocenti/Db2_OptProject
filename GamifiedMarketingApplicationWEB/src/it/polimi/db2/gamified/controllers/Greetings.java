@@ -25,6 +25,8 @@ import it.polimi.db2.gamified.exceptions.UserQuestionnaireNotFoundException;
 import it.polimi.db2.gamified.services.QuestionnaireService;
 import it.polimi.db2.gamified.services.UserQuestionnaireService;
 
+//Load the greeting page
+
 @WebServlet("/Greetings")
 public class Greetings extends HttpServlet{
 	private static final long serialVersionUID = 1L;
@@ -38,7 +40,6 @@ public class Greetings extends HttpServlet{
 		super();
 	}
 	
-	
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
 		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
@@ -47,7 +48,6 @@ public class Greetings extends HttpServlet{
 		this.templateEngine.setTemplateResolver(templateResolver);
 		templateResolver.setSuffix(".html");
 	}
-	
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// If the user is not logged in (not present in session) redirect to the login
@@ -67,16 +67,14 @@ public class Greetings extends HttpServlet{
 		Userquestionnaire uq = null;
 		try {
 			uq = uqService.getUserQuestionnaire(((Account) session.getAttribute("account")).getId(), q.getId());
-		} catch (UserQuestionnaireNotFoundException e1) {
-			e1.printStackTrace();
+		} catch (UserQuestionnaireNotFoundException e) {
+			//We should never reach this block
+			e.printStackTrace();
 		}		
-		try {
-			if (uq != null) {
-				newPoints = uq.getScore();
-			}
-		} catch (Exception e) {
-			//User never pressed "Answer questionnaire", so there isn't any entity in the DB.
+		if (uq != null) {
+			newPoints = uq.getScore();
 		}
+		
 		
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -84,9 +82,7 @@ public class Greetings extends HttpServlet{
 		templateEngine.process("/WEB-INF/Greetings.html", ctx, response.getWriter()); 
 	}
 	
-	
 	public void destroy() {
 	}
+	
 }
-
-

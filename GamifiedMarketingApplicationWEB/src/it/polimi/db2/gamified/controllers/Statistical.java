@@ -18,6 +18,8 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import it.polimi.db2.gamified.entities.Account;
 import it.polimi.db2.gamified.entities.AccountStatus;
 
+//Load the Statistical page (static .html)
+
 @WebServlet("/Statistical")
 public class Statistical extends HttpServlet{
 	private static final long serialVersionUID = 1L;
@@ -27,7 +29,6 @@ public class Statistical extends HttpServlet{
 		super();
 	}
 	
-	
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
 		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
@@ -36,7 +37,6 @@ public class Statistical extends HttpServlet{
 		this.templateEngine.setTemplateResolver(templateResolver);
 		templateResolver.setSuffix(".html");
 	}
-	
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// If the user is not logged in (not present in session) redirect to the login
@@ -56,8 +56,7 @@ public class Statistical extends HttpServlet{
 		templateEngine.process("/WEB-INF/Statistical.html", ctx, response.getWriter()); 
 	}
 	
-	
 	public void destroy() {
 	}
+	
 }
-

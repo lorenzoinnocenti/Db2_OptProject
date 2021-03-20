@@ -18,6 +18,8 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import it.polimi.db2.gamified.entities.Account;
 import it.polimi.db2.gamified.entities.AccountStatus;
 
+//Show the page for creating a questionnaire. The page will show differently based on some parameters.
+
 @WebServlet("/CreateQuestionnaire")
 public class GoToCreateQuestionnaire extends HttpServlet{
 	
@@ -52,11 +54,14 @@ public class GoToCreateQuestionnaire extends HttpServlet{
 			response.sendRedirect(getServletContext().getContextPath() + "/Home");
 			return;
 		}
+		//Parameters coming from the session.
 		Integer questionnaireDateOk = (Integer) session.getAttribute("dateOk");
 		Integer numberOfQuestions =(Integer) session.getAttribute("numberOfQuestions");
 		Integer alreadyExisting = (Integer) session.getAttribute("alreadyExisting");
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		
+		//If it is the first time that this servlet is called, the parameters are set to null
 		if(questionnaireDateOk!=null && numberOfQuestions!=null && alreadyExisting != null) {
 			if(questionnaireDateOk == 1) {
 				if (alreadyExisting == 0) {
@@ -78,6 +83,7 @@ public class GoToCreateQuestionnaire extends HttpServlet{
 	
 	
 	private void removeSessionAttributes(HttpSession session) {
+		//Clear the parameters
 		session.removeAttribute("dateOk");
 		session.removeAttribute("alreadyExisting");
 	}

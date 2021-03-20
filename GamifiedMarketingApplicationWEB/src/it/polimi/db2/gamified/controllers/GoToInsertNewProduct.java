@@ -1,12 +1,6 @@
 package it.polimi.db2.gamified.controllers;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -26,7 +20,8 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.db2.gamified.entities.Account;
 import it.polimi.db2.gamified.entities.AccountStatus;
-import it.polimi.db2.gamified.entities.Product;
+
+//Load the page where the admin can add a new product
 
 @WebServlet("/InsertNewProduct")
 public class GoToInsertNewProduct extends HttpServlet{

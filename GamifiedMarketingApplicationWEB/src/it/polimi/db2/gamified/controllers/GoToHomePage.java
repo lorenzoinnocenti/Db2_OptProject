@@ -18,8 +18,18 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import it.polimi.db2.gamified.entities.*;
-import it.polimi.db2.gamified.services.*;
+import it.polimi.db2.gamified.entities.Review;
+import it.polimi.db2.gamified.entities.Account;
+import it.polimi.db2.gamified.entities.Product;
+import it.polimi.db2.gamified.entities.AccountStatus;
+import it.polimi.db2.gamified.entities.Questionnaire;
+import it.polimi.db2.gamified.services.ReviewService;
+import it.polimi.db2.gamified.entities.QuestionnaireStatus;
+import it.polimi.db2.gamified.services.QuestionnaireService;
+import it.polimi.db2.gamified.services.UserQuestionnaireService;
+import it.polimi.db2.gamified.exceptions.UserQuestionnaireNotFoundException;
+
+//Load the user home page
 
 @WebServlet("/Home")
 public class GoToHomePage extends HttpServlet {
@@ -82,8 +92,9 @@ public class GoToHomePage extends HttpServlet {
 			if (uqService.getUserQuestionnaire(((Account) session.getAttribute("account")).getId(), questionnaires.get(0).getId()) != null) {
 				status = uqService.getUserQuestionnaire(((Account) session.getAttribute("account")).getId(), questionnaires.get(0).getId()).getStatus();
 			}
-		} catch (Exception e) {
+		} catch (UserQuestionnaireNotFoundException e) {
 			//User never pressed "Answer questionnaire", so there isn't any entity in the DB.
+			status = null;
 		}
 		// Redirect to the Home page and add missions to the parameters
 		String path = "/WEB-INF/Home.html";

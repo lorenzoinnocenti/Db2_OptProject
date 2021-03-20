@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.util.List;
-import java.util.ArrayList;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpSession;
@@ -20,8 +19,10 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import it.polimi.db2.gamified.entities.*;
-import it.polimi.db2.gamified.services.*;
+import it.polimi.db2.gamified.entities.Account;
+import it.polimi.db2.gamified.services.AccountService;
+
+//Load the leaderboard
 
 @WebServlet("/Leaderboard")
 public class Leaderboard extends HttpServlet {
@@ -55,23 +56,18 @@ public class Leaderboard extends HttpServlet {
 		Account first =null;
 		Account second = null;
 		Account third = null;
-		try {
-			users = qService.computeLeaderboard();
-			users = this.filterUsers(users);
-			if (users.size() != 0) {
-				first = users.remove(0);
-			}
-			if (users.size() != 0) {
-				second = users.remove(0);
-			}
-			if (users.size() != 0) {
-				third = users.remove(0);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
-			return;
+		
+		users = qService.computeLeaderboard();
+		if (users.size() != 0) {
+			first = users.remove(0);
 		}
+		if (users.size() != 0) {
+			second = users.remove(0);
+		}
+		if (users.size() != 0) {
+			third = users.remove(0);
+		}
+		
 		String path = "/WEB-INF/Leaderboard.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -88,13 +84,4 @@ public class Leaderboard extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	private List<Account> filterUsers(List<Account> users){
-		List<Account> resultList = new ArrayList<Account>();
-		for(Account user : users) {
-			if(user.getStatus() == AccountStatus.USER) 
-				resultList.add(user);			
-		}
-		return resultList;
-	}
-
 }

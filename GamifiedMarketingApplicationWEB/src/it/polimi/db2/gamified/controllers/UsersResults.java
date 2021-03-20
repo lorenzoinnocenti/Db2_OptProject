@@ -19,15 +19,17 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import it.polimi.db2.gamified.entities.Account;
-import it.polimi.db2.gamified.entities.AccountStatus;
 import it.polimi.db2.gamified.entities.Login;
-import it.polimi.db2.gamified.entities.Questionnaire;
-import it.polimi.db2.gamified.exceptions.QuestionnaireNotFoundException;
-import it.polimi.db2.gamified.exceptions.UserNotFoundException;
+import it.polimi.db2.gamified.entities.Account;
 import it.polimi.db2.gamified.services.LoginService;
+import it.polimi.db2.gamified.entities.AccountStatus;
+import it.polimi.db2.gamified.entities.Questionnaire;
 import it.polimi.db2.gamified.services.QuestionnaireService;
+import it.polimi.db2.gamified.exceptions.UserNotFoundException;
 import it.polimi.db2.gamified.services.UserQuestionnaireService;
+import it.polimi.db2.gamified.exceptions.QuestionnaireNotFoundException;
+
+//Load the list of users that completed or cancelled a given questionnaire
 
 @WebServlet("/UsersResults")
 public class UsersResults extends HttpServlet {
@@ -65,11 +67,11 @@ public class UsersResults extends HttpServlet {
 			response.sendRedirect(getServletContext().getContextPath() + "/Home");
 			return;
 		}
+		
 		Integer questionnaireId = null;
 		try {
 			questionnaireId = Integer.parseInt(request.getParameter("questionnaireid"));
 		} catch (NumberFormatException | NullPointerException e) {
-			// only for debugging e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect param values");
 			return;
 		}
@@ -84,7 +86,7 @@ public class UsersResults extends HttpServlet {
 		}
 		try {
 			userCancelled = uqService.FindUsersByQuestionnaireCancelled(questionnaireId);
-			List<Login> loginList;
+			List<Login> loginList; //temp list
 			Questionnaire questionnaire = qService.findById(questionnaireId.intValue());
 			Date date = questionnaire.getDate();
 			for(Account u:userCancelled) {
@@ -112,4 +114,7 @@ public class UsersResults extends HttpServlet {
 		doGet(request, response);
 	}
 
+	public void destroy() {
+	}
+	
 }

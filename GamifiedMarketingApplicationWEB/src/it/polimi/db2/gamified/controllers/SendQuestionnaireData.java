@@ -1,10 +1,8 @@
 package it.polimi.db2.gamified.controllers;
 
 import java.io.IOException;
-//import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
-//import java.util.List;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -17,18 +15,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.db2.gamified.entities.Account;
 import it.polimi.db2.gamified.entities.AccountStatus;
-import it.polimi.db2.gamified.entities.Questionnaire;
-import it.polimi.db2.gamified.exceptions.ProductNotFoundException;
-import it.polimi.db2.gamified.exceptions.QuestionnaireAlreadyPresentException;
-import it.polimi.db2.gamified.exceptions.QuestionnaireNotFoundException;
 import it.polimi.db2.gamified.services.QuestionnaireService;
-import it.polimi.db2.gamified.services.UserQuestionnaireService;
+import it.polimi.db2.gamified.exceptions.ProductNotFoundException;
+import it.polimi.db2.gamified.exceptions.QuestionnaireNotFoundException;
+import it.polimi.db2.gamified.exceptions.QuestionnaireAlreadyPresentException;
+
+//Load the new questionnaire data into the DB (questionnaire + questions).
 
 @WebServlet("/SendQuestionnaireData")
 public class SendQuestionnaireData extends HttpServlet{
@@ -64,6 +61,7 @@ public class SendQuestionnaireData extends HttpServlet{
 			response.sendRedirect(getServletContext().getContextPath() + "/Home");
 			return;
 		}
+		
 		int productId = Integer.parseInt(request.getParameter("productId"));
 		List<String> questions = null;
 		questions = Arrays.asList(request.getParameterValues("Questions"));
@@ -91,4 +89,5 @@ public class SendQuestionnaireData extends HttpServlet{
 
 	public void destroy() {
 	}
+	
 }

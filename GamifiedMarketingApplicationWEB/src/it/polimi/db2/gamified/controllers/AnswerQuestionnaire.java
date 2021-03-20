@@ -1,7 +1,6 @@
 package it.polimi.db2.gamified.controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +23,8 @@ import it.polimi.db2.gamified.entities.AccountStatus;
 import it.polimi.db2.gamified.entities.Question;
 import it.polimi.db2.gamified.services.AnswerStateService;
 import it.polimi.db2.gamified.services.QuestionnaireService;
+
+//Load the marketing questions (and answers if coming from "BACK")
 
 @WebServlet("/AnswerQuestionnaire")
 public class AnswerQuestionnaire extends HttpServlet{

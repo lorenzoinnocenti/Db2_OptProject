@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,6 +21,7 @@ import it.polimi.db2.gamified.entities.Account;
 import it.polimi.db2.gamified.entities.AccountStatus;
 import it.polimi.db2.gamified.services.AnswerStateService;
 
+//
 
 @WebServlet("/GoToStatistical")
 public class GoToStatistical extends HttpServlet {
@@ -55,10 +55,12 @@ public class GoToStatistical extends HttpServlet {
 			response.sendRedirect(getServletContext().getContextPath() + "/AdminPage");
 			return;
 		}
+		
 		String ctxpath = getServletContext().getContextPath();
 		List<String> answers;
 		try {
 			AnswerStateService asService = null;
+			//Save the answers in the stateful bean
 			asService = (AnswerStateService) request.getSession().getAttribute("AnswerStateService");
 			//Get answers
 			answers = Arrays.asList(request.getParameterValues("Answer"));

@@ -1,7 +1,6 @@
 package it.polimi.db2.gamified.controllers;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -13,16 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringEscapeUtils;
-
 import it.polimi.db2.gamified.entities.Account;
 import it.polimi.db2.gamified.entities.AccountStatus;
-import it.polimi.db2.gamified.entities.QuestionnaireStatus;
-import it.polimi.db2.gamified.exceptions.BannedUserException;
-import it.polimi.db2.gamified.services.AnswerStateService;
 import it.polimi.db2.gamified.services.AnswersService;
+import it.polimi.db2.gamified.services.AnswerStateService;
+import it.polimi.db2.gamified.entities.QuestionnaireStatus;
 import it.polimi.db2.gamified.services.QuestionnaireService;
+import it.polimi.db2.gamified.exceptions.BannedUserException;
 import it.polimi.db2.gamified.services.UserQuestionnaireService;
+
+//Load the answers (Marketing + Statistical) into the DB. Create an UserQuestionnaire instance
 
 @WebServlet("/SendAnswers")
 public class SendAnswers extends HttpServlet{
@@ -90,5 +89,5 @@ public class SendAnswers extends HttpServlet{
 	
 	public void destroy() {
 	}
+	
 }
-
