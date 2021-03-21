@@ -31,7 +31,7 @@ public class Questionnaire implements Serializable {
 	private Date date;
 
 	//bi-directional many-to-one association to Question
-	@OneToMany(mappedBy="questionnaire",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="questionnaire", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<Question> questions;
 
 	//bi-directional many-to-one association to Product
