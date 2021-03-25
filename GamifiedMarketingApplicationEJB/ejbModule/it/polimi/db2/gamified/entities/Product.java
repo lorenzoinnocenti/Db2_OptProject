@@ -36,7 +36,7 @@ public class Product implements Serializable {
 	private byte[] image;
 
 	//bi-directional many-to-one association to Questionnaire
-	@OneToMany(mappedBy="product", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+	@OneToMany(mappedBy="product", cascade = CascadeType.REMOVE)
 	private List<Questionnaire> questionnaires;
 
 	//bi-directional many-to-one association to Review
