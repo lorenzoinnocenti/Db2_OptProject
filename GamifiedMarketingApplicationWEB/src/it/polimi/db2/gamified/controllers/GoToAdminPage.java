@@ -62,8 +62,9 @@ public class GoToAdminPage extends HttpServlet {
 		
 		List<Questionnaire> questionnaires = null;
 		Product product = null;
-		try {
-			questionnaires = qService.findByDate(new Date(java.lang.System.currentTimeMillis()));
+		try {			
+			// questionnaires = qService.findByDate(new Date(java.lang.System.currentTimeMillis()));
+			questionnaires = qService.findToday();
 			if (questionnaires.size() != 0) {
 				product = questionnaires.get(0).getProduct();
 			}
