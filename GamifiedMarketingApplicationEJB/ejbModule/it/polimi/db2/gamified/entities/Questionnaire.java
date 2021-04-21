@@ -15,7 +15,6 @@ import java.util.List;
 
 
 @NamedQueries({ @NamedQuery(name = "Questionnaire.findByDate", query = "SELECT q FROM Questionnaire q WHERE q.date = :date"),
-				@NamedQuery(name = "Questionnaire.findToday", query = "SELECT q FROM Questionnaire q WHERE (q.date = CURRENT_DATE)"),
     			@NamedQuery(name = "Questionnaire.findPastQuestionnaires", query = "SELECT q FROM Questionnaire q WHERE q.date < :date ORDER BY q.date DESC")})
  
 

@@ -26,10 +26,6 @@ public class QuestionnaireService {
 		return em.createNamedQuery("Questionnaire.findByDate", Questionnaire.class).setParameter("date", date).getResultList();
 	}
 	
-	public List<Questionnaire> findToday(){ 
-		return em.createNamedQuery("Questionnaire.findToday", Questionnaire.class).getResultList();
-	}
-	
 	public Questionnaire findById(int id) throws QuestionnaireNotFoundException{ 
 		Questionnaire q = em.find(Questionnaire.class, id);
 		if (q == null) throw new QuestionnaireNotFoundException("Questionnaire not found");
