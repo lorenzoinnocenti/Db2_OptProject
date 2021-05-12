@@ -76,7 +76,6 @@ public class UserQuestionnaireService {
 			userquestionnaire.setAnswerSex(sex_answer);
 		if(!expertise_answer.equals("null"))
 			userquestionnaire.setAnswerExp(expertise_answer);
-		em.persist(userquestionnaire);
 	}
 	
 }
