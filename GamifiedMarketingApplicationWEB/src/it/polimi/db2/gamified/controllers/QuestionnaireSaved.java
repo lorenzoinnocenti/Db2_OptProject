@@ -60,7 +60,6 @@ public class QuestionnaireSaved extends HttpServlet{
 	
 	private void deleteSessionParameters(HttpSession session) {
 		session.removeAttribute("questionnaireDate");
-		session.removeAttribute("questionnaireDate");
 	}
 	
 	public void destroy() {

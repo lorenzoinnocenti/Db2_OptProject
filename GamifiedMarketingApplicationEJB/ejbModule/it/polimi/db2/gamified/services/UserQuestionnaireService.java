@@ -49,7 +49,6 @@ public class UserQuestionnaireService {
 	}
 	
 	public Userquestionnaire getUserQuestionnaire(int accountId, int questionnaireId) throws UserQuestionnaireNotFoundException{
-		//No need to Refresh, since it is used for older questionnaires or after the user change its questionnaire status
 		Userquestionnaire userquest = em.find(Userquestionnaire.class, new UserquestionnairePK(accountId, questionnaireId));
 		if (userquest == null) throw new UserQuestionnaireNotFoundException("Userquestionnaire not found");
 		em.refresh(userquest);
@@ -65,7 +64,7 @@ public class UserQuestionnaireService {
 			throw new QuestionnaireNotFoundException("Questionnaire not found");
 		UserquestionnairePK id = new UserquestionnairePK(accountid, questionnaireid);
 		Userquestionnaire new_userquestionnaire = new Userquestionnaire(id, user, questionnaire, status);
-		em.merge(new_userquestionnaire);
+		em.persist(new_userquestionnaire);
 		return new_userquestionnaire;
 	}
 	
@@ -77,7 +76,7 @@ public class UserQuestionnaireService {
 			userquestionnaire.setAnswerSex(sex_answer);
 		if(!expertise_answer.equals("null"))
 			userquestionnaire.setAnswerExp(expertise_answer);
-		em.merge(userquestionnaire);
+		em.persist(userquestionnaire);
 	}
 	
 }
