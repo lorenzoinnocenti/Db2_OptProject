@@ -35,9 +35,7 @@ public class Userquestionnaire implements Serializable {
 	//bi-directional many-to-one association to Account
 	@ManyToOne
 	@JoinColumn(name="userid", nullable=false)
-	private Account account;
-	// prima era @JoinColumn(name="userid", nullable=false, insertable=false, updatable=false), sia in questo che in tutti campi delle pk anche di answers, ma dava errore
-	
+	private Account account;	
 	
 	//bi-directional many-to-one association to Questionnaire
 	@ManyToOne
