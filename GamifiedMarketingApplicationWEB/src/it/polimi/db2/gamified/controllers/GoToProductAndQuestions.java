@@ -60,9 +60,14 @@ public class GoToProductAndQuestions extends HttpServlet{
 			response.sendRedirect(getServletContext().getContextPath() + "/Home");
 			return;
 		}
+		Integer numberOfQuestions = (Integer) session.getAttribute("numberOfQuestions");
+		if(numberOfQuestions == null) {
+			String path = getServletContext().getContextPath() + "/CreateQuestionnaire";
+			response.sendRedirect(path);
+			return;
+		}
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		Integer numberOfQuestions =(Integer) session.getAttribute("numberOfQuestions");
 		List<Integer> numberList = new ArrayList<Integer>();
 		for (int i=1; i<numberOfQuestions+1; i=i+1)
 			numberList.add(i);

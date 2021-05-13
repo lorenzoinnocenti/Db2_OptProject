@@ -88,6 +88,7 @@ public class SendNewProductData extends HttpServlet{
 			response.sendRedirect(path);
 			return;
 		}
+		session.removeAttribute("errorMsg");
 		String ctxpath = getServletContext().getContextPath();
 		String path = ctxpath + "/AdminPage";
 		response.sendRedirect(path);

@@ -61,7 +61,6 @@ public class GoToInsertNewProduct extends HttpServlet{
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		String errorMsg = (String) session.getAttribute("errorMsg");
 		ctx.setVariable("errorMsg", errorMsg);
-		session.removeAttribute("errorMsg");
 		templateEngine.process("/WEB-INF/InsertNewProduct.html", ctx, response.getWriter());		
 	}
 		
