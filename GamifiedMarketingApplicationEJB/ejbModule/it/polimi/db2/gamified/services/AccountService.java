@@ -95,5 +95,6 @@ public class AccountService {
 		if (isEmailUsed(email)) throw new EmailAlreadyUsedException("Email altready in use");
 		Account account = new Account(usrn, psw, email);
 		em.persist(account);
+		em.flush();
 	}
 }
