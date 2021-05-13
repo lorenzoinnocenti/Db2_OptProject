@@ -53,7 +53,6 @@ public class AnswersService {
 			throw new QuestionnaireNotFoundException("questionnaire not found");
 		List<Question> questions = questionnaire.getQuestions();
 		int len = questions.size();
-		assert(len == answers_text.size());
 		List<String> checkBadWords = bwService.checkBadword(answers_text);	
 		if(checkBadWords != null) {
 			for (int i=0; i<len; i++) {
