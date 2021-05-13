@@ -31,6 +31,7 @@ public class ProductService {
 			throw  new ProductAlreadyExistingException("The products with that name already exists");
 		Product newProduct = new Product(ProductName, ProductPrice, ProductDescription, imgByteArray);
 		em.persist(newProduct);
+		em.flush();
 		return newProduct;
 	}
 	
